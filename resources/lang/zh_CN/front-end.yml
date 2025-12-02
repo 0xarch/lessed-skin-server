@@ -23,6 +23,7 @@ auth:
   change-captcha: 点击以更换图片
   login-link: 已经有账号了？登录
   forgot-link: 忘记密码？
+  register-link: 注册新账号
   keep: 记住我
   repeat-pwd: 重复密码
   nickname-intro: 昵称可使用汉字，不可包含特殊字符
