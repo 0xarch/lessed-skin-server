@@ -6,7 +6,7 @@ import useTexture from '@/scripts/hooks/useTexture'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import { showModal, toast } from '@/scripts/notify'
-import { Player, TextureType } from '@/scripts/types'
+import { Player, TextureType, ScoreInfo } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import Row from './Row'
 import LoadingRow from './LoadingRow'
@@ -24,6 +24,8 @@ const Players: React.FC = () => {
   const [showModalAddPlayer, setShowModalAddPlayer] = useState(false)
   const [showModalReset, setShowModalReset] = useState(false)
   const playersCount = useBlessingExtra<number>('count')
+  const [score, setScore] = useState(0)
+  const [playersRate, setPlayersRate] = useState(1)
 
   useEmitMounted()
 
@@ -37,7 +39,10 @@ const Players: React.FC = () => {
     const getPlayers = async () => {
       setIsLoading(true)
       const players = await fetch.get<Player[]>('/user/player/list')
+      const scoreData = await fetch.get<ScoreInfo>(urls.user.score())
       setPlayers(players)
+      setPlayersRate(scoreData.rate.players)
+      setScore(scoreData.user.score)
       if (players.length === 1) {
         selectPlayer(players[0]!)
       }
@@ -208,7 +213,7 @@ const Players: React.FC = () => {
           </table>
         </div>
         {
-          playersCount > 0 ? null : <div className="card-footer">
+          playersCount >= score / playersRate ? null : <div className="card-footer">
             <button className="btn btn-primary" onClick={openModalAddPlayer}>
               <i className="fas fa-plus mr-1"></i>
               <span>{t('user.player.add-player')}</span>

@@ -59,3 +59,11 @@ export type Paginator<T> = {
   to: number
   total: number
 }
+
+export type ScoreInfo = {
+  signAfterZero: boolean
+  signGapTime: number
+  rate: { players: number; storage: number }
+  usage: { players: number; storage: number }
+  user: { score: number; lastSignAt: string }
+}

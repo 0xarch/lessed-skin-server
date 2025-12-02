@@ -28,10 +28,7 @@ const Row: React.FC<Props> = (props) => {
   const selected =
     props.selected &&
     css`
-      background: #efefef;
-      .dark-mode & {
-        background: var(--dark);
-      }
+      background: var(--callout-bg-color);
     `
 
   return (

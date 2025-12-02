@@ -11,14 +11,7 @@ import * as breakpoints from '@/styles/breakpoints'
 import InfoBox from './InfoBox'
 import SignButton from './SignButton'
 import * as scoreUtils from './scoreUtils'
-
-type ScoreInfo = {
-  signAfterZero: boolean
-  signGapTime: number
-  rate: { players: number; storage: number }
-  usage: { players: number; storage: number }
-  user: { score: number; lastSignAt: string }
-}
+import { ScoreInfo } from '@/scripts/types'
 
 type SignReturn = {
   score: number
