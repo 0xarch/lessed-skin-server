@@ -21,9 +21,15 @@ const wrapper = css`
   position: fixed;
   right: calc((100% - 350px) / 2);
   width: 350px;
-  z-index: 1050;
+  z-index: 9000;
   transition-property: top;
   transition-duration: 0.3s;
+  background-color: var(--info-box-bg-color);
+  color: var(--info-box-color);
+  backdrop-filter: blur(10px);
+  font-size: 18px;
+  padding: 12px;
+  border-radius: 12px;
 `
 const shadow = css`
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
