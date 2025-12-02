@@ -2,7 +2,7 @@
   <div class="row">
     {% set layout = grid.layout[loop.index0] %}
     {% for col in row %}
-      <div class="col-{{ layout[loop.index0] }}">
+      <div class="col-{{ layout[loop.index0] }} d-flex column">
         {% for widget in col %}
           {{ include(widget) }}
         {% endfor %}

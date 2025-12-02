@@ -25,12 +25,12 @@
       <nav class="navbar navbar-expand fixed-top navbar-{{ navbar_color }} navbar-{{ color_mode }}
         ml-0 {{ transparent_navbar ? 'transparent' }}"
       >
-        <div class="container">
+        <div class="container d-flex row">
           <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">{{ site_name }}</a>
           </div>
 
-          <div class="navbar-custom-menu">
+          <div class="navbar-custom-menu" style="margin-left: auto">
             <ul class="nav navbar-nav">
               <li class="nav-item">
                 <a class="nav-link" href="{{ url('skinlib') }}">{{ trans('general.skinlib') }}</a>
