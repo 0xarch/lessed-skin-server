@@ -12,11 +12,21 @@
       >
 
         {% if scope == 'user' %}
-
+          <li class="nav-header">皮肤库</li>
+          {% if auth_check() %}
+            <li class="nav-item">
+              <a class="nav-link" href="{{ url('skinlib/upload') }}">
+                <i class="fas fa-upload" aria-hidden="true"></i>&nbsp;
+                <span class="d-none d-sm-inline">
+                  {{ trans('skinlib.general.upload-new-skin') }}
+                </span>
+              </a>
+            </li>
+          {% endif %}
           <li class="nav-header">{{ trans('general.user-center') }}</li>
           {{ include('shared.side-menu', {type: 'user'}) }}
-          <li class="nav-header">{{ trans('general.explore') }}</li>
-          {{ include('shared.side-menu', {type: 'explore'}) }}
+          {# <li class="nav-header">{{ trans('general.explore') }}</li> #}
+          {# {{ include('shared.side-menu', {type: 'explore'}) }} #}
           {% if auth_user().admin %}
             <li class="nav-header">{{ trans('general.manage') }}</li>
             <li class="nav-item">

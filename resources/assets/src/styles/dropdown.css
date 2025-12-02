@@ -1,12 +1,63 @@
+.dropdown-menu {
+  position: absolute;
+  top: 64px;
+  right: 0px;
+  background-color: var(--card-bg-color);
+  color: var(--card-color);
+  border: 1px solid var(--outline-color);
+  backdrop-filter: blur(10px);
+  /* visibility: hidden; */
+  pointer-events: none;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition-property: transform, opacity;
+  transition-duration: .25s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  min-width: 128px;
+  min-height: 64px;
+  width: fit-content;
+
+  & a, a.dropdown-item {
+    color: var(--card-color);
+
+    &:hover {
+      color: var(--accent-on-color);
+    }
+  }
+
+  & .dropdown-item {
+    display: block;
+    width: 100%;
+    min-height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.dropdown.show>.dropdown-menu,
+.dropdown-menu.show {
+  /* visibility: visible; */
+  pointer-events: initial;
+  transform: none;
+  opacity: 1;
+}
+
 .dropdown-item:hover,
 .dropdown-item:focus {
-  color: #fff;
-  background-color: var(--blue);
+  color: var(--accent-on-color);
+  background-color: var(--accent-color-75);
 }
 
 .dropdown-item.dropdown-item-danger {
   color: var(--danger);
 }
+
 .dropdown-item.dropdown-item-danger:hover,
 .dropdown-item.dropdown-item-danger:focus {
   color: #fff;

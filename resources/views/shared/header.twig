@@ -5,10 +5,15 @@
         <i class="fas fa-bars"></i>
       </a>
     </li>
+    <li class="nav-item">
+      <a href="{{ url('/') }}" class="brand-link text-center">
+        <span class="brand-text font-weight-light">{{ site_name }}</span>
+      </a>
+    </li>
   </ul>
 
   <ul class="navbar-nav ml-auto">
-    {{ include('shared.dark-mode') }}
+    {# {{ include('shared.dark-mode') }} #}
     {{ include('shared.notifications') }}
     {{ include('shared.languages') }}
     {{ include('shared.user-menu') }}

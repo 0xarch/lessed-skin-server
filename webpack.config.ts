@@ -13,10 +13,16 @@ interface Env {
 export default function (env?: Env): webpack.Configuration {
   const isDev = !env?.production
   const isGitpod = 'GITPOD_REPO_ROOT' in process.env
+  // const htmlPublicPath = isDev
+  //   ? isGitpod
+  //     ? `${execSync('gp url 8080')}/app/`
+  //     : '//localhost:8080/app/'
+  //   : '{{ cdn_base }}/app/'
+
   const htmlPublicPath = isDev
     ? isGitpod
       ? `${execSync('gp url 8080')}/app/`
-      : '//localhost:8080/app/'
+      : '/app/'  // 改为相对路径
     : '{{ cdn_base }}/app/'
 
   return {
@@ -26,10 +32,10 @@ export default function (env?: Env): webpack.Configuration {
       app: ['react-hot-loader/patch', '@/index.tsx'],
       style: [
         '@/styles/common.css',
-        'admin-lte/dist/css/alt/adminlte.components.min.css',
-        'admin-lte/dist/css/alt/adminlte.core.min.css',
-        'admin-lte/dist/css/alt/adminlte.pages.min.css',
-        'admin-lte/dist/css/alt/adminlte.light.min.css',
+        // 'admin-lte/dist/css/alt/adminlte.components.min.css', // deprecated, use self-implemented css
+        // 'admin-lte/dist/css/alt/adminlte.core.min.css',
+        // 'admin-lte/dist/css/alt/adminlte.pages.min.css',
+        // 'admin-lte/dist/css/alt/adminlte.light.min.css',
         '@fortawesome/fontawesome-free/css/all.min.css',
       ],
       home: '@/scripts/homePage.ts',

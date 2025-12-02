@@ -207,13 +207,16 @@ const Players: React.FC = () => {
             </tbody>
           </table>
         </div>
-        <div className="card-footer">
-          <button className="btn btn-primary" onClick={openModalAddPlayer}>
-            <i className="fas fa-plus mr-1"></i>
-            <span>{t('user.player.add-player')}</span>
-          </button>
-        </div>
+        {
+          playersCount > 0 ? null : <div className="card-footer">
+            <button className="btn btn-primary" onClick={openModalAddPlayer}>
+              <i className="fas fa-plus mr-1"></i>
+              <span>{t('user.player.add-player')}</span>
+            </button>
+          </div>
+        }
       </div>
+
       <Previewer
         skin={skin.url}
         cape={cape.url}

@@ -5,9 +5,9 @@
     <title>{% block title %}{% endblock %} - {{ site_name }}</title>
   </head>
 
-  <body class="{{ dark_mode ? 'dark-mode' : '' }} hold-transition layout-top-nav">
+  <body class="hold-transition layout-top-nav">
     <div class="wrapper">
-      <nav class="main-header navbar navbar-expand navbar-{{ navbar_color }} navbar-{{ color_mode }} ml-0">
+      {# <nav class="main-header navbar navbar-expand navbar-{{ navbar_color }} navbar-{{ color_mode }} ml-0">
         <div class="container">
           <div class="navbar-header">
             <a href="{{ url('/') }}" class="navbar-brand">{{ site_name }}</a>
@@ -29,44 +29,17 @@
               {% endif %}
             </ul>
           </div>
-
-          <div class="navbar-custom-menu">
-            <ul class="nav navbar-nav">
-              {% if auth_check() %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('skinlib/upload') }}">
-                    <i class="fas fa-upload" aria-hidden="true"></i>&nbsp;
-                    <span class="d-none d-sm-inline">
-                      {{ trans('skinlib.general.upload-new-skin') }}
-                    </span>
-                  </a>
-                </li>
-                {{ include('shared.notifications') }}
-              {% endif %}
-              {{ include('shared.languages') }}
-              {% if auth_check() %}
-                {{ include('shared.user-menu') }}
-              {% else %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('auth/login') }}">
-                    <i class="fas fa-user"></i>
-                    <span class="d-none d-sm-inline">
-                      {{ trans('general.anonymous') }}
-                    </span>
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
         </div>
-      </nav>
+      </nav> #}
+      {{ include('shared.header') }}
+      {{ include('shared.sidebar-skinlib', {scope: 'user'}) }}
 
       {% block content %}{% endblock %}
 
       <footer class="main-footer">
-        <div class="container">
+        {# <div class="container"> #}
           {{ include('shared.copyright') }}
-        </div>
+        {# </div> #}
       </footer>
     </div>
     {% block before_foot %}{% endblock %}

@@ -2,10 +2,18 @@
 ARG VARIANT=8-bullseye
 FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 
+# 设置为中国国内源
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+RUN sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
+
 # Install MariaDB client
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y mariadb-client zlib1g-dev libpng-dev libzip-dev libwebp-dev \
+    && apt-get install -y mariadb-client zlib1g-dev libpng-dev libzip-dev libwebp-dev libmagickwand-dev \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+
+# Install php-imagick
+RUN pecl install imagick \
+    && docker-php-ext-enable imagick
 
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql gd zip

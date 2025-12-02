@@ -171,7 +171,7 @@ const SkinLibrary: React.FC = () => {
   return (
     <div className="container">
       <div className="content-header">
-        <div className="container-fluid d-flex justify-content-between">
+        <div className="container-fluid d-flex justify-content-between row">
           <h1>{t('general.skinlib')}</h1>
           <span>
             {uploader ? (
