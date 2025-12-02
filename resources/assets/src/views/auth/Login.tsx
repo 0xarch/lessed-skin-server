@@ -136,20 +136,23 @@ const Login: React.FC = () => {
         <a href={`${blessing.base_url}/auth/forgot`}>{t('auth.forgot-link')}</a>
       </div>
 
-      <button
-        className="btn btn-primary btn-block"
-        type="submit"
-        disabled={isPending}
-      >
-        {isPending ? (
-          <>
-            <i className="fas fa-spinner fa-spin mr-1"></i>
-            {t('auth.loggingIn')}
-          </>
-        ) : (
-          t('auth.login')
-        )}
-      </button>
+      <div className="card-footer">
+        <a href={`${blessing.base_url}/auth/register`}>{t('auth.register-link')}</a>
+        <button
+          className="btn btn-primary btn-block"
+          type="submit"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <>
+              <i className="fas fa-spinner fa-spin mr-1"></i>
+              {t('auth.loggingIn')}
+            </>
+          ) : (
+            t('auth.login')
+          )}
+        </button>
+      </div>
     </form>
   )
 }

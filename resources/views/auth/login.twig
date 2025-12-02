@@ -3,9 +3,11 @@
 {% block title %}{{ trans('auth.login.title') }}{% endblock %}
 
 {% block content %}
-  {% for row in rows %}
-    {{ include(row) }}
-  {% endfor %}
+  <div class="card-body login-card-body">
+    {% for row in rows %}
+      {{ include(row) }}
+    {% endfor %}
+  </div>
 {% endblock %}
 
 {% block before_foot %}
