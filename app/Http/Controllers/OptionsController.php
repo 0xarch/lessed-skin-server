@@ -17,11 +17,11 @@ class OptionsController extends Controller
 
             $form->text('favicon_url')->hint()->description();
 
-            $form->checkbox('transparent_navbar')->label();
+            // $form->checkbox('transparent_navbar')->label();
 
-            $form->checkbox('hide_intro')->label();
+            // $form->checkbox('hide_intro')->label();
 
-            $form->checkbox('fixed_bg')->label();
+            // $form->checkbox('fixed_bg')->label();
 
             $form->select('copyright_prefer')
                     ->option('0', 'Powered with ❤ by Blessing Skin Server.')
