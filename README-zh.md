@@ -2,6 +2,7 @@
 - [English](./README.md)
 
 <p align="center"><img src="https://media.githubusercontent.com/media/bs-community/logo/main/logo.png"></p>
+(Less tweaked)
 
 <p align="center">
 <a href="https://github.com/bs-community/blessing-skin-server/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/bs-community/blessing-skin-server/CI?style=flat-square"></a>
@@ -10,6 +11,12 @@
 <a href="https://github.com/bs-community/blessing-skin-server/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/bs-community/blessing-skin-server?style=flat-square"></a>
 <a href="https://discord.com/invite/QAsyEyt"><img alt="Discord" src="https://discord.com/api/guilds/761226550921658380/widget.png"></a>
 </p>
+
+# 本项目（LESSED SKIN）是BLESSING SKIN SERVER的分支
+
+Lessed skin 在不大幅破坏核心功能的情况下对用户界面进行了一些修改。
+
+Lessed skin 同时在 DevContainer 中添加了 phpMyAdmin (3399端口)
 
 优雅的开源 Minecraft 皮肤站，现在，回应您的等待。
 

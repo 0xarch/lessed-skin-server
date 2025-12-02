@@ -2,6 +2,7 @@
 - **English**
 
 <p align="center"><img src="https://media.githubusercontent.com/media/bs-community/logo/main/logo.png"></p>
+(Less tweaked)
 
 <p align="center">
 <a href="https://github.com/bs-community/blessing-skin-server/actions"><img alt="GitHub Workflow Status" src="https://img.shields.io/github/actions/workflow/status/bs-community/blessing-skin-server/CI.yml?branch=dev&style=flat-square"></a>
@@ -10,6 +11,12 @@
 <a href="https://github.com/bs-community/blessing-skin-server/blob/master/LICENSE"><img alt="GitHub" src="https://img.shields.io/github/license/bs-community/blessing-skin-server?style=flat-square"></a>
 <a href="https://discord.com/invite/QAsyEyt"><img alt="Discord" src="https://discord.com/api/guilds/761226550921658380/widget.png"></a>
 </p>
+
+# THIS(LESSED SKIN) IS A FORK OF BLESSING SKIN SERVER
+
+Lessed skin has made some changes to the user interface without much breaking changes to the core.
+
+Lessed skin also added phpMyAdmin to DevContainer. (Port 3399)
 
 Puzzled by losing your custom skins in Minecraft servers runing in offline mode? Now you can easily get them back with the help of Blessing Skin!
 
