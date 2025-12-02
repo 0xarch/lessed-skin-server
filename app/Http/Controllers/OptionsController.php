@@ -13,7 +13,7 @@ class OptionsController extends Controller
     public function customize(Request $request)
     {
         $homepage = Option::form('homepage', OptionForm::AUTO_DETECT, function ($form) {
-            $form->text('home_pic_url')->hint();
+            // $form->text('home_pic_url')->hint();
 
             $form->text('favicon_url')->hint()->description();
 
