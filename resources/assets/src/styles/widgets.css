@@ -64,9 +64,10 @@
 
 .info-box {
     display: flex;
-    height: 64px;
+    min-height: 64px;
     margin: 8px;
-    border-radius: 999vmax;
+    padding: 16px;
+    border-radius: 32px;
     gap: 8px;
     position: relative;
     background-color: var(--info-box-bg-color);
@@ -74,17 +75,16 @@
 
     &>.info-box-icon {
         display: flex;
-        height: 64px;
+        height: 32px;
         aspect-ratio: 1;
         align-items: center;
         justify-content: center;
     }
 
     &>.info-box-content {
-        height: 32px;
+        min-height: 32px;
         align-self: center;
         flex-grow: 1;
-        margin-right: 48px;
     }
 }
 

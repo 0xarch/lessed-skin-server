@@ -6,3 +6,34 @@
 .login-logo a:hover {
   color: #42a5f5;
 }
+
+.login-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 80vh;
+  width: 100vw;
+
+  & .login-box-msg {
+    text-align: center;
+  }
+
+  & main form {
+    gap: 12px;
+    display: flex;
+    margin: 12px 12px 0;
+    flex-direction: column;
+
+    & .card-footer {
+      margin: 12px -12px 0;
+      justify-content: space-between;
+    }
+  }
+
+  & .card .login-card-body {
+    padding: 0;
+    gap: 0;
+  }
+  
+}
