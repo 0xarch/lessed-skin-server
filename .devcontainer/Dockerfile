@@ -6,14 +6,17 @@ FROM mcr.microsoft.com/vscode/devcontainers/php:0-${VARIANT}
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 RUN sed -i 's/security.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list
 
-# Install MariaDB client
+# Install MariaDB client, ImageMagick, FreeType
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
-    && apt-get install -y mariadb-client zlib1g-dev libpng-dev libzip-dev libwebp-dev libmagickwand-dev \
+    && apt-get install -y mariadb-client zlib1g-dev libpng-dev libzip-dev libwebp-dev libmagickwand-dev libfreetype6-dev libjpeg62-turbo-dev \
     && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install php-imagick
 RUN pecl install imagick \
     && docker-php-ext-enable imagick
+
+# configure gd
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 # Install php-mysql driver
 RUN docker-php-ext-install mysqli pdo pdo_mysql gd zip
