@@ -102,8 +102,8 @@
 }
 
 button.btn,
-button.dropdown-item {
-    display: flex;
+button {
+    display: inline-flex;
     min-height: 32px;
     align-items: center;
     justify-content: center;

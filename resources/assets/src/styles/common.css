@@ -1,9 +1,9 @@
 @import '../fonts/minecraft.css';
+@import './widgets.css';
 @import './avatar.css';
 @import './dropdown.css';
 @import './auth.css';
 @import './admin.css';
-@import './widgets.css';
 @import './structure.css';
 @import './bootstrap.css';
 
