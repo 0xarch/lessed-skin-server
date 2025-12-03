@@ -105,13 +105,13 @@ aside [data-mark='nickname'] {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--card-color);
+    background-color: var(--accent-color);
     border-radius: 6px;
     border: 3px solid var(--card-bg-color);
 }
 
 ::-webkit-scrollbar-button {
-    background-color: var(--card-color);
+    background-color: var(--accent-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -119,9 +119,9 @@ aside [data-mark='nickname'] {
 }
 
 ::-webkit-scrollbar-thumb:active {
-    background-color: var(--accent-color);
+    background-color: var(--card-color);
 }
 
 * {
-  scrollbar-color: var(--card-color) var(--card-bg-color);
+  scrollbar-color: var(--accent-color) var(--card-bg-color);
 }
