@@ -24,12 +24,11 @@ const wrapper = css`
   z-index: 9000;
   transition-property: top;
   transition-duration: 0.3s;
-  background-color: var(--info-box-bg-color);
-  color: var(--info-box-color);
-  backdrop-filter: blur(10px);
+  background-color: var(--accent-color);
+  color: var(--accent-on-color);
   font-size: 18px;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: var(--radius);
 `
 const shadow = css`
   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);

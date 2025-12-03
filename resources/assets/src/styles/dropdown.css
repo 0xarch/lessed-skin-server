@@ -21,6 +21,8 @@
   min-width: 128px;
   min-height: 64px;
   width: fit-content;
+  border-radius: var(--radius);
+  overflow: hidden;
 
   & a, a.dropdown-item {
     color: var(--card-color);

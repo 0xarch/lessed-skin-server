@@ -12,7 +12,15 @@
       >
 
         {% if scope == 'user' %}
-          <li class="nav-header">皮肤库</li>
+          <li class="nav-header">{{ trans('general.skinlib') }}</li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url('skinlib') }}">
+              <i class="fas fa-archive" aria-hidden="true"></i>&nbsp;
+              <span class="d-none d-sm-inline">
+                {{ trans('general.skinlib') }}
+              </span>
+            </a>
+          </li>
           {% if auth_check() %}
             <li class="nav-item">
               <a class="nav-link" href="{{ url('skinlib/upload') }}">

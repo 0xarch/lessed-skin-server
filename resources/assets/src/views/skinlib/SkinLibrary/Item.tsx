@@ -14,7 +14,7 @@ const Card = styled.div`
   }
 
   .card-body {
-    background-color: #eff1f0;
+    background-color: var(--card-bg-color);
   }
 
   img {
@@ -22,12 +22,12 @@ const Card = styled.div`
   }
 `
 
-const Icon = styled.i`
-  height: 24px;
-`
+// const Icon = styled.i`
+//   height: 24px;
+// `
 
 const Badge = styled.span`
-  padding-top: 0.4rem;
+  padding-top: 0;
 `
 
 const NickNameBadge = styled(Badge)`
@@ -85,10 +85,10 @@ const Item: React.FC<Props> = (props) => {
             </picture>
           </a>
         </div>
-        <div className="card-footer">
+        <div className="card-footer block-footer">
           <div className="d-flex align-items-center">
             {item.public || (
-              <Icon
+              <i
                 className="fas fa-lock text-warning mr-2"
                 title={t('skinlib.private')}
               />
@@ -98,12 +98,12 @@ const Item: React.FC<Props> = (props) => {
             </span>
           </div>
           <div className="d-flex justify-content-between">
-            <div className="d-flex">
-              <Badge className="badge bg-teal mr-1">
+            <div className="d-flex align-items-center">
+              <Badge className="badge">
                 {humanizeType(item.type)}
               </Badge>
               <NickNameBadge
-                className="badge bg-indigo text-truncate"
+                className="badge name-badge"
                 title={t('skinlib.show.uploader')}
                 onClick={handleUploaderClick}
               >
