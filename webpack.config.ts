@@ -22,7 +22,7 @@ export default function (env?: Env): webpack.Configuration {
   const htmlPublicPath = isDev
     ? isGitpod
       ? `${execSync('gp url 8080')}/app/`
-      : '/app/'  // 改为相对路径
+      : '/app/' // 改为相对路径
     : '{{ cdn_base }}/app/'
 
   return {
@@ -31,13 +31,11 @@ export default function (env?: Env): webpack.Configuration {
     entry: {
       app: ['react-hot-loader/patch', '@/index.tsx'],
       style: [
-        '@/styles/common.css',
-        // 'admin-lte/dist/css/alt/adminlte.components.min.css', // deprecated, use self-implemented css
-        // 'admin-lte/dist/css/alt/adminlte.core.min.css',
-        // 'admin-lte/dist/css/alt/adminlte.pages.min.css',
-        // 'admin-lte/dist/css/alt/adminlte.light.min.css',
         '@fortawesome/fontawesome-free/css/all.min.css',
+        '@/fonts/minecraft.css',
       ],
+      commonStyle: ['@/styles/common.css'],
+      structureStyle: ['@/styles/preload.css'],
       home: '@/scripts/homePage.ts',
       'home-css': '@/styles/home.css',
       spectre: [
