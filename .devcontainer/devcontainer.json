@@ -26,7 +26,7 @@
     "3399:3399"
   ],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "sudo truncate -s 0 /etc/apache2/ports.conf && sudo rm -f /etc/apache2/sites-enabled/000-default.conf && sudo ln -sf /workspace/.devcontainer/blessing-skin.apache.conf /etc/apache2/sites-enabled/ && ln -sf .devcontainer/.env.devcontainer .env && composer install && yarn install",
+  "postCreateCommand": "sudo truncate -s 0 /etc/apache2/ports.conf && sudo rm -f /etc/apache2/sites-enabled/000-default.conf && sudo ln -sf /workspace/.devcontainer/blessing-skin.apache.conf /etc/apache2/sites-enabled/ && bash .devcontainer/post-create.sh && composer install && yarn install",
   // Start apache2 after the container is started
   "postStartCommand": "apache2ctl start && echo '\\n👉 \\e[0;32mPlease run '\\'yarn build\\'' to build the frontend. Application is available on port 8080.\\e[0m 👈\\n'",
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
