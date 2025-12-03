@@ -15,6 +15,10 @@ body {
 .navbar {
   transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
     background-color 0.25s ease-in-out;
+  justify-content: center;
+  &>.container {
+    align-items: baseline;
+  }
 }
 .navbar.transparent {
   background-color: rgba(255, 255, 255, 0.2);
@@ -100,6 +104,10 @@ body {
   padding: 50px 0;
   border-top: 5px solid #bdc3c7;
   background-color: #fff;
+
+  & .container-lg .row {
+    flex-wrap: nowrap;
+  }
 }
 #intro i {
   font-size: 80px;
