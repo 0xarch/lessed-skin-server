@@ -7,6 +7,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@/fonts/minecraft.css'
 import '@/styles/common.css'
 import '@/styles/preload.css'
+import '@/styles/fluent.css'
 
 Object.assign(window, { React, ReactDOM, $ })
 

@@ -1,0 +1,482 @@
+/* Windows 11 Fluent Design 表单控件 */
+
+/* ========== 基础表单控件重置 ========== */
+input,
+select,
+textarea {
+  font-family: var(--font-family-sans);
+  font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-medium);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+/* 焦点状态 */
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+}
+
+/* 禁用状态 */
+input:disabled,
+select:disabled,
+textarea:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: var(--color-disabled);
+}
+
+/* 错误状态 */
+input.error,
+select.error,
+textarea.error {
+  border-color: var(--color-error);
+
+  &:focus {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 2px rgba(209, 52, 56, 0.2);
+  }
+}
+
+/* 成功状态 */
+input.success,
+select.success,
+textarea.success {
+  border-color: var(--color-success);
+
+  &:focus {
+    border-color: var(--color-success);
+    box-shadow: 0 0 0 2px rgba(16, 124, 16, 0.2);
+  }
+}
+
+/* ========== 文本输入框 ========== */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  line-height: 1.5;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-medium);
+  font-size: 0.9375rem;
+  transition: all var(--transition-fast);
+
+  /* 移除默认外观 */
+  appearance: none;
+  -webkit-appearance: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-disabled);
+  }
+
+  /* 大小变体 */
+  &.form-control-sm {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+    border-radius: var(--radius-small);
+  }
+
+  &.form-control-lg {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    font-size: 1rem;
+    border-radius: var(--radius-large);
+  }
+}
+
+/* ========== 下拉选择框 ========== */
+.form-select {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  padding-right: calc(var(--spacing-lg) * 2.5);
+  line-height: 1.5;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-medium);
+  font-size: 0.9375rem;
+  cursor: pointer;
+
+  /* 自定义下拉箭头 */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='%23666'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--spacing-lg) center;
+  background-size: 16px;
+
+  /* 移除默认箭头 */
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='%230078D4'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E");
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-disabled);
+  }
+
+  /* 大小变体 */
+  &.form-select-sm {
+    padding: var(--spacing-sm) var(--spacing-md);
+    padding-right: calc(var(--spacing-md) * 2.5);
+    font-size: 0.875rem;
+    border-radius: var(--radius-small);
+    background-size: 14px;
+  }
+
+  &.form-select-lg {
+    padding: var(--spacing-lg) var(--spacing-xl);
+    padding-right: calc(var(--spacing-xl) * 2.5);
+    font-size: 1rem;
+    border-radius: var(--radius-large);
+    background-size: 18px;
+  }
+}
+
+/* 多选下拉框 */
+.form-select[multiple] {
+  padding: var(--spacing-md);
+  background-image: none;
+
+  option {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-small);
+    margin-bottom: var(--spacing-xs);
+
+    &:checked {
+      background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.1);
+      color: var(--color-primary);
+    }
+
+    &:hover {
+      background-color: var(--color-bg-primary);
+    }
+  }
+}
+
+.input-group {
+  display: flex;
+  align-items: stretch;
+  width: max-content;
+
+  .custom-file,
+  .form-control,
+  .btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-top-left-radius: var(--radius-medium);
+      border-bottom-left-radius: var(--radius-medium);
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--radius-medium);
+      border-bottom-right-radius: var(--radius-medium);
+    }
+  }
+}
+
+.custom-file {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+}
+
+.custom-file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+
+  /* 隐藏但可点击 */
+  font-size: 0;
+
+  &:focus ~ .custom-file-label {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+  }
+
+  &:disabled ~ .custom-file-label {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-disabled);
+  }
+}
+
+.custom-file-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-right: none;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  /* 文件名过长时显示省略号 */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &::after {
+    content: '选择文件';
+    display: none;
+  }
+
+  /* 当有文件选择时的样式 */
+  &.has-file {
+    color: var(--color-text-primary);
+  }
+}
+
+.input-group-append {
+  display: flex;
+  margin-left: -1px; /* 消除边框重叠 */
+}
+
+.input-group-append .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  background-color: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border-primary);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-secondary);
+  }
+
+  &:active {
+    background-color: var(--color-pressed);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* 文件上传组件的完整圆角 */
+.input-group:not(.has-append) .custom-file-label {
+  border-top-right-radius: var(--radius-medium);
+  border-bottom-right-radius: var(--radius-medium);
+  border-right: 1px solid var(--color-border-primary);
+}
+
+/* ========== 表单标签 ========== */
+.form-label {
+  display: block;
+  margin-bottom: var(--spacing-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+}
+
+.form-label.required::after {
+  content: '*';
+  color: var(--color-error);
+  margin-left: var(--spacing-xs);
+}
+
+/* ========== 表单帮助文本 ========== */
+.form-text {
+  display: block;
+  margin-top: var(--spacing-xs);
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+/* ========== 表单组 ========== */
+.form-group {
+  margin-bottom: var(--spacing-lg);
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* ========== 复选框和单选框 ========== */
+.form-check {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: var(--spacing-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.form-check-input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+
+  &:checked ~ .form-check-mark {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+
+    &::after {
+      display: block;
+    }
+  }
+
+  &:disabled ~ .form-check-mark {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: var(--color-disabled);
+  }
+
+  &:focus ~ .form-check-mark {
+    box-shadow: 0 0 0 2px rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+  }
+}
+
+.form-check-mark {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  height: 18px;
+  width: 18px;
+  background-color: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-small);
+  transition: all var(--transition-fast);
+
+  /* 复选框勾选标记 */
+  &::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 5px;
+    top: 1px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+}
+
+/* 单选框样式 */
+.form-check-radio .form-check-mark {
+  border-radius: var(--radius-circle);
+
+  &::after {
+    left: 4px;
+    top: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-circle);
+    background-color: white;
+    border: none;
+  }
+}
+
+.form-check-label {
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+/* 内联表单组 */
+.form-inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+  align-items: flex-end;
+}
+
+.form-inline .form-group {
+  margin-bottom: 0;
+}
+
+/* ========== 亮色主题适配 ========== */
+@media (prefers-color-scheme: light) {
+  .form-control,
+  .form-select,
+  .custom-file-label {
+    background-color: var(--color-surface-card);
+    border-color: var(--color-border-primary);
+  }
+
+  .input-group-append .btn {
+    background-color: var(--color-bg-tertiary);
+    border-color: var(--color-border-primary);
+
+    &:hover {
+      background-color: var(--color-bg-primary);
+    }
+  }
+
+  .form-check-mark {
+    background-color: var(--color-surface-card);
+  }
+}
+
+/* ========== 响应式调整 ========== */
+@media (max-width: 768px) {
+  .form-control,
+  .form-select {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .custom-file-label {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .input-group-append .btn {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .form-inline {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-inline .form-group {
+    width: 100%;
+  }
+}
+
+input[type='radio'] {
+  margin: 0;
+}

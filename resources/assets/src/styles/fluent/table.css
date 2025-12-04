@@ -1,0 +1,318 @@
+/* Windows 11 Fluent Design 表格组件 */
+
+/* ========== 基础表格重置 ========== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-text-primary);
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  background-color: var(--color-surface-card);
+  border-radius: var(--radius-medium);
+  overflow: hidden;
+
+  /* 表格阴影 */
+  box-shadow: var(--shadow-card);
+}
+
+.table {
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-medium);
+}
+
+/* 表头 */
+.table thead th {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-semibold);
+  text-align: left;
+  padding: var(--spacing-lg) var(--spacing-lg);
+  border-bottom: 2px solid var(--color-border-primary);
+  position: relative;
+
+  /* 表头单元格排序指示器 */
+  &.sortable {
+    cursor: pointer;
+    user-select: none;
+
+    &::after {
+      content: '↕';
+      margin-left: var(--spacing-sm);
+      opacity: 0.5;
+      font-size: 0.875rem;
+    }
+
+    &.asc::after {
+      content: '↑';
+      opacity: 1;
+    }
+
+    &.desc::after {
+      content: '↓';
+      opacity: 1;
+    }
+  }
+}
+
+.table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border-primary);
+  vertical-align: middle;
+  transition: background-color var(--transition-fast);
+}
+
+.table-striped tbody tr:nth-child(odd) {
+  background-color: var(--color-bg-tertiary);
+}
+
+.table-bordered {
+  border: 1px solid var(--color-border-primary);
+
+  th,
+  td {
+    border: 1px solid var(--color-border-primary);
+  }
+
+  thead th {
+    border-bottom-width: 2px;
+  }
+}
+
+/* 无边表格 */
+.table-borderless {
+  border: none;
+  box-shadow: none;
+
+  th,
+  td {
+    border: none;
+  }
+
+  thead th {
+    border-bottom: 2px solid var(--color-border-primary);
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+/* 紧凑表格 */
+.table-sm {
+  font-size: 0.875rem;
+
+  th {
+    padding: var(--spacing-md) var(--spacing-md);
+  }
+
+  td {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+}
+
+/* 悬停效果表格 */
+.table-hover tbody tr {
+  cursor: pointer;
+}
+
+/* ========== 表格状态行 ========== */
+
+/* 成功状态行 */
+.table tbody tr.success {
+  background-color: rgba(16, 124, 16, 0.1);
+}
+
+/* 警告状态行 */
+.table tbody tr.warning {
+  background-color: rgba(255, 185, 0, 0.1);
+}
+
+/* 危险状态行 */
+.table tbody tr.danger {
+  background-color: rgba(209, 52, 56, 0.1);
+}
+
+/* 信息状态行 */
+.table tbody tr.info {
+  background-color: rgba(0, 188, 242, 0.1);
+}
+
+/* 主要状态行 */
+.table tbody tr.primary {
+  background-color: rgba(0, 120, 212, 0.1);
+}
+
+/* ========== 表格单元格内容 ========== */
+
+/* 带图标的单元格 */
+.table td .cell-icon {
+  margin-right: var(--spacing-sm);
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+/* 操作按钮单元格 */
+.table td.actions {
+  white-space: nowrap;
+  text-align: right;
+
+  .btn {
+    margin-left: var(--spacing-xs);
+    min-width: auto;
+    padding: var(--spacing-xs) var(--spacing-sm);
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+/* 复选框单元格 */
+.table td.checkbox-cell {
+  width: 40px;
+  text-align: center;
+  vertical-align: middle;
+
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+  }
+}
+
+/* ========== 表格脚注 ========== */
+.table tfoot td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background-color: var(--color-bg-secondary);
+  border-top: 2px solid var(--color-border-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* ========== 亮色主题适配 ========== */
+@media (prefers-color-scheme: light) {
+  .table {
+    background-color: var(--color-surface-card);
+    border-color: var(--color-border-primary);
+  }
+
+  .table thead th {
+    background-color: var(--color-bg-tertiary);
+    border-bottom-color: var(--color-border-primary);
+  }
+
+  .table-striped tbody tr:nth-child(odd) {
+    background-color: var(--color-bg-quaternary);
+  }
+
+  /* 亮色主题下的状态行 */
+  .table tbody tr.success {
+    background-color: rgba(16, 124, 16, 0.05);
+  }
+
+  .table tbody tr.warning {
+    background-color: rgba(255, 185, 0, 0.05);
+  }
+
+  .table tbody tr.danger {
+    background-color: rgba(209, 52, 56, 0.05);
+  }
+
+  .table tbody tr.info {
+    background-color: rgba(0, 188, 242, 0.05);
+  }
+
+  .table tbody tr.primary {
+    background-color: rgba(0, 120, 212, 0.05);
+  }
+}
+
+/* ========== 响应式表格容器 ========== */
+.table-responsive {
+  overflow-x: auto;
+  border-radius: var(--radius-medium);
+  margin-bottom: var(--spacing-lg);
+
+  /* 滚动条样式 */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(128, 128, 128, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.4);
+    border-radius: 4px;
+  }
+
+  /* 确保表格不会溢出容器 */
+  table {
+    margin-bottom: 0;
+  }
+}
+
+/* ========== 响应式调整 ========== */
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.875rem;
+  }
+
+  .table th,
+  .table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  /* 移动端隐藏非必要列 */
+  .table-responsive .hidden-mobile {
+    display: none;
+  }
+
+  /* 移动端表格卡片视图 */
+  .table-mobile-card {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody,
+    tr,
+    td {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--color-border-primary);
+      border-radius: var(--radius-medium);
+      padding: var(--spacing-md);
+      background-color: var(--color-surface-card);
+    }
+
+    td {
+      border: none;
+      padding: var(--spacing-sm) 0;
+      display: flex;
+      justify-content: space-between;
+
+      &::before {
+        content: attr(data-label);
+        font-weight: var(--font-weight-semibold);
+        color: var(--color-text-secondary);
+        margin-right: var(--spacing-md);
+        min-width: 120px;
+      }
+    }
+  }
+}

@@ -1,0 +1,1002 @@
+/* Windows 11 Fluent Design 小物件样式 */
+
+/* ========== Callout 提示框 ========== */
+.callout {
+  padding: var(--spacing-lg);
+  margin: var(--spacing-md) 0;
+  border-radius: var(--radius-medium);
+  border-left: 4px solid var(--color-border-primary);
+  background-color: var(--color-bg-primary);
+  position: relative;
+  overflow: hidden;
+
+  /* 过渡效果 */
+  transition: all var(--transition-fast);
+}
+
+.callout:hover {
+  background-color: var(--color-hover-secondary);
+  transform: translateX(2px);
+}
+
+/* 图标容器 */
+.callout::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: inherit;
+  border-radius: 2px;
+}
+
+/* 标题和内容 */
+.callout-title {
+  margin: 0 0 var(--spacing-sm);
+  font-size: 1.125rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.callout-content {
+  margin: 0;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  font-size: 0.9375rem;
+}
+
+/* 信息类型 */
+.callout-info {
+  border-left-color: var(--color-info);
+  background-color: rgba(0, 188, 242, 0.08);
+}
+
+.callout-info .callout-title {
+  color: var(--color-info);
+}
+
+.callout-info:hover {
+  background-color: rgba(0, 188, 242, 0.12);
+}
+
+/* 成功类型 */
+.callout-success {
+  border-left-color: var(--color-success);
+  background-color: rgba(16, 124, 16, 0.08);
+}
+
+.callout-success .callout-title {
+  color: var(--color-success);
+}
+
+.callout-success:hover {
+  background-color: rgba(16, 124, 16, 0.12);
+}
+
+/* 警告类型 */
+.callout-warning {
+  border-left-color: var(--color-warning);
+  background-color: rgba(255, 185, 0, 0.08);
+}
+
+.callout-warning .callout-title {
+  color: var(--color-warning);
+}
+
+.callout-warning:hover {
+  background-color: rgba(255, 185, 0, 0.12);
+}
+
+/* 危险类型 */
+.callout-danger {
+  border-left-color: var(--color-error);
+  background-color: rgba(209, 52, 56, 0.08);
+}
+
+.callout-danger .callout-title {
+  color: var(--color-error);
+}
+
+.callout-danger:hover {
+  background-color: rgba(209, 52, 56, 0.12);
+}
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  .callout {
+    background-color: var(--color-bg-tertiary);
+  }
+
+  .callout-info {
+    background-color: rgba(0, 188, 242, 0.05);
+  }
+
+  .callout-success {
+    background-color: rgba(16, 124, 16, 0.05);
+  }
+
+  .callout-warning {
+    background-color: rgba(255, 185, 0, 0.05);
+  }
+
+  .callout-danger {
+    background-color: rgba(209, 52, 56, 0.05);
+  }
+}
+
+/* ========== Dropdown 下拉菜单 ========== */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 1000;
+
+  /* 样式 */
+  min-width: 180px;
+  padding: var(--spacing-sm) 0;
+  margin: var(--spacing-xs) 0 0;
+  background-color: var(--color-bg-acrylic-alt);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid var(--color-border-primary);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-dialog);
+
+  /* 过渡效果 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: all var(--transition-fast);
+}
+
+/* 显示状态 */
+.dropdown-menu.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* 下拉菜单项 */
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  position: relative;
+
+  /* 确保文本不会换行 */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* 分隔线 */
+.dropdown-divider {
+  height: 1px;
+  margin: var(--spacing-sm) 0;
+  background-color: var(--color-border-primary);
+  border: none;
+}
+
+/* 下拉菜单项状态 */
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background-color: var(--color-hover-primary);
+  color: var(--color-text-primary);
+  outline: none;
+}
+
+.dropdown-item:active {
+  background-color: var(--color-pressed);
+}
+
+.dropdown-item.disabled {
+  color: var(--color-text-disabled);
+  pointer-events: none;
+  cursor: default;
+}
+
+.dropdown-item.active {
+  background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.1);
+  color: var(--color-primary);
+
+  /* 左侧指示器 */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: 16px;
+    background-color: var(--color-primary);
+    border-radius: 2px;
+  }
+}
+
+/* 带图标的菜单项 */
+.dropdown-item .icon {
+  margin-right: var(--spacing-sm);
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  vertical-align: middle;
+}
+
+/* 次级文本 */
+.dropdown-item .secondary-text {
+  float: right;
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-regular);
+}
+
+/* 子菜单指示器 */
+.dropdown-item.has-submenu::after {
+  content: '›';
+  float: right;
+  color: var(--color-text-tertiary);
+  font-size: 1.125rem;
+  margin-left: var(--spacing-sm);
+}
+
+/* 分组标题 */
+.dropdown-header {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  color: var(--color-text-tertiary);
+  font-size: 0.8125rem;
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  user-select: none;
+}
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  .dropdown-menu {
+    background-color: var(--color-bg-acrylic-alt);
+    border-color: var(--color-border-primary);
+  }
+
+  .dropdown-item:hover,
+  .dropdown-item:focus {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .dropdown-item:active {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .dropdown-item.active {
+    background-color: rgba(0, 120, 212, 0.08);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .dropdown-menu {
+    min-width: 160px;
+    font-size: 0.875rem;
+  }
+
+  .dropdown-item {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+
+  .dropdown-header {
+    padding: var(--spacing-xs) var(--spacing-md);
+  }
+}
+
+/* Windows 11 Fluent Design 按钮系统 */
+
+/* ========== 基础按钮重置 ========== */
+button,
+.btn {
+  /* 重置默认样式 */
+  border: none;
+  background: none;
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all var(--transition-fast);
+  text-wrap: nowrap;
+
+  /* 移除默认焦点样式 */
+  &:focus {
+    outline: none;
+  }
+
+  /* 使用 focus-visible 提供现代焦点样式 */
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-small);
+  }
+}
+
+/* ========== 按钮基础样式 ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--radius-medium);
+  font-weight: var(--font-weight-medium);
+  font-size: 0.9375rem;
+  line-height: 1.25;
+
+  /* 默认按钮样式（次级按钮） */
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-primary);
+
+  &:hover {
+    background-color: var(--color-hover-primary);
+    border-color: var(--color-border-secondary);
+    color: var(--color-text-primary);
+  }
+
+  &:active {
+    background-color: var(--color-pressed);
+    transform: translateY(1px);
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+}
+
+/* ========== 按钮变体 ========== */
+
+/* 主要按钮 */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border: 1px solid var(--color-primary);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 90%, white);
+    border-color: color-mix(in srgb, var(--color-primary) 90%, white);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--color-primary) 80%, black);
+    border-color: color-mix(in srgb, var(--color-primary) 80%, black);
+  }
+}
+
+/* 成功按钮 */
+.btn-success {
+  background-color: var(--color-success);
+  color: var(--color-text-on-primary);
+  border: 1px solid var(--color-success);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-success) 90%, white);
+    border-color: color-mix(in srgb, var(--color-success) 90%, white);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--color-success) 80%, black);
+    border-color: color-mix(in srgb, var(--color-success) 80%, black);
+  }
+}
+
+/* 警告按钮 */
+.btn-warning {
+  background-color: var(--color-warning);
+  color: #000000; /* 深色文字确保可读性 */
+  border: 1px solid var(--color-warning);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-warning) 90%, white);
+    border-color: color-mix(in srgb, var(--color-warning) 90%, white);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--color-warning) 80%, black);
+    border-color: color-mix(in srgb, var(--color-warning) 80%, black);
+    color: #000000;
+  }
+}
+
+/* 危险按钮 */
+.btn-danger {
+  background-color: var(--color-error);
+  color: var(--color-text-on-primary);
+  border: 1px solid var(--color-error);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-error) 90%, white);
+    border-color: color-mix(in srgb, var(--color-error) 90%, white);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--color-error) 80%, black);
+    border-color: color-mix(in srgb, var(--color-error) 80%, black);
+  }
+}
+
+/* 信息按钮 */
+.btn-info {
+  background-color: var(--color-info);
+  color: var(--color-text-on-primary);
+  border: 1px solid var(--color-info);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-info) 90%, white);
+    border-color: color-mix(in srgb, var(--color-info) 90%, white);
+  }
+
+  &:active {
+    background-color: color-mix(in srgb, var(--color-info) 80%, black);
+    border-color: color-mix(in srgb, var(--color-info) 80%, black);
+  }
+}
+
+/* 链接按钮 */
+.btn-link {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: none;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+
+  &:hover {
+    background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.1);
+    text-decoration: none;
+  }
+
+  &:active {
+    background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+  }
+}
+
+/* 轮廓按钮变体 */
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid currentColor;
+
+  &.btn-primary {
+    color: var(--color-primary);
+
+    &:hover {
+      background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.1);
+    }
+
+    &:active {
+      background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.2);
+    }
+  }
+
+  &.btn-success {
+    color: var(--color-success);
+
+    &:hover {
+      background-color: rgba(16, 124, 16, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(16, 124, 16, 0.2);
+    }
+  }
+
+  &.btn-warning {
+    color: var(--color-warning);
+
+    &:hover {
+      background-color: rgba(255, 185, 0, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(255, 185, 0, 0.2);
+    }
+  }
+
+  &.btn-danger {
+    color: var(--color-error);
+
+    &:hover {
+      background-color: rgba(209, 52, 56, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(209, 52, 56, 0.2);
+    }
+  }
+
+  &.btn-info {
+    color: var(--color-info);
+
+    &:hover {
+      background-color: rgba(0, 188, 242, 0.1);
+    }
+
+    &:active {
+      background-color: rgba(0, 188, 242, 0.2);
+    }
+  }
+}
+
+/* ========== 按钮大小 ========== */
+
+/* 小按钮 */
+.btn-sm {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  font-size: 0.875rem;
+  border-radius: var(--radius-small);
+}
+
+/* 大按钮 */
+.btn-lg {
+  padding: var(--spacing-lg) var(--spacing-xxl);
+  font-size: 1rem;
+  border-radius: var(--radius-large);
+}
+
+/* 图标按钮 */
+.btn-icon {
+  padding: var(--spacing-md);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-medium);
+
+  &.btn-sm {
+    width: 32px;
+    height: 32px;
+    padding: var(--spacing-sm);
+  }
+
+  &.btn-lg {
+    width: 48px;
+    height: 48px;
+    padding: var(--spacing-lg);
+  }
+}
+
+/* ========== 按钮组 ========== */
+.btn-group {
+  display: inline-flex;
+  align-items: center;
+
+  .btn {
+    border-radius: 0;
+    margin-left: -1px; /* 消除边框重叠 */
+
+    &:first-child {
+      border-top-left-radius: var(--radius-medium);
+      border-bottom-left-radius: var(--radius-medium);
+      margin-left: 0;
+    }
+
+    &:last-child {
+      border-top-right-radius: var(--radius-medium);
+      border-bottom-right-radius: var(--radius-medium);
+    }
+  }
+
+  &.btn-group-vertical {
+    flex-direction: column;
+
+    .btn {
+      margin-left: 0;
+      margin-top: -1px;
+      width: 100%;
+
+      &:first-child {
+        border-top-left-radius: var(--radius-medium);
+        border-top-right-radius: var(--radius-medium);
+        border-bottom-left-radius: 0;
+        margin-top: 0;
+      }
+
+      &:last-child {
+        border-bottom-left-radius: var(--radius-medium);
+        border-bottom-right-radius: var(--radius-medium);
+        border-top-right-radius: 0;
+      }
+    }
+  }
+}
+
+/* ========== 块级按钮 ========== */
+.btn-block {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ========== 按钮加载状态 ========== */
+.btn-loading {
+  position: relative;
+  color: transparent !important;
+
+  &::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: button-spinner 0.6s linear infinite;
+  }
+}
+
+@keyframes button-spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== 浮动操作按钮 (FAB) ========== */
+.btn-fab {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-circle);
+  box-shadow: var(--shadow-card);
+  padding: 0;
+
+  &.btn-sm {
+    width: 40px;
+    height: 40px;
+  }
+
+  &.btn-lg {
+    width: 72px;
+    height: 72px;
+  }
+
+  &:hover {
+    box-shadow: var(--shadow-dialog);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: var(--shadow-card);
+    transform: translateY(0);
+  }
+}
+
+/* ========== 亮色主题适配 ========== */
+@media (prefers-color-scheme: light) {
+  .btn {
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    &:active {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  .btn-outline {
+    &.btn-primary:hover {
+      background-color: rgba(0, 120, 212, 0.05);
+    }
+
+    &.btn-success:hover {
+      background-color: rgba(16, 124, 16, 0.05);
+    }
+
+    &.btn-warning:hover {
+      background-color: rgba(255, 185, 0, 0.05);
+    }
+
+    &.btn-danger:hover {
+      background-color: rgba(209, 52, 56, 0.05);
+    }
+
+    &.btn-info:hover {
+      background-color: rgba(0, 188, 242, 0.05);
+    }
+  }
+
+  .btn-link {
+    &:hover {
+      background-color: rgba(0, 120, 212, 0.05);
+    }
+
+    &:active {
+      background-color: rgba(0, 120, 212, 0.1);
+    }
+  }
+}
+
+/* ========== 响应式调整 ========== */
+@media (max-width: 768px) {
+  .btn {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-size: 0.875rem;
+  }
+
+  .btn-lg {
+    padding: var(--spacing-md) var(--spacing-xl);
+    font-size: 0.9375rem;
+  }
+
+  .btn-fab {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Windows 11 Fluent Design 分页组件 */
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  list-style: none;
+  margin: var(--spacing-xl) 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+/* 分页项目 */
+.page-item {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 分页链接 */
+.page-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 var(--spacing-sm);
+  border-radius: var(--radius-small);
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+
+  /* 确保内容居中 */
+  line-height: 1;
+
+  &:hover:not(.disabled) {
+    background-color: var(--color-hover-primary);
+    color: var(--color-text-primary);
+    border-color: var(--color-border-primary);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+}
+
+/* 当前页面 */
+.page-item.active .page-link {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+  border-color: var(--color-primary);
+
+  &:hover {
+    background-color: color-mix(in srgb, var(--color-primary) 90%, white);
+    border-color: color-mix(in srgb, var(--color-primary) 90%, white);
+  }
+}
+
+/* 禁用状态 */
+.page-item.disabled .page-link {
+  color: var(--color-text-disabled);
+  pointer-events: none;
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* 特殊按钮（上一页/下一页） */
+.page-item:first-child .page-link,
+.page-item:last-child .page-link {
+  min-width: 36px;
+  padding: 0 var(--spacing-md);
+  font-weight: var(--font-weight-semibold);
+
+  /* 添加上一页/下一页图标 */
+  position: relative;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border: 2px solid currentColor;
+    border-top: none;
+    border-right: none;
+    transition: all var(--transition-fast);
+  }
+}
+
+/* 上一页按钮图标 */
+.page-item:first-child .page-link::before {
+  transform: rotate(45deg);
+  margin-right: var(--spacing-xs);
+}
+
+/* 下一页按钮图标 */
+.page-item:last-child .page-link::before {
+  transform: rotate(-135deg);
+  margin-left: var(--spacing-xs);
+}
+
+/* 省略号 */
+.page-item.ellipsis .page-link {
+  background-color: transparent;
+  border: none;
+  pointer-events: none;
+  color: var(--color-text-tertiary);
+  padding: 0;
+  min-width: 0;
+
+  &:hover {
+    background-color: transparent;
+    color: var(--color-text-tertiary);
+  }
+}
+
+/* 大尺寸分页 */
+.pagination-lg {
+  .page-link {
+    min-width: 40px;
+    height: 40px;
+    padding: 0 var(--spacing-md);
+    font-size: 1rem;
+    border-radius: var(--radius-medium);
+  }
+
+  .page-item:first-child .page-link,
+  .page-item:last-child .page-link {
+    min-width: 44px;
+    padding: 0 var(--spacing-lg);
+  }
+}
+
+/* 小尺寸分页 */
+.pagination-sm {
+  .page-link {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 var(--spacing-xs);
+    font-size: 0.875rem;
+    border-radius: var(--radius-small);
+  }
+
+  .page-item:first-child .page-link,
+  .page-item:last-child .page-link {
+    min-width: 32px;
+    padding: 0 var(--spacing-sm);
+  }
+}
+
+/* 圆形分页变体 */
+.pagination-rounded {
+  .page-link {
+    border-radius: var(--radius-circle);
+  }
+}
+
+/* 轮廓分页变体 */
+.pagination-outline {
+  .page-link {
+    border: 1px solid var(--color-border-primary);
+    background-color: transparent;
+
+    &:hover:not(.disabled) {
+      background-color: var(--color-hover-primary);
+      border-color: var(--color-border-secondary);
+    }
+  }
+
+  .page-item.active .page-link {
+    border-color: var(--color-primary);
+  }
+}
+
+/* 紧凑分页（无间隙） */
+.pagination-compact {
+  gap: 0;
+
+  .page-link {
+    border-radius: 0;
+    border-left: none;
+    border-right: 1px solid var(--color-border-primary);
+
+    &:hover:not(.disabled) {
+      border-left: none;
+      border-right: 1px solid var(--color-border-secondary);
+    }
+  }
+
+  .page-item:first-child .page-link {
+    border-top-left-radius: var(--radius-small);
+    border-bottom-left-radius: var(--radius-small);
+    border-left: 1px solid var(--color-border-primary);
+  }
+
+  .page-item:last-child .page-link {
+    border-top-right-radius: var(--radius-small);
+    border-bottom-right-radius: var(--radius-small);
+    border-right: 1px solid var(--color-border-primary);
+  }
+
+  .page-item.active .page-link {
+    border-right: 1px solid var(--color-primary);
+
+    &:hover {
+      border-right: 1px solid
+        color-mix(in srgb, var(--color-primary) 90%, white);
+    }
+  }
+}
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  .page-link:hover:not(.disabled) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .pagination-outline .page-link:hover:not(.disabled) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  .pagination-compact .page-link {
+    border-right-color: var(--color-border-primary);
+
+    &:hover:not(.disabled) {
+      border-right-color: var(--color-border-secondary);
+    }
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .pagination {
+    gap: var(--spacing-xs);
+  }
+
+  .page-link {
+    min-width: 28px;
+    height: 28px;
+    padding: 0 var(--spacing-xs);
+    font-size: 0.875rem;
+  }
+
+  /* 在移动设备上隐藏部分页码 */
+  .pagination-mobile-hide {
+    display: none;
+  }
+
+  /* 移动端显示更多按钮 */
+  .page-item.mobile-more {
+    display: flex;
+  }
+}

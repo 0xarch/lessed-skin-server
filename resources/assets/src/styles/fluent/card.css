@@ -1,0 +1,334 @@
+/* Windows 11 Fluent Design 卡片组件 - 优化版 */
+.card {
+  /* 基础样式 */
+  background-color: var(--color-bg-mica);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+
+  /* 布局 */
+  display: flex;
+  flex-direction: column;
+
+  /* 过渡效果 */
+  transition: all var(--transition-medium);
+
+  /* 阴影 */
+  box-shadow: var(--shadow-card);
+
+  /* 整体边框（代替分割线） */
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+}
+
+/* 卡片头 - 优化版 */
+.card-header {
+  padding: var(--spacing-lg) var(--spacing-lg) 0;
+  background-color: transparent;
+
+  /* 移除边框，使用间距分隔 */
+  border-bottom: none;
+
+  /* 垂直居中布局 */
+  display: flex;
+  align-items: center;
+  min-height: 56px;
+}
+
+/* 卡片标题 */
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: 1.4;
+
+  /* 支持多级标题 */
+  &.h1 {
+    font-size: 1.5rem;
+  }
+  &.h2 {
+    font-size: 1.375rem;
+  }
+  &.h3 {
+    font-size: 1.25rem;
+  }
+  &.h4 {
+    font-size: 1.125rem;
+  }
+  &.h5 {
+    font-size: 1rem;
+  }
+  &.h6 {
+    font-size: 0.875rem;
+  }
+}
+
+/* 当只有标题时，调整底部内边距 */
+.card-header:has(.card-title:only-child) {
+  padding-bottom: var(--spacing-lg);
+}
+
+/* 卡片体 - 优化版 */
+.card-body {
+  padding: var(--spacing-lg);
+  flex: 1;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+
+  /* 确保内容与header/footer有适当间距 */
+  &:first-child {
+    padding-top: var(--spacing-lg);
+  }
+
+  &:last-child {
+    padding-bottom: var(--spacing-lg);
+  }
+}
+
+/* 调整header和body之间的间距 */
+.card-header + .card-body {
+  padding-top: var(--spacing-md);
+}
+
+/* 卡片脚 - 优化版 */
+.card-footer {
+  padding: 0 var(--spacing-lg) var(--spacing-lg);
+  background-color: transparent;
+
+  /* 移除边框，使用间距分隔 */
+  border-top: none;
+
+  /* 底部操作区域布局 */
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  min-height: 52px;
+}
+
+/* 调整body和footer之间的间距 */
+.card-body + .card-footer {
+  padding-top: var(--spacing-md);
+}
+
+/* 只有header和footer的情况 */
+.card-header + .card-footer {
+  padding-top: var(--spacing-lg);
+}
+
+/* 突出显示的卡片变体 - 优化版 */
+.card-primary {
+  /* border-color: var(--color-primary); */
+  background: linear-gradient(
+    135deg,
+    var(--color-bg-acrylic) 0%,
+    var(--color-bg-acrylic-alt) 100%
+  );
+}
+
+.card-primary .card-header {
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
+}
+
+.card-primary .card-title {
+  color: var(--color-primary);
+}
+
+.card-primary .card-footer {
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
+}
+
+/* 亚克力材质卡片变体 - 优化版 */
+.card-acrylic {
+  background: var(--color-bg-acrylic);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.card-acrylic .card-header {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
+}
+
+.card-acrylic .card-footer {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 0 var(--radius-large) var(--radius-large);
+}
+
+/* 不使用云母材质卡片 - 优化版 */
+.card-inmica {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--color-surface-card);
+  border-color: var(--color-border-primary);
+}
+
+/* 紧凑卡片 - 优化版 */
+.card-compact {
+  .card-header {
+    padding: var(--spacing-md) var(--spacing-md) 0;
+    min-height: 48px;
+
+    .card-title {
+      font-size: 1.125rem;
+    }
+  }
+
+  .card-body {
+    padding: var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .card-footer {
+    padding: 0 var(--spacing-md) var(--spacing-md);
+    min-height: 44px;
+  }
+}
+
+/* 无边距卡片 - 优化版 */
+.card-borderless {
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  .card-header {
+    padding-top: var(--spacing-lg);
+    border-radius: var(--radius-large) var(--radius-large) 0 0;
+  }
+
+  .card-footer {
+    padding-bottom: var(--spacing-lg);
+    border-radius: 0 0 var(--radius-large) var(--radius-large);
+  }
+}
+
+.card-borderless:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  .card-primary {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 120, 212, 0.08) 0%,
+      rgba(0, 120, 212, 0.03) 100%
+    );
+  }
+
+  .card-acrylic {
+    background: var(--color-bg-acrylic);
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .card-acrylic .card-header,
+  .card-acrylic .card-footer {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .card-mica {
+    border-color: rgba(0, 0, 0, 0.06);
+  }
+
+  .card-borderless {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .card-borderless:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+}
+
+/* 卡片中的按钮样式 */
+.card-footer .btn {
+  min-width: 80px;
+  height: 32px;
+  padding: 0 var(--spacing-md);
+  border-radius: var(--radius-small);
+  font-weight: var(--font-weight-medium);
+  font-size: 0.875rem;
+  transition: all var(--transition-fast);
+  border: none;
+  cursor: pointer;
+
+  /* 垂直居中 */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-footer .btn-primary {
+  background-color: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.card-footer .btn-primary:hover {
+  background-color: color-mix(in srgb, var(--color-primary) 90%, white);
+}
+
+.card-footer .btn-secondary {
+  background-color: var(--color-bg-tertiary);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border-primary);
+}
+
+.card-footer .btn-secondary:hover {
+  background-color: var(--color-hover-primary);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .card {
+    border-radius: var(--radius-medium);
+  }
+
+  .card-header {
+    padding: var(--spacing-md) var(--spacing-md) 0;
+    min-height: 48px;
+  }
+
+  .card-body {
+    padding: var(--spacing-md);
+  }
+
+  .card-footer {
+    padding: 0 var(--spacing-md) var(--spacing-md);
+    min-height: 48px;
+
+    /* 移动端堆叠按钮 */
+    flex-direction: column;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  /* 调整紧凑模式在移动端的尺寸 */
+  .card-compact {
+    .card-header {
+      padding: var(--spacing-sm) var(--spacing-sm) 0;
+      min-height: 40px;
+    }
+
+    .card-body {
+      padding: var(--spacing-sm);
+    }
+
+    .card-footer {
+      padding: 0 var(--spacing-sm) var(--spacing-sm);
+      min-height: 40px;
+    }
+  }
+}
+
+/* 卡片内的图标支持 */
+.card-header .icon {
+  margin-right: var(--spacing-sm);
+  color: var(--color-text-tertiary);
+}
+
+.card-primary .card-header .icon {
+  color: var(--color-primary);
+}

@@ -1,0 +1,309 @@
+/* Windows 11 Fluent Design 导航系统 - 修正版 */
+:root {
+  /* 布局变量 */
+  --header-height: 64px;
+  --sidebar-width: 240px;
+  --sidebar-collapsed-width: 48px;
+  --footer-height: 48px;
+  --content-padding: 24px;
+  --transition-sidebar: 300ms cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+/* 基础布局结构 */
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  transition: padding-left var(--transition-sidebar);
+}
+
+/* 顶部导航栏 */
+.main-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--header-height);
+  background-color: var(--color-bg-acrylic);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--color-border-primary);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  padding: 0 var(--spacing-lg);
+
+  /* 顶部阴影 */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 侧边栏 */
+.main-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--sidebar-width);
+  background-color: var(--color-bg-acrylic-alt);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border-right: 1px solid var(--color-border-primary);
+  z-index: 999;
+  transition: all var(--transition-sidebar);
+  overflow-y: auto;
+  overflow-x: hidden;
+  margin-top: var(--header-height); /* 避免被header遮挡 */
+  padding-top: 1rem;
+}
+
+/* 侧边栏折叠状态 */
+body.sidebar-collapse .main-sidebar {
+  transform: translateX(-100%);
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 主要内容包装器 - 包含内容和页脚 */
+.content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left var(--transition-sidebar);
+  min-height: calc(100vh - var(--header-height) - var(--footer-height));
+}
+
+/* 侧边栏展开时，内容包装器右移 */
+body:not(.sidebar-collapse) .content-wrapper {
+  margin-left: var(--sidebar-width);
+}
+
+/* 内容头部 - 与内容区域融合 */
+.content-header {
+  padding: var(--spacing-xl) var(--content-padding) var(--spacing-md);
+
+  /* 移除背景色和边框，与内容融合 */
+  background-color: transparent;
+  border-bottom: none;
+  box-shadow: none;
+
+  /* 布局 */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.content-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+.content-header .breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+}
+
+/* 主要内容区域 */
+.content {
+  flex: 1;
+  padding: 0 var(--content-padding) var(--content-padding);
+}
+
+/* 页脚 - 修正避开侧边栏问题 */
+.main-footer {
+  margin-top: auto; /* 确保页脚在底部 */
+  height: var(--footer-height);
+  background-color: var(--color-bg-secondary);
+  border-top: 1px solid var(--color-border-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--content-padding);
+  color: var(--color-text-tertiary);
+  font-size: 0.875rem;
+
+  /* 确保页脚也避开侧边栏 */
+  transition: margin-left var(--transition-sidebar);
+}
+
+body:not(.sidebar-collapse) .main-footer {
+  margin-left: var(--sidebar-width);
+}
+
+/* 宽屏模式（>= 992px） */
+@media (min-width: 992px) {
+  /* 宽屏模式下隐藏 pushmenu 按钮 */
+  [data-widget='pushmenu'] {
+    display: none !important;
+  }
+
+  /* 宽屏模式下侧边栏默认显示 */
+  .main-sidebar {
+    transform: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  body.sidebar-collapse .main-sidebar {
+    transform: translateX(-100%) !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  body.sidebar-collapse .content-wrapper {
+    margin-left: 0 !important;
+  }
+
+  body.sidebar-collapse .main-footer {
+    margin-left: 0 !important;
+  }
+}
+
+/* 窄屏模式（< 992px） */
+@media (max-width: 991px) {
+  /* 窄屏模式下默认折叠侧边栏 */
+  .main-sidebar {
+    transform: translateX(-100%);
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  body:not(.sidebar-collapse) .main-sidebar {
+    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .content-wrapper {
+    margin-left: 0 !important;
+  }
+
+  .main-footer {
+    margin-left: 0 !important;
+  }
+}
+
+/* 侧边栏导航菜单样式 */
+.sidebar-nav {
+  list-style: none;
+  margin: 0;
+  padding: var(--spacing-md) 0;
+}
+
+.sidebar-nav li {
+  margin: 0;
+}
+
+.sidebar-nav a {
+  display: flex;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  gap: var(--spacing-md);
+  position: relative;
+}
+
+.sidebar-nav a:hover {
+  background-color: var(--color-hover-primary);
+  color: var(--color-text-primary);
+}
+
+.sidebar-nav a.active {
+  background-color: rgba(var(--color-primary-rgb, 0, 120, 212), 0.1);
+  color: var(--color-primary);
+  border-right: 3px solid var(--color-primary);
+}
+
+.sidebar-nav a .nav-icon {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+}
+
+.sidebar-nav a .nav-text {
+  flex: 1;
+  font-weight: var(--font-weight-medium);
+  font-size: 0.9375rem;
+}
+
+/* 侧边栏折叠时的状态 */
+.sidebar-collapsed .main-sidebar {
+  width: var(--sidebar-collapsed-width);
+}
+
+.sidebar-collapsed .main-sidebar .nav-text {
+  display: none;
+}
+
+.sidebar-collapsed .main-sidebar .nav-badge {
+  display: none;
+}
+
+/* 亮色主题适配 */
+@media (prefers-color-scheme: light) {
+  .main-header {
+    background-color: var(--color-bg-acrylic);
+    border-bottom-color: var(--color-border-primary);
+  }
+
+  .main-sidebar {
+    background-color: var(--color-bg-acrylic-alt);
+    border-right-color: var(--color-border-primary);
+  }
+
+  .main-footer {
+    background-color: var(--color-bg-secondary);
+    border-top-color: var(--color-border-primary);
+  }
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  :root {
+    --content-padding: 16px;
+    --header-height: 56px;
+  }
+
+  .content-header {
+    padding: var(--spacing-lg) var(--content-padding) var(--spacing-md);
+  }
+
+  .content-header h1 {
+    font-size: 1.25rem;
+  }
+
+  .content-header .breadcrumb {
+    font-size: 0.8125rem;
+  }
+
+  .main-footer {
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm) var(--content-padding);
+    height: auto;
+    min-height: var(--footer-height);
+  }
+}

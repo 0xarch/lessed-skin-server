@@ -1,0 +1,35 @@
+@import './fluent/color.css';
+@import './fluent/scrollbar.css';
+@import './fluent/navigate.css';
+@import './fluent/navitem.css';
+@import './fluent/card.css';
+@import './fluent/widgets.css';
+@import './fluent/table.css';
+@import './fluent/input.css';
+
+/* 辅助类 */
+.acrylic {
+  background: var(--color-bg-acrylic);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+}
+
+.mica {
+  background: var(--color-bg-mica);
+  backdrop-filter: blur(15px) saturate(180%);
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+}
+
+.smoke {
+  box-shadow: var(--shadow-smoke);
+}
+
+.card-shadow {
+  box-shadow: var(--shadow-card);
+}
+
+/* 焦点样式 */
+:focus-visible {
+  outline: 2px solid var(--color-border-focus);
+  outline-offset: 2px;
+}

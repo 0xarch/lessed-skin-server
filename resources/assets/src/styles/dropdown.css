@@ -1,4 +1,4 @@
-.dropdown-menu {
+/* .dropdown-menu {
   position: absolute;
   top: 64px;
   right: 0px;
@@ -6,7 +6,6 @@
   color: var(--card-color);
   border: 1px solid var(--outline-color);
   backdrop-filter: blur(10px);
-  /* visibility: hidden; */
   pointer-events: none;
   transform: translateY(-100%);
   opacity: 0;
@@ -40,9 +39,9 @@
     align-items: center;
     justify-content: center;
   }
-}
+} */
 
-.dropdown.show>.dropdown-menu,
+.dropdown.show > .dropdown-menu,
 .dropdown-menu.show {
   /* visibility: visible; */
   pointer-events: initial;
