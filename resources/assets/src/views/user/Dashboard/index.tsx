@@ -93,7 +93,7 @@ const Dashboard: React.FC = () => {
   }, [])
 
   return (
-    <div className="card card-primary card-outline">
+    <div className="card LiquidGlass">
       <div className="card-header">
         <h3 className="card-title">{t('user.used.title')}</h3>
       </div>
