@@ -52,7 +52,7 @@
 .dropdown-item:hover,
 .dropdown-item:focus {
   color: var(--accent-on-color);
-  background-color: var(--accent-color-75);
+  background-color: var(--color-primary);
 }
 
 .dropdown-item.dropdown-item-danger {

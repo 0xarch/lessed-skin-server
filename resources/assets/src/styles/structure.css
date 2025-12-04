@@ -77,7 +77,7 @@
 .user-panel .badge {
   display: block;
   padding: 0px 8px;
-  background-color: var(--accent-color);
+  background-color: var(--color-primary);
   color: var(--accent-on-color);
   border-radius: 999vmax;
 }
@@ -132,4 +132,10 @@ text {
 
 .alert {
   align-items: center;
+}
+
+@media (max-width: 991px) {
+  .row > [class*='col-'] {
+    margin-top: var(--grid-gutter);
+  }
 }

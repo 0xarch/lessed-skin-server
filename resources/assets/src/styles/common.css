@@ -3,42 +3,6 @@
 @import './auth.css';
 @import './admin.css';
 
-:root {
-  --bg-color: #222;
-  --card-bg-color: #333c;
-  --card-color: #eee;
-  --card-footer-bg-color: #444c;
-  --callout-bg-color: #222c;
-  --callout-color: #ddd;
-  --outline-color: #555a;
-  --accent-color: #3273d2;
-  --accent-color-75: #116df8b8;
-  --accent-color-50: #1d70ec98;
-  --accent-color-25: #0d6eff58;
-  --accent-on-color: white;
-  --disabled-color: #888;
-  --info-box-bg-color: var(--accent-color-50);
-  --info-box-color: white;
-  --common-color: var(--card-color);
-  --name-color: var(--accent-on-color);
-  --name-bg-color: var(--accent-color-50);
-
-  /* --radius: 8px; */
-  --radius: 4px;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --bg-color: #eee;
-    --card-bg-color: #fffc;
-    --card-footer-bg-color: #eeec;
-    --card-color: #222;
-    --callout-bg-color: #fffc;
-    --callout-color: #222;
-    --outline-color: #aaac;
-  }
-}
-
 body {
   margin: 0 !important;
   padding: 0 !important;
@@ -57,7 +21,7 @@ body {
 a {
   outline: none;
   text-decoration: none;
-  color: var(--accent-color);
+  color: var(--color-primary);
 }
 
 .brand-link,
