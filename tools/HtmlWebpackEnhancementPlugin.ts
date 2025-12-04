@@ -47,22 +47,37 @@ class HtmlWebpackEnhancementPlugin {
               compilation.compiler.options.mode === 'production' &&
               data.headTags.length > 0
             ) {
-              if (
-                data.headTags.some((tag) => tag.attributes.rel === 'stylesheet')
-              ) {
-                data.bodyTags = data.headTags.filter(
-                  (tag) => tag.tagName !== 'script',
-                )
-              } else {
-                data.bodyTags = data.headTags
-              }
-
+              // 简单地将所有headTags移到bodyTags，不进行过滤
+              data.bodyTags = [...data.bodyTags, ...data.headTags]
               data.headTags = []
             }
 
             return data
           },
         )
+        // hooks.afterTemplateExecution.tap(
+        //   'HtmlWebpackEnhancementPlugin',
+        //   (data) => {
+        //     if (
+        //       compilation.compiler.options.mode === 'production' &&
+        //       data.headTags.length > 0
+        //     ) {
+        //       if (
+        //         data.headTags.some((tag) => tag.attributes.rel === 'stylesheet')
+        //       ) {
+        //         data.bodyTags = data.headTags.filter(
+        //           (tag) => tag.tagName !== 'script',
+        //         )
+        //       } else {
+        //         data.bodyTags = data.headTags
+        //       }
+
+        //       data.headTags = []
+        //     }
+
+        //     return data
+        //   },
+        // )
       },
     )
   }
