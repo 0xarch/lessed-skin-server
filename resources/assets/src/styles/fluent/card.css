@@ -48,18 +48,23 @@
   &.h1 {
     font-size: 1.5rem;
   }
+
   &.h2 {
     font-size: 1.375rem;
   }
+
   &.h3 {
     font-size: 1.25rem;
   }
+
   &.h4 {
     font-size: 1.125rem;
   }
+
   &.h5 {
     font-size: 1rem;
   }
+
   &.h6 {
     font-size: 0.875rem;
   }
@@ -331,4 +336,8 @@
 
 .card-primary .card-header .icon {
   color: var(--color-primary);
+}
+
+.card-footer.block-footer {
+  display: block;
 }
