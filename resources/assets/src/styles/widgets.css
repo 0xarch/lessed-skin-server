@@ -127,6 +127,7 @@ button {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   text-wrap: nowrap;
   border-radius: var(--radius);
+  padding: 0 4px;
 
   &.btn-primary,
   &.bg-gradient-primary,
