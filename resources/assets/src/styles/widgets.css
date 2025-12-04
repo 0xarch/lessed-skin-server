@@ -1,33 +1,33 @@
 .card {
   box-sizing: border-box;
   position: relative;
-  border: 1px solid var(--outline-color);
-  border-radius: var(--radius);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
   word-wrap: break-word;
   background-clip: initial;
   display: flex;
   flex-direction: column;
   min-width: 0;
+  border: 1px solid var(--outline-color);
+  border-radius: var(--radius) var(--radius);
   backdrop-filter: blur(10px);
-  overflow: hidden;
 
   & .card-header,
   & .card-body,
   & .card-footer {
     box-sizing: border-box;
-    display: flex;
-    min-height: 48px;
+    min-height: 49px;
   }
 
   & .card-header {
-    height: 48px;
     background-color: var(--card-footer-bg-color);
     color: var(--card-color);
     border-bottom: 1px solid var(--outline-color);
     align-items: center;
     padding: 0 16px;
     gap: 8px;
+    display: flex;
+    border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+    overflow: hidden;
 
     & > .card-title {
       font-size: 20px;
@@ -38,8 +38,6 @@
     padding: 16px;
     background-color: var(--card-bg-color);
     color: var(--card-color);
-    flex-direction: column;
-    gap: 12px;
 
     & > .row {
       width: 100%;
@@ -53,6 +51,10 @@
     align-items: center;
     padding: 0 16px;
     gap: 8px;
+    display: flex;
+    border-radius: 0 0 calc(var(--radius) - 1px) calc(var(--radius) - 1px);
+    backdrop-filter: blur(10px);
+    overflow: hidden;
 
     &.block-footer {
       padding: 8px 16px;
@@ -66,10 +68,10 @@
       color: var(--accent-on-color);
     }
   }
+}
 
-  & + .card {
-    margin-top: var(--grid-gutter);
-  }
+:not(.d-flex) > .card + .card {
+  margin-top: var(--grid-gutter);
 }
 
 .info-box {

@@ -3,6 +3,7 @@ import { t } from '@/scripts/i18n'
 import type { ClosetItem as ClosetItemType } from '@/scripts/types'
 import setAsAvatar from './setAsAvatar'
 import { Card, DropdownButton } from './styles'
+import styled from '@emotion/styled'
 
 interface Props {
   item: ClosetItemType
@@ -11,6 +12,10 @@ interface Props {
   onRename(): void
   onRemove(): void
 }
+
+const Img = styled.img`
+  max-width: 100%;
+`
 
 const ClosetItem: React.FC<Props> = (props) => {
   const { item } = props
@@ -28,11 +33,7 @@ const ClosetItem: React.FC<Props> = (props) => {
       <div className="card-body" onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
-          <img
-            src={previewPNG}
-            alt={item.pivot.item_name}
-            className="card-img-top"
-          />
+          <Img src={previewPNG} alt={item.pivot.item_name} />
         </picture>
       </div>
       <div className="card-footer pb-2 pt-2 pl-1 pr-1">

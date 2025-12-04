@@ -265,14 +265,14 @@ const Closet: React.FC = () => {
         cape={cape?.hash}
         isAlex={skin?.type === TextureType.Alex}
       >
-        <div className="d-flex justify-content-between">
-          <button className="btn btn-primary" onClick={applyToPlayer}>
-            {t('user.useAs')}
-          </button>
-          <button className="btn btn-default" onClick={resetSelected}>
-            {t('user.resetSelected')}
-          </button>
-        </div>
+        {/* <div className="d-flex justify-content-between">
+        </div> */}
+        <button className="btn btn-primary" onClick={applyToPlayer}>
+          {t('user.useAs')}
+        </button>
+        <button className="btn btn-default" onClick={resetSelected}>
+          {t('user.resetSelected')}
+        </button>
       </Previewer>
       <ModalApply
         show={showModalApply}
