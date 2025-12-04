@@ -321,17 +321,6 @@
   }
 }
 
-button.close {
-  border-radius: 999vmax;
-  border: 1px solid var(--accent-color);
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 24px;
-  height: 24px;
-}
-
 .user-panel > .d-flex {
   align-items: center;
   gap: 12px;

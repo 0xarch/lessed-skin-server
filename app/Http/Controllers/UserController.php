@@ -44,7 +44,7 @@ class UserController extends Controller
 
         $grid = [
             'layout' => [
-                ['md-7', 'md-5'],
+                ['md-6', 'md-6'],
             ],
             'widgets' => [
                 [

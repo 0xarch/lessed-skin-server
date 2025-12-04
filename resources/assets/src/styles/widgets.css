@@ -102,12 +102,12 @@
   height: 4px;
   width: 100%;
   border-radius: 999vmax;
-  background-color: var(--info-box-color);
+  background-color: #6668;
 
   & .progress-bar {
     width: 50%;
     height: 100%;
-    background: var(--accent-color);
+    background: currentColor;
   }
 }
 
@@ -137,25 +137,45 @@ button {
     border: 1px solid var(--accent-color-75);
   }
 
+  &.btn-small {
+    font-size: 14px;
+  }
+
   &:hover {
     background-color: var(--accent-color);
     color: var(--accent-on-color);
   }
 }
 
-.btn-color.bg-white {
-  background-color: white;
-  color: #444;
+button.close {
+  border-radius: 999vmax;
+  border: 1px solid var(--accent-color);
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  aspect-ratio: 1;
+  min-height: unset;
+  min-width: unset;
 }
 
-.btn-color.bg-black {
-  background-color: black;
-  color: #ddd;
-}
+.card-footer > :is(button, .btn) {
+  height: 48px;
+  margin-top: -8px;
+  margin-bottom: -8px;
+  margin-left: -8px;
+  border-radius: 0px;
+  border: none;
+  flex: 1;
 
-.btn-color.bg-gray {
-  background-color: #444;
-  color: white;
+  &:first-child {
+    margin-left: -16px;
+  }
+
+  &:last-child {
+    margin-right: -16px;
+  }
 }
 
 .tooltip {

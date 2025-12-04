@@ -137,7 +137,12 @@ const Login: React.FC = () => {
       </div>
 
       <div className="card-footer">
-        <a href={`${blessing.base_url}/auth/register`}>{t('auth.register-link')}</a>
+        <a
+          className="btn btn-small"
+          href={`${blessing.base_url}/auth/register`}
+        >
+          {t('auth.register-link')}
+        </a>
         <button
           className="btn btn-primary btn-block"
           type="submit"

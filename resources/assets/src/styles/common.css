@@ -12,9 +12,9 @@
   --callout-color: #ddd;
   --outline-color: #555a;
   --accent-color: #3273d2;
-  --accent-color-75: #3273d2b8;
-  --accent-color-50: #3273d298;
-  --accent-color-25: #3273d258;
+  --accent-color-75: #116df8b8;
+  --accent-color-50: #1d70ec98;
+  --accent-color-25: #0d6eff58;
   --accent-on-color: white;
   --disabled-color: #888;
   --info-box-bg-color: var(--accent-color-50);
@@ -23,7 +23,8 @@
   --name-color: var(--accent-on-color);
   --name-bg-color: var(--accent-color-50);
 
-  --radius: 8px;
+  /* --radius: 8px; */
+  --radius: 4px;
 }
 
 @media (prefers-color-scheme: light) {
@@ -95,14 +96,39 @@ aside [data-mark='nickname'] {
   }
 }
 
+.bg-white {
+  background-color: white !important;
+  color: darkslategray !important;
+}
+
+.bg-black {
+  background-color: black !important;
+  color: #ddd !important;
+}
+
+.bg-gray {
+  background-color: gray !important;
+  color: white !important;
+}
+
+.bg-teal {
+  background-color: teal !important;
+  color: white !important;
+}
+
+.bg-pink {
+  background-color: pink !important;
+  color: black !important;
+}
+
+.bg-maroon {
+  background-color: maroon !important;
+  color: white !important;
+}
+
 #email-verification:empty {
   margin-top: calc(var(--grid-gutter) * -1);
 }
-
-/* ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
-} */
 
 ::-webkit-scrollbar-track {
   background-color: var(--card-bg-color);

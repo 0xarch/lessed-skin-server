@@ -29,6 +29,7 @@ const Score = styled.p`
   font-size: 50px;
   margin-top: 20px;
   cursor: help;
+  text-wrap: nowrap;
 `
 const ScoreNotice = styled.p`
   font-size: smaller;
@@ -98,8 +99,7 @@ const Dashboard: React.FC = () => {
       </div>
       <div className="card-body">
         <div className="row">
-          <div className="col-md-1"></div>
-          <div className="col-md-6">
+          <div className="col-md-7">
             <InfoBox
               color="teal"
               icon="gamepad"
@@ -128,7 +128,7 @@ const Dashboard: React.FC = () => {
               />
             )}
           </div>
-          <div className="col-md-4 text-center">
+          <div className="col-md-5 text-center">
             <ScoreTitle>{t('user.cur-score')}</ScoreTitle>
             <Score data-toggle="modal" data-target="#modal-score-instruction">
               {~~tweenedScore}

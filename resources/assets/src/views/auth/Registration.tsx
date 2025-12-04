@@ -159,7 +159,9 @@ const Registration: React.FC = () => {
       <Alert type="warning">{warningMessage}</Alert>
 
       <div className="card-footer">
-        <a href={`${blessing.base_url}/auth/login`}>{t('auth.login-link')}</a>
+        <a className="btn btn-small" href={`${blessing.base_url}/auth/login`}>
+          {t('auth.login-link')}
+        </a>
         <button className="btn btn-primary" type="submit" disabled={isPending}>
           {isPending ? (
             <>
