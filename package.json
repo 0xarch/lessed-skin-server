@@ -12,6 +12,7 @@
   "scripts": {
     "dev": "webpack serve",
     "build": "webpack --env development --progress",
+    "build:release": "webpack --env production --progress",
     "lint": "eslint --ext=ts -f=beauty .",
     "fmt": "prettier --write resources/assets tools webpack.config.ts",
     "fmt:check": "prettier --check resources/assets tools webpack.config.ts",

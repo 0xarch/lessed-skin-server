@@ -30,14 +30,16 @@ export default function (env?: Env): webpack.Configuration {
     mode: isDev ? 'development' : 'production',
     entry: {
       app: ['react-hot-loader/patch', '@/index.tsx'],
-      style: [
-        '@fortawesome/fontawesome-free/css/all.min.css',
-        '@/fonts/minecraft.css',
-      ],
-      commonStyle: ['@/styles/common.css'],
-      structureStyle: ['@/styles/preload.css'],
       home: '@/scripts/homePage.ts',
-      'home-css': '@/styles/home.css',
+      // app: ['react-hot-loader/patch', '@/index.tsx'],
+      // style: [
+      //   '@fortawesome/fontawesome-free/css/all.min.css',
+      //   '@/fonts/minecraft.css',
+      // ],
+      // commonStyle: ['@/styles/common.css'],
+      // structureStyle: ['@/styles/preload.css'],
+      // home: '@/scripts/homePage.ts',
+      // 'home-css': '@/styles/home.css',
       spectre: [
         'spectre.css/dist/spectre.min.css',
         '@/fonts/minecraft.css',

@@ -3,6 +3,10 @@ import * as ReactDOM from 'react-dom'
 import $ from 'jquery'
 import './scripts/app'
 import routes from './scripts/route'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import '@/fonts/minecraft.css'
+import '@/styles/common.css'
+import '@/styles/preload.css'
 
 Object.assign(window, { React, ReactDOM, $ })
 
@@ -31,6 +35,7 @@ if (route) {
       </React.StrictMode>
     )
     const c =
+      // @ts-ignore
       typeof route.el === 'string' ? document.querySelector(route.el) : route.el
     ReactDOM.render(<Root />, c)
   }

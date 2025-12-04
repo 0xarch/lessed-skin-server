@@ -1,4 +1,5 @@
 import { getExtraData } from './extra'
+import '@/styles/home.css'
 
 export function scrollHander() {
   const header = document.querySelector('.navbar')
