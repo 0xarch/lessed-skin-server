@@ -27,6 +27,7 @@
     border-bottom: 1px solid var(--outline-color);
     align-items: center;
     padding: 0 16px;
+    gap: 8px;
 
     & > .card-title {
       font-size: 20px;
@@ -51,6 +52,7 @@
     border-top: 1px solid var(--outline-color);
     align-items: center;
     padding: 0 16px;
+    gap: 8px;
 
     &.block-footer {
       padding: 8px 16px;
@@ -126,7 +128,7 @@ button {
   text-wrap: nowrap;
   border-radius: var(--radius);
 
-  &.btn-default,
+  &.btn-primary,
   &.bg-gradient-primary,
   &.active {
     background-color: var(--accent-color-75);
