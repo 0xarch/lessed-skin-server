@@ -16,19 +16,24 @@ body {
   transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
     background-color 0.25s ease-in-out;
   justify-content: center;
+
   & > .container {
     align-items: baseline;
   }
 }
+
 .navbar.transparent {
   background-color: rgba(255, 255, 255, 0.2);
 }
+
 .navbar.transparent .navbar-brand {
   color: #5e5e5e;
 }
+
 .navbar-brand {
   font-family: Minecraft;
 }
+
 .navbar-nav {
   display: inline-flex;
   align-items: center;
@@ -46,6 +51,7 @@ body {
   right: 0;
   text-align: center;
 }
+
 .splash-head {
   color: #fff;
   padding: 0.8em 0.5em 1em;
@@ -55,6 +61,7 @@ body {
   text-shadow: 0 4px 3px rgba(0, 0, 0, 0.4), 0 8px 13px rgba(0, 0, 0, 0.1),
     0 18px 23px rgba(0, 0, 0, 0.1);
 }
+
 .splash-subhead {
   font-size: 16px;
   letter-spacing: 0.05em;
@@ -63,14 +70,17 @@ body {
   font-family: Ubuntu, 'Segoe UI', 'Microsoft Yahei', 'Microsoft Jhenghei',
     sans-serif;
 }
+
 @media (max-width: 768px) {
   .splash {
     width: 100%;
   }
+
   .splash-head {
     font-size: 200%;
   }
 }
+
 @media (min-width: 768px) {
   .splash-head {
     font-size: 250%;
@@ -87,6 +97,7 @@ body {
   transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
     background-color 0.25s ease-in-out;
 }
+
 .main-button:hover {
   color: #fff;
   background-color: rgba(255, 255, 255, 0.2);
@@ -101,6 +112,7 @@ body {
     flex-wrap: nowrap;
   }
 }
+
 #intro i {
   font-size: 80px;
 }
@@ -114,10 +126,12 @@ body {
 #copyright {
   color: #fff;
 }
+
 #copyright.with-intro {
   background-color: #222;
   padding: 15px 0;
 }
+
 #copyright.without-intro {
   position: fixed;
   bottom: 0;
@@ -127,4 +141,5 @@ body {
 
 .navbar {
   color: white !important;
+  background-color: transparent !important;
 }

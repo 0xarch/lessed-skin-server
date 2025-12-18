@@ -164,5 +164,6 @@ aside [data-mark='nickname'] {
 }
 
 * {
-  scrollbar-color: var(--accent-color) var(--card-bg-color);
+  scrollbar-color: var(--outline-light-color) transparent;
+  scrollbar-width: thin;
 }

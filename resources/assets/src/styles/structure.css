@@ -12,7 +12,7 @@ body {
   display: flex;
   /* background-color: var(--accent-color); */
   /* color: var(--accent-on-color); */
-  background-color: transparent;
+  background-color: var(--root-color);
   color: var(--common-color);
   /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2); */
   height: 64px;
@@ -199,6 +199,7 @@ body {
     height: 32px;
     margin-left: auto;
     pointer-events: none;
+
     &:not(.active),
     &:not(:has(.active)) {
       opacity: 0.5;
@@ -226,10 +227,10 @@ body {
   flex-direction: column;
   transition: margin-left 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
   margin: 64px 0px 0px var(--sidebar-open-width);
-  min-height: calc(100vh - 64px - 64px);
+  height: calc(100vh - 64px - 48px);
   color: var(--common-color);
   background-color: var(--bg-color);
-  padding: 16px;
+  padding: 0;
   border-left: 1px solid var(--outline-light-color);
   border-top: 1px solid var(--outline-light-color);
   border-top-left-radius: var(--radius);
@@ -239,17 +240,26 @@ body {
   margin: 64px 0px 0px var(--sidebar-close-width);
 }
 
+section.content {
+  overflow: auto;
+}
+
+.content-header h1 {
+  margin: var(--container-padding) 0;
+}
+
 .main-footer {
   display: flex;
   transition: margin-left 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
   margin-left: var(--sidebar-open-width);
-  height: 64px;
-  background-color: var(--card-bg-color);
+  height: 48px;
+  background-color: var(--bg-color);
   color: var(--card-color);
-  border-top: 1px solid var(--outline-color);
+  border-left: 1px solid var(--outline-light-color);
+  font-size: 0.8rem;
   align-items: center;
   justify-content: space-between;
-  padding: 0 16px;
+  padding: 16px 16px 0;
 
   & a {
     color: var(--accent-color);

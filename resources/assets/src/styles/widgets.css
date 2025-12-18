@@ -289,7 +289,19 @@ input,
   background-color: var(--callout-bg-color);
   color: var(--callout-color);
   min-height: 32px;
-  border: 1px solid var(--outline-color);
+  border: 1px solid var(--outline-light-color);
+  border-bottom: 1px solid var(--outline-color);
+}
+
+input {
+  border-radius: var(--card-button-radius);
+  outline: none;
+
+  &:active,
+  &:focus {
+    border-bottom-color: var(--accent-color);
+    border-bottom-width: 2px;
+  }
 }
 
 input[type='checkbox'],
@@ -500,9 +512,47 @@ textarea.form-control {
 .callout {
   background-color: var(--callout-bg-color);
   color: var(--callout-color);
-  border: 1px solid var(--outline-color);
-  margin: 0 8px;
+  border: 1px solid var(--outline-light-color);
+  margin-bottom: calc(var(--grid-gutter) / 2);
   padding: 2px 8px;
+  border-radius: var(--radius);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-right: 0.4rem;
+    background-color: var(--first-letter-color);
+    border-radius: 999vmax;
+  }
+
+  &.callout-warning {
+    --first-letter-color: orange;
+  }
+
+  &.callout-danger {
+    --first-letter-color: red;
+  }
+
+  &.callout-info {
+    --first-letter-color: rgb(23, 99, 170);
+  }
+
+  &.callout-success {
+    --first-letter-color: green;
+  }
+
+  &.callout-secondary {
+    --first-letter-color: brown;
+  }
+
+  &.callout-primary {
+    --first-letter-color: var(--accent-color);
+  }
 }
 
 .small-box {
