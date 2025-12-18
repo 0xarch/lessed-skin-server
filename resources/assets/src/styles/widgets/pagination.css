@@ -1,0 +1,85 @@
+/* Widget: Pagination */
+
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+
+  & .page-item {
+    background-color: var(--card-bg-color);
+    color: var(--card-color);
+    min-height: 24px;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+
+    & a {
+      color: var(--card-color);
+      text-decoration: none;
+    }
+
+    &.disabled {
+      color: var(--outline-color);
+
+      & a {
+        color: var(--outline-color);
+      }
+    }
+
+    &.active {
+      background-color: var(--accent-color-75);
+      color: var(--accent-on-color);
+
+      & a {
+        color: var(--accent-on-color);
+      }
+    }
+  }
+}
+
+.immersive .pagination,
+.pagination.immersive {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+
+  & .page-item {
+    min-height: 32px;
+    min-width: 32px;
+    color: var(--accent-color);
+    background-color: transparent;
+    border-radius: var(--card-content-radius);
+    transition-property: background-color, color, font-size;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition-duration: 0.25s;
+
+    & a {
+      text-decoration: none;
+      color: currentColor;
+    }
+
+    &.disabled {
+      color: var(--outline-color);
+    }
+
+    &.active {
+      background-color: var(--accent-color);
+      color: var(--accent-on-color);
+      font-size: 0.9rem;
+    }
+
+    &:not(.disabled):hover {
+      background-color: var(--accent-color-75);
+      color: var(--accent-on-color);
+      font-size: 1.1rem;
+
+      &.active {
+        font-size: 1rem;
+      }
+    }
+  }
+}

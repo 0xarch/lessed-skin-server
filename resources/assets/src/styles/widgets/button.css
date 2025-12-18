@@ -1,0 +1,89 @@
+/* Widget: Button */
+
+.btn,
+button {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  background-color: var(--callout-bg-color);
+  color: var(--callout-color);
+  /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2); */
+  border: 1px solid var(--outline-light-color);
+  border-bottom: 1px solid var(--outline-color);
+  transition-property: background-color, color;
+  transition-duration: 0.25s;
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  text-wrap: nowrap;
+  font-size: 1rem;
+  border-radius: var(--card-button-radius);
+  padding: 0 8px;
+  cursor: pointer;
+
+  &.btn-primary,
+  &.bg-gradient-primary,
+  &.active {
+    background-color: var(--accent-color);
+    color: var(--accent-on-color);
+    border: 1px solid var(--accent-color);
+  }
+
+  &[disabled] {
+    background-color: var(--callout-bg-color);
+    color: var(--callout-color);
+    /* box-shadow: none; */
+    border: 1px solid var(--outline-light-color);
+    border-bottom: 1px solid var(--outline-color);
+    filter: contrast(0.9) grayscale();
+  }
+
+  &.btn-small {
+    font-size: 14px;
+  }
+
+  &:not([disabled]):hover {
+    filter: brightness(0.9) contrast(0.95);
+  }
+}
+
+button.close {
+  border-radius: 999vmax;
+  border: none;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  aspect-ratio: 1;
+  min-height: unset;
+  min-width: unset;
+}
+
+.card:not(.immersive) > .card-footer > :is(button, .btn) {
+  height: 48px;
+  margin-top: -8px;
+  margin-bottom: -8px;
+  margin-left: calc(0px - var(--card-content-padding) / 2);
+  border-radius: 0px;
+  border: none;
+  flex: 1;
+
+  &:first-child {
+    margin-left: calc(0px - var(--card-content-padding));
+  }
+
+  &:last-child {
+    margin-right: calc(0px - var(--card-content-padding));
+  }
+}
+
+.btn-danger {
+  background-color: rgb(197, 12, 12);
+  color: white;
+}
+
+.btn-success {
+  background-color: rgb(5, 105, 5);
+  color: white;
+}
