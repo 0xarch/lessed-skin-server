@@ -94,6 +94,7 @@
 
   &.immersive {
     background-color: var(--card-bg-color);
+    border-color: var(--outline-light-color);
     box-shadow: none;
 
     & .card-header {
@@ -104,13 +105,29 @@
       display: block;
       padding: var(--card-content-padding);
 
+      & > .card-icon {
+        margin-bottom: var(--card-content-radius);
+        color: var(--accent-color);
+      }
+
       & > .card-title {
         margin: 0;
+
+        &.large {
+          font-size: 30px;
+        }
       }
 
       & > .card-subtitle {
         margin-top: var(--card-content-radius);
         margin-bottom: 0;
+      }
+
+      &.inlined {
+        & > .card-title,
+        & > .card-subtitle {
+          display: inline;
+        }
       }
     }
 
@@ -183,20 +200,20 @@
 .btn,
 button {
   display: inline-flex;
-  min-height: 48px;
+  min-height: 36px;
   align-items: center;
   justify-content: center;
   min-width: 96px;
   background-color: var(--callout-bg-color);
   color: var(--callout-color);
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2); */
   border: 1px solid var(--outline-light-color);
   border-bottom: 1px solid var(--outline-color);
   transition-property: background-color, color;
   transition-duration: 0.25s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   text-wrap: nowrap;
-  font-size: 1.05rem;
+  font-size: 1rem;
   border-radius: var(--card-button-radius);
   padding: 0 8px;
 
@@ -211,7 +228,7 @@ button {
   &[disabled] {
     background-color: var(--callout-bg-color);
     color: var(--callout-color);
-    box-shadow: none;
+    /* box-shadow: none; */
     border: 1px solid var(--outline-light-color);
     border-bottom: 1px solid var(--outline-color);
     filter: contrast(0.9) grayscale();
