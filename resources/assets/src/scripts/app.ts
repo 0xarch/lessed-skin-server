@@ -15,9 +15,13 @@ window.addEventListener('load', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (localStorage.getItem('LSS/WebUI/Sidebar/Status') == 'closed') {
-    document.body.classList.add('sidebar-collapse')
+  if (window.matchMedia('(min-width: 768px)').matches) {
+    // Current client is Desktop
+    if (localStorage.getItem('LSS/WebUI/Sidebar/Status') == 'closed') {
+      document.body.classList.add('sidebar-collapse')
+    }
   }
+
   function toggleSidebarStatus(status: boolean) {
     localStorage.setItem('LSS/WebUI/Sidebar/Status', status ? 'closed' : 'open')
   }
