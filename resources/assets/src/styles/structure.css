@@ -18,7 +18,7 @@ body > .wrapper {
   display: none;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .d-none {
     display: revert;
   }
