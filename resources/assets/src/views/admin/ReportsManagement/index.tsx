@@ -88,7 +88,7 @@ const ReportsManagement: React.FC = () => {
   return (
     <div className="row">
       <div className="col-lg-8">
-        <div className="card">
+        <div className="card immersive">
           <div className="card-header">
             <form className="input-group" onSubmit={handleSubmitQuery}>
               <input
