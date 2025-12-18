@@ -11,6 +11,7 @@
   --callout-bg-color: #222c;
   --callout-color: #ddd;
   --outline-color: #555a;
+  --outline-light-color: #5557;
   --accent-color: #3273d2;
   --accent-color-75: #116df8b8;
   --accent-color-50: #1d70ec98;
@@ -24,18 +25,22 @@
   --name-bg-color: var(--accent-color-50);
 
   /* --radius: 8px; */
-  --radius: 4px;
+  --radius: 10px;
+  --card-content-radius: calc(var(--radius) - 1px);
+  --card-content-padding: calc(8px + var(--card-content-radius));
+  --card-button-radius: calc(var(--card-content-radius) / 2);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
-    --bg-color: #eee;
+    --bg-color: #ecf0f1;
     --card-bg-color: #fffc;
     --card-footer-bg-color: #eeec;
     --card-color: #222;
     --callout-bg-color: #fffc;
     --callout-color: #222;
     --outline-color: #aaac;
+    --outline-light-color: #aaa7;
   }
 }
 body {

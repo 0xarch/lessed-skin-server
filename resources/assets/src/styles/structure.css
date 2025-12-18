@@ -75,7 +75,8 @@
   backdrop-filter: blur(10px);
   width: 240px;
   z-index: 1000;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2);
+  /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2); */
+  box-shadow: 0 0 1.25rem #0008, 0 0.5rem 1rem #0004;
   transition-property: transform;
   transition-duration: 0.25s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
@@ -155,6 +156,7 @@
 
 .sidebar-collapse .main-sidebar {
   transform: translateX(-100%);
+  box-shadow: none;
 }
 
 .content-wrapper {

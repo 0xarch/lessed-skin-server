@@ -17,10 +17,10 @@
   </head>
 
   <body class="hold-transition layout-top-nav">
-    <div class="hp-wrapper">
-      {% if fixed_bg %}
+    <div class="hp-wrapper" style="background-image: linear-gradient(var(--accent-color-75),var(--accent-color-25))">
+      {# {% if fixed_bg %}
         <div id="fixed-bg" style="background-image: url('{{ home_pic_url }}')"></div>
-      {% endif %}
+      {% endif %} #}
 
       <nav class="navbar navbar-expand fixed-top navbar-{{ navbar_color }} navbar-{{ color_mode }}
         ml-0 {{ transparent_navbar ? 'transparent' }}"
@@ -36,7 +36,7 @@
                 <a class="nav-link" href="{{ url('skinlib') }}">{{ trans('general.skinlib') }}</a>
               </li>
 
-              {{ include('shared.languages') }}
+              {# {{ include('shared.languages') }} #}
 
               {% if auth_check() %}
                 {{ include('shared.user-menu') }}
@@ -73,16 +73,16 @@
         </div>
       </div>
 
-      {% if hide_intro %}
+      {# {% if hide_intro %} #}
         <div id="copyright" class="without-intro">
           <div class="container">
             {{ include('shared.copyright') }}
           </div>
         </div>
-      {% endif %}
+      {# {% endif %} #}
     </div>
 
-    {% if not hide_intro %}
+    {# {% if not hide_intro %}
       <div id="intro">
         <div class="container">
           <div class="text-center">
@@ -124,7 +124,7 @@
           {{ include('shared.copyright') }}
         </div>
       </div>
-    {% endif %}
+    {% endif %} #}
 
     <script type="application/json" id="blessing-extra">
       {{ {transparent_navbar: transparent_navbar}|json_encode|raw }}
