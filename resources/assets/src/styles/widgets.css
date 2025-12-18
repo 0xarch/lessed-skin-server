@@ -223,13 +223,14 @@ button {
   font-size: 1rem;
   border-radius: var(--card-button-radius);
   padding: 0 8px;
+  cursor: pointer;
 
   &.btn-primary,
   &.bg-gradient-primary,
   &.active {
-    background-color: var(--accent-color-75);
+    background-color: var(--accent-color);
     color: var(--accent-on-color);
-    border: 1px solid var(--accent-color-75);
+    border: 1px solid var(--accent-color);
   }
 
   &[disabled] {
@@ -246,19 +247,18 @@ button {
   }
 
   &:not([disabled]):hover {
-    background-color: var(--accent-color);
-    color: var(--accent-on-color);
+    filter: brightness(0.9) contrast(0.95);
   }
 }
 
 button.close {
   border-radius: 999vmax;
-  border: 1px solid var(--accent-color);
-  font-size: 20px;
+  border: none;
+  font-size: 26px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
+  width: 36px;
   aspect-ratio: 1;
   min-height: unset;
   min-width: unset;
@@ -318,6 +318,7 @@ input {
 
   input {
     border: none;
+    flex: 1;
   }
 
   &:focus-within {

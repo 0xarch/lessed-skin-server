@@ -17,9 +17,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 8px;
+  padding: 4px;
   min-width: max(128px, 100%);
-  min-height: 64px;
+  min-height: 40px;
   width: fit-content;
   border-radius: var(--card-button-radius);
   overflow: hidden;
@@ -42,6 +42,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: var(--card-button-radius);
   }
 }
 
@@ -56,7 +57,7 @@
 .dropdown-item:hover,
 .dropdown-item:focus {
   color: var(--accent-on-color);
-  background-color: var(--accent-color-75);
+  background-color: var(--accent-color);
 }
 
 .dropdown-item.dropdown-item-danger {

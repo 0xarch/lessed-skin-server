@@ -12,7 +12,7 @@ body {
   display: flex;
   /* background-color: var(--accent-color); */
   /* color: var(--accent-on-color); */
-  background-color: var(--root-color);
+  /* background-color: var(--root-color); */
   color: var(--common-color);
   /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.125), 0 1px 3px rgba(0, 0, 0, 0.2); */
   height: 64px;
@@ -349,9 +349,11 @@ section.content {
     & > .modal-content {
       background-color: var(--card-bg-color);
       color: var(--card-color);
-      border: 1px solid var(--outline-color);
+      border: 1px solid var(--outline-light-color);
       backdrop-filter: blur(10px);
-      box-shadow: 0 35px 400px 40px #000a;
+      box-shadow: 0 35px 4000px 4000px #0009;
+      border-radius: var(--radius);
+      min-width: 20rem;
 
       & > .modal-header,
       & > .modal-body,
@@ -363,9 +365,6 @@ section.content {
 
       & > .modal-header {
         height: 48px;
-        background-color: var(--card-footer-bg-color);
-        color: var(--card-color);
-        border-bottom: 1px solid var(--outline-color);
         align-items: center;
         padding: 0 16px;
         justify-content: space-between;
@@ -377,8 +376,6 @@ section.content {
 
       & > .modal-body {
         padding: 16px;
-        background-color: var(--card-bg-color);
-        color: var(--card-color);
         flex-direction: column;
 
         & > .row {
@@ -387,9 +384,6 @@ section.content {
       }
 
       & > .modal-footer {
-        background-color: var(--card-footer-bg-color);
-        color: var(--card-color);
-        border-top: 1px solid var(--outline-color);
         align-items: center;
         padding: 0 16px;
       }
@@ -399,6 +393,11 @@ section.content {
   &:not(.show) .modal-dialog {
     display: none;
   }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
 }
 
 .user-panel > .d-flex {
@@ -459,7 +458,7 @@ section.content {
 
 .input-group-append {
   opacity: 0.9;
-  margin-left: 8px;
+  margin: 0 8px;
   color: var(--accent-color);
 }
 
