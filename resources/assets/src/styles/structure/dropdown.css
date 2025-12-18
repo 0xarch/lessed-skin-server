@@ -1,18 +1,12 @@
 .dropdown-menu {
-  position: absolute;
-  /* top: 4px; */
-  right: 0px;
-  background-color: var(--card-bg-color);
-  color: var(--card-color);
-  border: 1px solid var(--outline-color);
-  backdrop-filter: blur(10px);
-  /* visibility: hidden; */
-  pointer-events: none;
-  transform: translateY(-100%);
-  opacity: 0;
   transition-property: transform, opacity;
   transition-duration: 0.25s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+
+  position: absolute;
+  right: 0px;
+  transform: translateY(-100%);
+  pointer-events: none;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,10 +15,17 @@
   min-width: max(128px, 100%);
   min-height: 40px;
   width: fit-content;
-  border-radius: var(--card-button-radius);
   overflow: hidden;
   margin: 0;
   z-index: 900;
+
+  background-color: var(--card-bg-color);
+  color: var(--card-color);
+  border: 1px solid var(--outline-light-color);
+  box-shadow: 0 0 0.5rem #0003;
+  border-radius: var(--dropdown-radius);
+  backdrop-filter: blur(10px);
+  opacity: 0;
 
   & a,
   a.dropdown-item {

@@ -1,0 +1,89 @@
+/* Structure: Navigation Bar */
+
+/* root */
+.main-header {
+  display: flex;
+  color: var(--common-color);
+  height: 64px;
+  align-items: center;
+  padding: 0 16px;
+  z-index: 2000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  flex-wrap: wrap;
+
+  & a {
+    text-decoration: none;
+    color: var(--accent-on-color);
+  }
+}
+
+/* nav list */
+.navbar-nav {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: 16px;
+
+  &.ml-auto {
+    margin-left: auto;
+  }
+}
+
+/* nav item */
+.navbar-nav .nav-item {
+  height: 100%;
+  min-width: 48px;
+  min-height: 64px;
+  position: relative;
+
+  &:not(.menu-open).active > .nav-link,
+  &.menu-open.active > .nav-treeview > .nav-item.active > .nav-link {
+    background-color: var(--accent-color);
+    color: var(--accent-on-color);
+  }
+
+  & > a {
+    display: flex;
+    min-width: 48px;
+    min-height: 64px;
+    align-items: center;
+    justify-content: center;
+    color: currentColor;
+  }
+}
+
+.navbar-nav > .nav-item:has(.brand-link) {
+  display: none;
+}
+
+/* Desktop View */
+@media (min-width: 768px) {
+  .main-header {
+    flex-wrap: nowrap;
+  }
+
+  .navbar-nav > .nav-item:has(.brand-link) {
+    display: flex;
+  }
+
+  .navbar-nav {
+    & .nav-item {
+      min-width: 64px;
+      min-height: 64px;
+
+      & > a {
+        min-width: 64px;
+        height: 64px;
+      }
+
+      &:first-child {
+        /* Hack for burger-menu */
+        margin-left: -16px;
+      }
+    }
+  }
+}

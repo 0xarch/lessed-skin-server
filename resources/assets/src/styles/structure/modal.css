@@ -1,0 +1,65 @@
+/* Structure Element: Modal */
+
+.modal {
+  & > .modal-dialog {
+    display: flex;
+    position: fixed;
+    top: 112px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    z-index: 3000;
+
+    & > .modal-content {
+      background-color: var(--card-bg-color);
+      color: var(--card-color);
+      border: 1px solid var(--outline-light-color);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 35px 4000px 4000px #0009;
+      border-radius: var(--radius);
+      min-width: 20rem;
+
+      & > .modal-header,
+      & > .modal-body,
+      & > .modal-footer {
+        box-sizing: border-box;
+        display: flex;
+        min-height: 48px;
+      }
+
+      & > .modal-header {
+        height: 48px;
+        align-items: center;
+        padding: 0 16px;
+        justify-content: space-between;
+
+        & > .card-title {
+          font-size: 20px;
+        }
+      }
+
+      & > .modal-body {
+        padding: 16px;
+        flex-direction: column;
+
+        & > .row {
+          width: 100%;
+        }
+      }
+
+      & > .modal-footer {
+        align-items: center;
+        padding: 0 16px;
+      }
+    }
+  }
+
+  &:not(.show) .modal-dialog {
+    display: none;
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+}

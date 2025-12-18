@@ -1,5 +1,4 @@
 @import './avatar.css';
-@import './dropdown.css';
 @import './auth.css';
 @import './admin.css';
 
@@ -32,6 +31,7 @@
   --card-content-radius: calc(var(--radius) - 1px);
   --card-content-padding: calc(8px + var(--card-content-radius));
   --card-button-radius: calc(var(--card-content-radius) / 2);
+  --dropdown-radius: calc(var(--card-button-radius) + 3px);
   --sidebar-open-width: 240px;
   --sidebar-close-width: 48px;
 }
