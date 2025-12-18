@@ -5,11 +5,14 @@
     <link rel="preload" as="image" href="{{ home_pic_url }}">
     <title>{{ site_name }}</title>
     <style>
+      body {
+        background-image: linear-gradient(var(--accent-color-75),var(--accent-color-25))
+      }
       .hp-wrapper {
-        {% if fixed_bg %}
-          background-color: rgba(0, 0, 0, 0);
-        {% else %}
+        {% if home_pic_url %}
           background-image: url('{{ home_pic_url }}');
+        {% else %}
+          background-image: linear-gradient(var(--accent-color-75),var(--accent-color-25))
         {% endif %}
       }
     </style>
@@ -17,7 +20,7 @@
   </head>
 
   <body class="hold-transition layout-top-nav">
-    <div class="hp-wrapper" style="background-image: linear-gradient(var(--accent-color-75),var(--accent-color-25))">
+    <div class="hp-wrapper">
       {# {% if fixed_bg %}
         <div id="fixed-bg" style="background-image: url('{{ home_pic_url }}')"></div>
       {% endif %} #}
