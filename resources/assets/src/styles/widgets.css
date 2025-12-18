@@ -423,6 +423,7 @@ textarea.form-control {
   & > .nav-item {
     border: none;
     padding: 8px;
+    background: transparent;
 
     &:hover {
       background: none;
@@ -499,6 +500,7 @@ textarea.form-control {
     min-height: 32px;
     min-width: 32px;
     color: var(--accent-color);
+    background-color: transparent;
     border-radius: var(--card-content-radius);
     transition-property: background-color, color, font-size;
     transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
