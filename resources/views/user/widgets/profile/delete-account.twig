@@ -1,4 +1,4 @@
-<div class="card card-danger">
+<div class="card immersive">
   <div class="card-header">
     <h3 class="card-title">
       {{ trans('user.profile.delete.title') }}
@@ -7,11 +7,16 @@
   <div class="card-body">
     {% if user.admin %}
       <p>{{ trans('user.profile.delete.admin') }}</p>
+    {% else %}
+      <p>{{ trans('user.profile.delete.notice', { site: site_name }) }}</p>
+    {% endif %}
+  </div>
+  <div class="card-footer">
+    {% if user.admin %}
       <button class="btn btn-danger" disabled="disabled">
         {{ trans('user.profile.delete.button') }}
       </button>
     {% else %}
-      <p>{{ trans('user.profile.delete.notice', { site: site_name }) }}</p>
       <button
         class="btn btn-danger"
         data-toggle="modal"

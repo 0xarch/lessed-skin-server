@@ -377,6 +377,43 @@ textarea.form-control {
   }
 }
 
+.immersive .nav-tabs,
+.nav-tabs.immersive {
+  border: none;
+  border-radius: 0;
+  display: flex;
+  gap: 12px;
+  margin: 0;
+  font-size: 1.1rem;
+
+  & > .nav-item {
+    border: none;
+    padding: 8px;
+
+    &:hover {
+      background: none;
+      color: inherit;
+    }
+
+    & a {
+      display: block;
+
+      &.active {
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: 4px;
+          left: 4px;
+          right: 4px;
+          height: 4px;
+          background-color: var(--accent-color);
+          border-radius: 999vmax;
+        }
+      }
+    }
+  }
+}
+
 .pagination {
   display: flex;
   list-style: none;
@@ -411,6 +448,50 @@ textarea.form-control {
 
       & a {
         color: var(--accent-on-color);
+      }
+    }
+  }
+}
+
+.immersive .pagination,
+.pagination.immersive {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+
+  & .page-item {
+    min-height: 32px;
+    min-width: 32px;
+    color: var(--accent-color);
+    border-radius: var(--card-content-radius);
+    transition-property: background-color, color, font-size;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    transition-duration: 0.25s;
+
+    & a {
+      text-decoration: none;
+      color: currentColor;
+    }
+
+    &.disabled {
+      color: var(--outline-color);
+    }
+
+    &.active {
+      background-color: var(--accent-color);
+      color: var(--accent-on-color);
+      font-size: 0.9rem;
+    }
+
+    &:not(.disabled):hover {
+      background-color: var(--accent-color-75);
+      color: var(--accent-on-color);
+      font-size: 1.1rem;
+
+      &.active {
+        font-size: 1rem;
       }
     }
   }
@@ -475,17 +556,35 @@ select {
 
 .badge {
   display: inline-flex;
-  border-radius: 999vmax;
+  border-radius: var(--card-content-radius);
   align-items: center;
   justify-content: center;
   margin: 4px;
-  padding: 0px 6px;
+  padding: 4px 8px;
+  text-wrap: nowrap;
+  font-size: 0.9rem;
 
-  background-color: var(--accent-color);
-  color: var(--accent-on-color);
+  background-color: var(--callout-bg-color);
+  color: var(--callout-color);
 
   &.name-badge {
     background-color: var(--name-bg-color);
     color: var(--name-color);
   }
+
+  &.bg-primary,
+  &.primary {
+    background-color: var(--accent-color);
+    color: var(--accent-on-color);
+  }
+}
+
+.btn-danger {
+  background-color: rgb(197, 12, 12);
+  color: white;
+}
+
+.btn-success {
+  background-color: rgb(5, 105, 5);
+  color: white;
 }

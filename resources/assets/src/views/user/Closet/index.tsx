@@ -165,7 +165,7 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <div className="card card-primary card-tabs" ref={containerRef}>
+      <div className="card immersive" ref={containerRef}>
         <div className="card-header p-0 pt-1 pl-1">
           <div className="d-flex justify-content-between">
             <ul className="nav nav-tabs" role="tablist">
