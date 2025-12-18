@@ -5,7 +5,7 @@
 
 :root {
   --root-color: #111;
-  --bg-color: #1f1d1d;
+  --bg-color: #2520208e;
   --card-bg-color: #333c;
   --card-color: #eee;
   --card-footer-bg-color: #444c;
@@ -39,7 +39,7 @@
 @media (prefers-color-scheme: light) {
   :root {
     --root-color: #fff;
-    --bg-color: #ecf0f1;
+    --bg-color: #dcefff8a;
     --card-bg-color: #fffc;
     --card-footer-bg-color: #eeec;
     --card-color: #222;
