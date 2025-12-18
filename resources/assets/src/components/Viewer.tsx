@@ -215,50 +215,48 @@ const Viewer: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="card">
+    <div className="card immersive">
       <div className="card-header">
-        <div className="d-flex justify-content-between">
-          <h3 className="card-title">
-            <span>{t('general.texturePreview')}</span>
-            {props.showIndicator && (
-              <span className="badge bg-olive ml-1">{indicator}</span>
-            )}
-          </h3>
-          <div>
-            <ActionButton
-              className={`fas fa-tablet ${props.cape ? '' : 'd-none'}`}
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title={t('general.switchCapeElytra')}
-              onClick={toggleBackEquippment}
-            ></ActionButton>
-            <ActionButton
-              className={`fas fa-person-running`}
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title={t('general.switchAnimation')}
-              onClick={toggleAnimation}
-            ></ActionButton>
-            <ActionButton
-              className={`fas fa-${paused ? 'play' : 'pause'}`}
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title={
-                paused
-                  ? t('general.playAnimation')
-                  : t('general.pauseAnimation')
-              }
-              onClick={togglePause}
-            ></ActionButton>
-            <ActionButton
-              className="fas fa-rotate-right"
-              data-toggle="tooltip"
-              data-placement="bottom"
-              title={t('general.rotation')}
-              onClick={toggleRotate}
-            ></ActionButton>
-          </div>
+        {/* <div className="d-flex justify-content-between"> */}
+        <h3 className="card-title">
+          <span>{t('general.texturePreview')}</span>
+          {props.showIndicator && (
+            <span className="badge bg-olive ml-1">{indicator}</span>
+          )}
+        </h3>
+        <div className="card-subtitle">
+          <ActionButton
+            className={`fas fa-tablet ${props.cape ? '' : 'd-none'}`}
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title={t('general.switchCapeElytra')}
+            onClick={toggleBackEquippment}
+          ></ActionButton>
+          <ActionButton
+            className={`fas fa-person-running`}
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title={t('general.switchAnimation')}
+            onClick={toggleAnimation}
+          ></ActionButton>
+          <ActionButton
+            className={`fas fa-${paused ? 'play' : 'pause'}`}
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title={
+              paused ? t('general.playAnimation') : t('general.pauseAnimation')
+            }
+            onClick={togglePause}
+          ></ActionButton>
+          <ActionButton
+            className="fas fa-rotate-right"
+            data-toggle="tooltip"
+            data-placement="bottom"
+            title={t('general.rotation')}
+            onClick={toggleRotate}
+          ></ActionButton>
         </div>
+        {/* </div> */}
       </div>
       <div ref={containerWrapperRef} css={cssViewer} className="p-0">
         <canvas ref={containerRef}></canvas>

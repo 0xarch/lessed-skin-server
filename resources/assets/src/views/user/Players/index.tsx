@@ -165,7 +165,7 @@ const Players: React.FC = () => {
 
   return (
     <>
-      <div className="card">
+      <div className="card immersive">
         <div className="card-header">
           <input
             type="text"
@@ -212,14 +212,14 @@ const Players: React.FC = () => {
             </tbody>
           </table>
         </div>
-        {
-          playersCount >= score / playersRate ? null : <div className="card-footer">
+        {playersCount >= score / playersRate ? null : (
+          <div className="card-footer">
             <button className="btn btn-primary" onClick={openModalAddPlayer}>
               <i className="fas fa-plus mr-1"></i>
               <span>{t('user.player.add-player')}</span>
             </button>
           </div>
-        }
+        )}
       </div>
 
       <Previewer
