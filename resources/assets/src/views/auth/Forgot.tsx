@@ -52,7 +52,7 @@ const Forgot: React.FC = () => {
       <Alert type="success">{successMessage}</Alert>
       <Alert type="warning">{warningMessage}</Alert>
 
-      <div className="d-flex justify-content-between align-items-center">
+      <div className="card-footer">
         <a href={`${blessing.base_url}/auth/login`}>
           {t('auth.forgot.login-link')}
         </a>
