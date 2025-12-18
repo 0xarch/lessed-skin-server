@@ -4,7 +4,8 @@
 @import './admin.css';
 
 :root {
-  --bg-color: #222;
+  --root-color: #111;
+  --bg-color: #1f1d1d;
   --card-bg-color: #333c;
   --card-color: #eee;
   --card-footer-bg-color: #444c;
@@ -29,10 +30,13 @@
   --card-content-radius: calc(var(--radius) - 1px);
   --card-content-padding: calc(8px + var(--card-content-radius));
   --card-button-radius: calc(var(--card-content-radius) / 2);
+  --sidebar-open-width: 240px;
+  --sidebar-close-width: 48px;
 }
 
 @media (prefers-color-scheme: light) {
   :root {
+    --root-color: #fff;
     --bg-color: #ecf0f1;
     --card-bg-color: #fffc;
     --card-footer-bg-color: #eeec;
@@ -43,6 +47,7 @@
     --outline-light-color: #aaa7;
   }
 }
+
 body {
   margin: 0 !important;
   padding: 0 !important;

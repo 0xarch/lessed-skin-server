@@ -16,7 +16,7 @@ body {
   transition: color 0.25s ease-in-out, border-color 0.25s ease-in-out,
     background-color 0.25s ease-in-out;
   justify-content: center;
-  &>.container {
+  & > .container {
     align-items: baseline;
   }
 }
@@ -92,14 +92,6 @@ body {
   background-color: rgba(255, 255, 255, 0.2);
 }
 
-#fixed-bg {
-  position: fixed;
-  z-index: -1;
-  height: 100vh;
-  width: 100%;
-  background-size: cover;
-}
-
 #intro {
   padding: 50px 0;
   border-top: 5px solid #bdc3c7;
@@ -131,4 +123,8 @@ body {
   bottom: 0;
   width: 100%;
   padding: 16px 50px;
+}
+
+.navbar {
+  color: white !important;
 }
