@@ -25,6 +25,8 @@
   --name-color: var(--accent-on-color);
   --name-bg-color: var(--accent-color-50);
 
+  accent-color: var(--accent-color);
+
   /* --radius: 8px; */
   --radius: 10px;
   --card-content-radius: calc(var(--radius) - 1px);

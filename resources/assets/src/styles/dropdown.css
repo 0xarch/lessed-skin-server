@@ -1,6 +1,6 @@
 .dropdown-menu {
   position: absolute;
-  top: 64px;
+  /* top: 4px; */
   right: 0px;
   background-color: var(--card-bg-color);
   color: var(--card-color);
@@ -11,20 +11,23 @@
   transform: translateY(-100%);
   opacity: 0;
   transition-property: transform, opacity;
-  transition-duration: .25s;
+  transition-duration: 0.25s;
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 8px;
-  min-width: 128px;
+  min-width: max(128px, 100%);
   min-height: 64px;
   width: fit-content;
-  border-radius: var(--radius);
+  border-radius: var(--card-button-radius);
   overflow: hidden;
+  margin: 0;
+  z-index: 900;
 
-  & a, a.dropdown-item {
+  & a,
+  a.dropdown-item {
     color: var(--card-color);
 
     &:hover {
@@ -42,7 +45,7 @@
   }
 }
 
-.dropdown.show>.dropdown-menu,
+.dropdown.show > .dropdown-menu,
 .dropdown-menu.show {
   /* visibility: visible; */
   pointer-events: initial;
@@ -64,4 +67,8 @@
 .dropdown-item.dropdown-item-danger:focus {
   color: #fff;
   background-color: var(--danger);
+}
+
+.navbar .dropdown-menu {
+  top: 64px;
 }

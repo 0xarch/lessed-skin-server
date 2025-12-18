@@ -18,6 +18,8 @@
 
   & .login-box-msg {
     text-align: center;
+    opacity: 0.9;
+    margin-top: 8px !important;
   }
 
   & main form {
@@ -36,4 +38,8 @@
     padding: 0;
     gap: 0;
   }
+}
+
+[role='combobox'] {
+  position: relative;
 }

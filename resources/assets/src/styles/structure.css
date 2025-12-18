@@ -457,6 +457,12 @@ section.content {
   align-items: center;
 }
 
+.input-group-append {
+  opacity: 0.9;
+  margin-left: 8px;
+  color: var(--accent-color);
+}
+
 .card-body > p.text-center {
   text-align: center;
   margin: 0 8px;

@@ -19,6 +19,7 @@
   }
 
   & .card-header {
+    z-index: 3;
     background-color: var(--card-bg-color);
     color: var(--card-color);
     border-bottom: 1px solid var(--outline-color);
@@ -35,6 +36,7 @@
   }
 
   & .card-body {
+    z-index: 2;
     padding: 16px;
     background-color: var(--card-bg-color);
     color: var(--card-color);
@@ -55,6 +57,7 @@
   }
 
   & .card-footer {
+    z-index: 1;
     background-color: var(--card-footer-bg-color);
     color: var(--card-color);
     border-top: 1px solid var(--outline-color);
@@ -134,6 +137,10 @@
     & .card-body {
       background-color: transparent;
       padding: 0 var(--card-content-padding);
+
+      &:last-child {
+        padding-bottom: var(--card-content-padding);
+      }
 
       & > :first-child {
         margin-top: 0;
@@ -299,6 +306,21 @@ input {
 
   &:active,
   &:focus {
+    border-bottom-color: var(--accent-color);
+    border-bottom-width: 2px;
+  }
+}
+
+.input-group:has(input) {
+  border: 1px solid var(--outline-light-color);
+  border-bottom: 1px solid var(--outline-color);
+  border-radius: var(--card-button-radius);
+
+  input {
+    border: none;
+  }
+
+  &:focus-within {
     border-bottom-color: var(--accent-color);
     border-bottom-width: 2px;
   }
