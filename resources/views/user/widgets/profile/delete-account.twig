@@ -5,14 +5,14 @@
     </h3>
   </div>
   <div class="card-body">
-    {% if user.admin %}
+    {% if user.permission %}
       <p>{{ trans('user.profile.delete.admin') }}</p>
     {% else %}
       <p>{{ trans('user.profile.delete.notice', { site: site_name }) }}</p>
     {% endif %}
   </div>
   <div class="card-footer">
-    {% if user.admin %}
+    {% if user.permission %}
       <button class="btn btn-danger" disabled="disabled">
         {{ trans('user.profile.delete.button') }}
       </button>
