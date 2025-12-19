@@ -45,12 +45,32 @@ body > .wrapper {
   margin-left: 8px;
   color: var(--accent-color);
 
-  & i {
+  & i,
+  & .input-group-text {
     margin-right: 8px;
+    cursor: default;
   }
 
   & button {
     border-radius: 0;
+  }
+}
+
+.btn-group-toggle {
+  border-radius: var(--card-button-radius);
+  border: 0.1rem solid var(--outline-light-color);
+  border-bottom: 0.1rem solid var(--outline-color);
+
+  & input[type='radio'] {
+    display: none;
+  }
+
+  & button,
+  & .btn {
+    border-radius: 0;
+    border: none;
+    min-width: 2rem;
+    height: 2rem;
   }
 }
 

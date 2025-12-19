@@ -19,7 +19,6 @@ input {
   &:focus {
     border-bottom-color: var(--accent-color);
     border-bottom-width: 2px;
-    margin-bottom: -1px;
   }
 }
 
@@ -27,6 +26,7 @@ input {
   border: 1px solid var(--outline-light-color);
   border-bottom: 1px solid var(--outline-color);
   border-radius: var(--card-button-radius);
+  background-color: var(--callout-bg-color);
 
   input {
     border: none;
