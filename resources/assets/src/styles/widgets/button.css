@@ -60,7 +60,8 @@ button.close {
   min-width: unset;
 }
 
-.card:not(.immersive) > .card-footer > :is(button, .btn) {
+.card:not(.immersive) > footer > :is(button, .btn),
+.card:not(.immersive) .card-footer > :is(button, .btn) {
   height: 48px;
   margin-top: -8px;
   margin-bottom: -8px;
