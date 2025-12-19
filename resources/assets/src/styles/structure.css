@@ -74,6 +74,12 @@ body > .wrapper {
   }
 }
 
+.form-group {
+  & > label {
+    display: block;
+  }
+}
+
 @media (min-width: 768px) {
   .input-group,
   .btn-group {
