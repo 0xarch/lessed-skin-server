@@ -30,9 +30,9 @@ const wrapper = css`
   padding: 12px;
   border-radius: var(--radius);
 `
-const shadow = css`
-  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
-`
+// const shadow = css`
+//   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+// `
 
 const Toast: React.FC<Props> = (props) => {
   const [show, setShow] = useState(false)
@@ -60,7 +60,7 @@ const Toast: React.FC<Props> = (props) => {
 
   return (
     <div css={wrapper} style={{ top: `${props.distance}px` }}>
-      <div className={classes.join(' ')} css={shadow} role={role}>
+      <div className={classes.join(' ')} /*css={shadow}*/ role={role}>
         <span className="mr-1 d-flex align-items-center">
           <i className={`icon fas fa-${icons.get(props.type)}`}></i>
         </span>
