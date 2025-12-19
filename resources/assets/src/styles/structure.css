@@ -1,7 +1,14 @@
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+  background-color: var(--root-color);
+}
+
 body > .wrapper {
   position: fixed;
   inset: 0;
   backdrop-filter: blur(10px);
+  background-color: var(--bg-color);
 }
 
 @import './structure/navbar.css';
