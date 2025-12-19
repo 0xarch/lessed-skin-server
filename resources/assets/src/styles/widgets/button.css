@@ -17,6 +17,7 @@ button {
   transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
   text-wrap: nowrap;
   font-size: 1rem;
+  font-weight: 300;
   border-radius: var(--card-button-radius);
   padding: 0 8px;
   cursor: pointer;

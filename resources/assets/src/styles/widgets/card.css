@@ -141,6 +141,7 @@
       & > .card-title,
       & > :is(h1, h2, h3, h4, h5, h6) {
         margin: 0;
+        font-weight: 300;
 
         &.large {
           font-size: 30px;
@@ -151,6 +152,7 @@
       & > p {
         margin-top: var(--card-content-radius);
         margin-bottom: 0;
+        opacity: 0.85;
       }
 
       &.inlined {
@@ -256,6 +258,7 @@ f-card {
     & > .card-title,
     & > :is(h1, h2, h3, h4, h5, h6) {
       font-size: 1.5rem;
+      font-weight: 300;
       margin: 0;
 
       &.large {
@@ -268,6 +271,7 @@ f-card {
     & f-subtitle {
       margin-top: var(--f-content-radius);
       margin-bottom: 0;
+      opacity: 0.85;
     }
 
     &.inlined {
