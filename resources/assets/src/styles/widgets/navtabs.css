@@ -87,3 +87,48 @@
     }
   }
 }
+
+/* Widget: Fluent Nav Tabs (Clean Code from Immersive Nav Tabs) */
+
+.fluent-nav-tabs,
+f-navtabs {
+  display: flex;
+  gap: 0.875rem;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style: none;
+  font-size: 1.1rem;
+
+  & > .nav-item,
+  & > f-item {
+    position: relative;
+    min-width: 2rem;
+    min-height: 2rem;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    margin: 0;
+    padding: 0.75rem;
+    background: transparent;
+
+    & a {
+      color: currentColor;
+      text-decoration: none;
+      display: block;
+
+      &.active {
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: 4px;
+          left: 4px;
+          right: 4px;
+          height: 4px;
+          background-color: var(--accent-color);
+          border-radius: 999vmax;
+        }
+      }
+    }
+  }
+}

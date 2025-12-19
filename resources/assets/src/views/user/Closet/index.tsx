@@ -18,6 +18,7 @@ import LoadingClosetItem from './LoadingClosetItem'
 import Previewer from './Previewer'
 import ModalApply from './ModalApply'
 import removeClosetItem from './removeClosetItem'
+import { NavTabs } from '@/components/_FluentComponents'
 
 type Category = 'skin' | 'cape'
 
@@ -165,43 +166,32 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <div className="card immersive" ref={containerRef}>
-        <div className="card-header p-0 pt-1 pl-1">
+      <f-card ref={containerRef}>
+        <f-card-header>
           <div className="d-flex justify-content-between">
-            <ul className="nav nav-tabs" role="tablist">
-              <li className="nav-item">
-                <a
-                  href="#"
-                  className={`nav-link ${category === 'skin' ? 'active' : ''}`}
-                  data-toggle="pill"
-                  role="tab"
-                  onClick={switchCategoryToSkin}
-                >
-                  {t('general.skin')}
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href="#"
-                  className={`nav-link ${
-                    category === TextureType.Cape ? 'active' : ''
-                  }`}
-                  data-toggle="pill"
-                  role="tab"
-                  onClick={switchCategoryToCape}
-                >
-                  {t('general.cape')}
-                </a>
-              </li>
-              <li className="nav-item d-none d-md-block">
-                <a
-                  href={`${blessing.base_url}/skinlib/upload`}
-                  className="nav-link"
-                >
-                  {t('user.closet.upload')}
-                </a>
-              </li>
-            </ul>
+            <NavTabs
+              tabs={[
+                {
+                  type: 'event',
+                  title: t('general.skin'),
+                  onClick: switchCategoryToSkin,
+                },
+                {
+                  type: 'event',
+                  title: t('general.cape'),
+                  onClick: switchCategoryToCape,
+                },
+                {
+                  type: 'hyperlink',
+                  href: `${blessing.base_url}/skinlib/upload`,
+                  title: t('user.closet.upload'),
+                  class: 'd-none d-md-block',
+                },
+              ]}
+              active={
+                category === 'skin' ? 0 : category === TextureType.Cape ? 1 : -1
+              }
+            />
             <div className="mr-3 my-2 my-lg-0">
               <input
                 type="search"
@@ -213,8 +203,8 @@ const Closet: React.FC = () => {
               />
             </div>
           </div>
-        </div>
-        <div className="card-body">
+        </f-card-header>
+        <f-card-body>
           {isLoading ? (
             <div className="d-flex flex-wrap">
               {new Array(perPageRef.current).fill(null).map((_, i) => (
@@ -249,8 +239,8 @@ const Closet: React.FC = () => {
               ))}
             </div>
           )}
-        </div>
-        <div className="card-footer">
+        </f-card-body>
+        <f-card-footer>
           <div className="float-right">
             <Pagination
               page={page}
@@ -258,8 +248,8 @@ const Closet: React.FC = () => {
               onChange={handlePageChange}
             />
           </div>
-        </div>
-      </div>
+        </f-card-footer>
+      </f-card>
       <Previewer
         skin={skin?.hash}
         cape={cape?.hash}

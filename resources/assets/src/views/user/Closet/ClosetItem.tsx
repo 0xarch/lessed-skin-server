@@ -29,14 +29,14 @@ const ClosetItem: React.FC<Props> = (props) => {
   const handleSetAsAvatar = () => setAsAvatar(item.tid)
 
   return (
-    <Card className={`card mr-3 mb-3 ${props.selected ? 'shadow' : ''}`}>
-      <div className="card-body" onClick={handleItemClick}>
+    <f-card className={`card mr-3 mb-3 ${props.selected ? 'shadow' : ''}`}>
+      <f-card-body onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
           <Img src={previewPNG} alt={item.pivot.item_name} />
         </picture>
-      </div>
-      <div className="card-footer pb-2 pt-2 pl-1 pr-1">
+      </f-card-body>
+      <f-card-footer>
         <div className="container d-flex justify-content-between">
           <span className="text-truncate" title={item.pivot.item_name}>
             {item.pivot.item_name}
@@ -69,8 +69,8 @@ const ClosetItem: React.FC<Props> = (props) => {
             </div>
           </span>
         </div>
-      </div>
-    </Card>
+      </f-card-footer>
+    </f-card>
   )
 }
 
