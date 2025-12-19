@@ -15,12 +15,15 @@
 
   & .card-header,
   & .card-body,
-  & .card-footer {
+  & .card-footer， & > header,
+  & > section,
+  & > footer {
     box-sizing: border-box;
     min-height: 49px;
   }
 
-  & .card-header {
+  & .card-header,
+  & > header {
     z-index: 3;
     background-color: var(--card-bg-color);
     color: var(--card-color);
@@ -37,7 +40,8 @@
     }
   }
 
-  & .card-body {
+  & .card-body,
+  & > section {
     z-index: 2;
     padding: 16px;
     background-color: var(--card-bg-color);
@@ -58,7 +62,8 @@
     }
   }
 
-  & .card-footer {
+  & .card-footer,
+  & > footer {
     z-index: 1;
     background-color: var(--card-footer-bg-color);
     color: var(--card-color);
@@ -85,7 +90,8 @@
   }
 
   &.card-primary {
-    & .card-header {
+    & .card-header,
+    & > header {
       background: linear-gradient(
         var(--accent-color-75),
         var(--card-bg-color) 60%
@@ -101,7 +107,8 @@
     border-color: var(--outline-light-color);
     box-shadow: none;
 
-    & .card-header {
+    & .card-header,
+    & > header {
       background: transparent;
       border: none;
       min-height: 48px;
@@ -135,7 +142,8 @@
       }
     }
 
-    & .card-body {
+    & .card-body,
+    & > section {
       background-color: transparent;
       padding: 0 var(--card-content-padding);
 
@@ -152,7 +160,8 @@
       }
     }
 
-    & .card-footer {
+    & .card-footer,
+    & > footer {
       background-color: transparent;
       border: none;
       min-height: 48px;
