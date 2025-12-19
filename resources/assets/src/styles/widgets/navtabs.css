@@ -9,6 +9,7 @@
   border: 1px solid var(--outline-color);
 
   & > .nav-item {
+    position: relative;
     min-width: 32px;
     min-height: 32px;
     align-items: center;
