@@ -108,6 +108,7 @@
     }
   }
 
+  /* Immersive Style for card build upon the old card */
   &.immersive {
     background-color: var(--card-bg-color);
     border-color: var(--outline-light-color);
@@ -194,5 +195,145 @@
 }
 
 :not(.d-flex) > .card + .card {
+  margin-top: var(--grid-gutter);
+}
+
+/* Widget: Fluent Card (Clean Code from Immersive Card) */
+
+.fluent-card,
+f-card {
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  word-wrap: break-word;
+  border: 0.1rem solid var(--outline-light-color);
+  border-radius: var(--f-radius) var(--f-radius);
+  background-color: var(--card-bg-color);
+  color: var(--card-color);
+
+  & .card-header,
+  & .card-body,
+  & .card-footer,
+  & > header,
+  & > section,
+  & > footer,
+  & f-header,
+  & f-body,
+  & f-footer {
+    box-sizing: border-box;
+    min-height: 1.5rem;
+    position: relative;
+  }
+
+  & .card-header,
+  & f-card-header,
+  & > header {
+    z-index: 3;
+    display: block;
+    overflow: hidden;
+    padding: var(--f-content-padding);
+    color: var(--card-color);
+    border-radius: var(--f-content-radius) var(--f-content-radius) 0 0;
+
+    &:last-child:not(.not-last) {
+      border-bottom-left-radius: var(--f-content-radius);
+      border-bottom-right-radius: var(--f-content-radius);
+    }
+
+    & > .card-icon,
+    & f-card-icon {
+      margin-bottom: var(--f-content-padding);
+      font-size: 1.5rem;
+
+      & svg {
+        height: 1.5rem;
+      }
+    }
+
+    & > .card-title,
+    & > :is(h1, h2, h3, h4, h5, h6) {
+      font-size: 1.5rem;
+      margin: 0;
+
+      &.large {
+        font-size: 2rem;
+      }
+    }
+
+    & > .card-subtitle,
+    & > p,
+    & f-subtitle {
+      margin-top: var(--f-content-radius);
+      margin-bottom: 0;
+    }
+
+    &.inlined {
+      & > .card-title,
+      & > .card-subtitle,
+      & f-subtitle {
+        display: inline;
+      }
+    }
+  }
+
+  & .card-body,
+  & f-card-body,
+  & > section {
+    z-index: 2;
+    padding: 0 var(--f-content-padding);
+
+    &:last-child:not(.not-last) {
+      border-bottom-left-radius: var(--f-content-radius);
+      border-bottom-right-radius: var(--f-content-radius);
+      padding-bottom: var(--f-content-padding);
+    }
+
+    &:first-child:not(.not-first) {
+      border-top-left-radius: var(--f-content-radius);
+      border-top-right-radius: var(--f-content-radius);
+      padding-top: var(--f-content-padding);
+    }
+
+    & > :first-child {
+      margin-top: 0;
+    }
+
+    & > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  & .card-footer,
+  & f-card-footer,
+  & > footer {
+    z-index: 1;
+    align-items: center;
+    padding: var(--f-content-padding);
+    gap: 1rem;
+    display: flex;
+    border-radius: 0 0 var(--f-content-radius) var(--f-content-radius);
+    overflow: hidden;
+
+    & .float-right {
+      margin-left: auto;
+    }
+  }
+
+  /* BACKDROP for blur */
+  &::before {
+    content: '';
+    position: absolute;
+    pointer-events: none;
+    inset: 0;
+    backdrop-filter: blur(10px);
+    border-radius: var(--f-content-radius);
+    box-sizing: border-box;
+  }
+}
+
+:not(.d-flex) > :is(f-card, .fluent-card) + :is(f-card, .fluent-card) {
   margin-top: var(--grid-gutter);
 }

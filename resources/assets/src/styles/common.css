@@ -5,7 +5,7 @@
 :root {
   --root-color: #111;
   --bg-color: #2520208e;
-  --card-bg-color: #333c;
+  --card-bg-color: #24242455;
   --card-color: #eee;
   --card-footer-bg-color: #444c;
   --callout-bg-color: #222c;
@@ -34,13 +34,19 @@
   --dropdown-radius: calc(var(--card-button-radius) + 3px);
   --sidebar-open-width: 240px;
   --sidebar-close-width: 48px;
+
+  --f-radius: 0.5rem;
+  --f-widget-radius: 0.2rem;
+  --f-content-radius: calc(var(--f-radius) - 0.1rem);
+  --f-content-padding: calc(0.5rem + var(--f-radius));
+  --f-dropdown-radius: calc(var(--f-widget-radius) + 0.2rem);
 }
 
 @media (prefers-color-scheme: light) {
   :root {
     --root-color: #fff;
     --bg-color: #dcefff8a;
-    --card-bg-color: #fffc;
+    --card-bg-color: #fff8;
     --card-footer-bg-color: #eeec;
     --card-color: #222;
     --callout-bg-color: #fffc;
