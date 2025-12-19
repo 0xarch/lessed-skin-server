@@ -1,7 +1,8 @@
 .dropdown-menu {
-  transition-property: transform, opacity;
+  /* Animation is disabled due to various layout and visbility issues */
+  /* transition-property: transform, opacity;
   transition-duration: 0.25s;
-  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1); */
 
   position: absolute;
   right: 0px;
