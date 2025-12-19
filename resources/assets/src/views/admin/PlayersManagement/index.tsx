@@ -163,7 +163,7 @@ const PlayersManagement: React.FC = () => {
   }
 
   return (
-    <div className="card">
+    <f-card>
       <Header className="card-header">
         <form className="input-group" onSubmit={handleSubmitQuery}>
           <input
@@ -182,7 +182,7 @@ const PlayersManagement: React.FC = () => {
         </form>
         <div className="btn-group btn-group-toggle">
           <label
-            className={`btn btn-secondary ${isTableMode ? 'active' : ''}`}
+            className={`btn ${isTableMode ? 'active' : ''}`}
             title="Table Mode"
           >
             <input
@@ -194,7 +194,7 @@ const PlayersManagement: React.FC = () => {
             <i className="fas fa-list"></i>
           </label>
           <label
-            className={`btn btn-secondary ${isTableMode ? '' : 'active'}`}
+            className={`btn ${isTableMode ? '' : 'active'}`}
             title="Card Mode"
           >
             <input
@@ -239,7 +239,7 @@ const PlayersManagement: React.FC = () => {
           </table>
         </div>
       ) : (
-        <div className="card-body d-flex flex-wrap">
+        <f-card-body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : players.map((player, i) => (
@@ -252,19 +252,19 @@ const PlayersManagement: React.FC = () => {
                   onDelete={() => handleDelete(player)}
                 />
               ))}
-        </div>
+        </f-card-body>
       )}
-      <div className="card-footer">
-        <div className="float-right">
+      <f-card-footer>
+        <div className="float-right immersive">
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
-      </div>
+      </f-card-footer>
       <ModalUpdateTexture
         open={textureUpdating > -1}
         onSubmit={handleUpdateTexture}
         onClose={handleCloseModalUpdateTexture}
       />
-    </div>
+    </f-card>
   )
 }
 

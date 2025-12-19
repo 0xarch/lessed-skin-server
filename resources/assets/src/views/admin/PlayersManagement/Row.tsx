@@ -63,11 +63,8 @@ const Row: React.FC<Props> = (props) => {
         )}
       </td>
       <td>{player.last_modified}</td>
-      <td className="d-flex flex-wrap">
-        <button
-          className="btn btn-default mr-2"
-          onClick={props.onUpdateTexture}
-        >
+      <td>
+        <button className="btn btn-default" onClick={props.onUpdateTexture}>
           {t('admin.changeTexture')}
         </button>
         <button className="btn btn-danger" onClick={props.onDelete}>
