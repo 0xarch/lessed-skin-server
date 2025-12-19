@@ -1,6 +1,6 @@
 :root {
   --grid-columns: 12;
-  --grid-gutter: 30px;
+  --grid-gutter: 1rem;
   --container-padding: 15px;
   --breakpoint-sm: 576px;
   --breakpoint-md: 768px;
