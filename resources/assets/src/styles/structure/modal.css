@@ -67,7 +67,9 @@
   }
 }
 
+/* Stacking context issue while using backdrop-filter to wrapper, so the backdrop won't work properly, temporaily disabled */
 .modal-backdrop {
   position: fixed;
   inset: 0;
+  pointer-events: none;
 }
