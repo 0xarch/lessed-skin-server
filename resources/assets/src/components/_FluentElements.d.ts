@@ -1,36 +1,22 @@
 import 'react'
 
+type CustomElementProps<T extends HTMLElement> = Omit<
+  React.DetailedHTMLProps<React.HTMLAttributes<T>, T>,
+  'className'
+> & {
+  class?: string
+}
+
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
-      'f-card': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-card-header': React.DedetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-card-body': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-card-footer': React.DetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-subtitle': React.DedetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-navtabs': React.DedetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
-      'f-item': React.DedetailedHTMLProps<
-        React.HTMLAttributes<HTMLElement>,
-        HTMLElement
-      >
+      'f-card': CustomElementProps
+      'f-card-header': CustomElementProps
+      'f-card-body': CustomElementProps
+      'f-card-footer': CustomElementProps
+      'f-subtitle': CustomElementProps
+      'f-navtabs': CustomElementProps
+      'f-item': CustomElementProps
     }
   }
 }

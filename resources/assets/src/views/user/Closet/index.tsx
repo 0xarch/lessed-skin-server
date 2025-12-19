@@ -22,14 +22,6 @@ import { NavTabs } from '@/components/_FluentComponents'
 
 type Category = 'skin' | 'cape'
 
-const updater = debounce(
-  <T extends unknown>(
-    value: React.SetStateAction<T>,
-    setter: React.Dispatch<React.SetStateAction<T>>,
-  ) => setter(value),
-  350,
-)
-
 const Closet: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [category, setCategory] = useState<Category>('skin')
@@ -86,10 +78,15 @@ const Closet: React.FC = () => {
     }
   }
 
+  const debouncedSetQuery = React.useMemo(
+    () => debounce((value: string) => setQuery(value), 350),
+    [setQuery], // setQuery 是稳定的，所以这个 debounced 函数也会是稳定的
+  )
+
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value
     setSearch(value)
-    updater(value, setQuery)
+    debouncedSetQuery
   }
 
   const handlePageChange = (page: number) => setPage(page)

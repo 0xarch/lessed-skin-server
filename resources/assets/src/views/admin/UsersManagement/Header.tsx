@@ -2,13 +2,9 @@ import styled from '@emotion/styled'
 import { lessThan, Breakpoint } from '@/styles/breakpoints'
 
 const Header = styled.div`
-  display: flex;
+  display: flex !important;
   & > div {
-    margin-left: 4px;
-
-    & label {
-      cursor: pointer;
-    }
+    margin-left: auto;
   }
 
   ${lessThan(Breakpoint.sm)} {

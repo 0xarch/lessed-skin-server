@@ -255,7 +255,7 @@ const UsersManagement: React.FC = () => {
   }
 
   return (
-    <div className="card">
+    <f-card>
       <Header className="card-header">
         <form className="input-group" onSubmit={handleSubmitQuery}>
           <input
@@ -300,9 +300,9 @@ const UsersManagement: React.FC = () => {
         </div>
       </Header>
       {users.length === 0 && !isLoading ? (
-        <div className="card-body text-center">{t('general.noResult')}</div>
+        <f-card-body>{t('general.noResult')}</f-card-body>
       ) : isTableMode ? (
-        <div className="card-body table-responsive p-0">
+        <f-card-body class="table-responsive">
           <table className={`table ${isLoading ? '' : 'table-striped'}`}>
             <thead>
               <tr>
@@ -337,9 +337,9 @@ const UsersManagement: React.FC = () => {
                   ))}
             </tbody>
           </table>
-        </div>
+        </f-card-body>
       ) : (
-        <div className="card-body d-flex flex-wrap">
+        <f-card-body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : users.map((user, i) => (
@@ -356,14 +356,14 @@ const UsersManagement: React.FC = () => {
                   onDelete={() => handleDelete(user)}
                 />
               ))}
-        </div>
+        </f-card-body>
       )}
-      <div className="card-footer">
-        <div className="float-right">
+      <f-card-footer>
+        <div className="float-right immersive">
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
-      </div>
-    </div>
+      </f-card-footer>
+    </f-card>
   )
 }
 

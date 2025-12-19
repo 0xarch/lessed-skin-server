@@ -2,7 +2,7 @@ import React from 'react'
 import { t } from '@/scripts/i18n'
 import type { ClosetItem as ClosetItemType } from '@/scripts/types'
 import setAsAvatar from './setAsAvatar'
-import { Card, DropdownButton } from './styles'
+import { DropdownButton } from './styles'
 import styled from '@emotion/styled'
 
 interface Props {
@@ -15,6 +15,7 @@ interface Props {
 
 const Img = styled.img`
   max-width: 100%;
+  max-height: 150px;
 `
 
 const ClosetItem: React.FC<Props> = (props) => {
@@ -29,7 +30,7 @@ const ClosetItem: React.FC<Props> = (props) => {
   const handleSetAsAvatar = () => setAsAvatar(item.tid)
 
   return (
-    <f-card className={`card mr-3 mb-3 ${props.selected ? 'shadow' : ''}`}>
+    <f-card>
       <f-card-body onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
@@ -41,7 +42,7 @@ const ClosetItem: React.FC<Props> = (props) => {
           <span className="text-truncate" title={item.pivot.item_name}>
             {item.pivot.item_name}
           </span>
-          <span className="d-inline-block drop-down">
+          <span>
             <DropdownButton
               data-toggle="dropdown"
               aria-haspopup="true"
