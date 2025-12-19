@@ -1,8 +1,7 @@
 /* Widget: Input(s) */
 
 /* Text input and file label */
-input,
-.custom-file-label {
+input {
   background-color: var(--callout-bg-color);
   color: var(--callout-color);
   min-height: 32px;

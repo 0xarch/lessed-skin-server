@@ -87,6 +87,15 @@ body > .wrapper {
   }
 }
 
+/* File Chooser HACK */
+
+.input-group .custom-file + .input-group-append {
+  & button {
+    border: none;
+    border-left: 0.1rem solid var(--outline-color);
+  }
+}
+
 /* User Panel SPECIFIED */
 
 .nav-item.user-menu > a {
