@@ -170,4 +170,8 @@ select {
     background-color: var(--accent-color);
     color: var(--accent-on-color);
   }
+
+  &:empty {
+    display: none;
+  }
 }
