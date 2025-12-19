@@ -19,7 +19,20 @@
 
   /* root, actual section wrapper */
   & .content {
+    --content-cover-width: 24px;
     overflow: auto;
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0%,
+      black var(--content-cover-width),
+      black calc(100% - var(--content-cover-width)),
+      transparent 100%
+    );
+    padding-bottom: var(--content-cover-width);
+    padding-top: var(--content-cover-width);
+    margin-top: calc(0 - var(--content-cover-width));
+    margin-bottom: calc(0 - var(--content-cover-width));
+    mask-clip: padding-box;
   }
 }
 
