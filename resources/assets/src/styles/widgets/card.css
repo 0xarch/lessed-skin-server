@@ -39,6 +39,11 @@
     & > .card-title {
       font-size: 20px;
     }
+
+    &:last-child {
+      border-bottom-left-radius: var(--card-content-radius);
+      border-bottom-right-radius: var(--card-content-radius);
+    }
   }
 
   & .card-body,
