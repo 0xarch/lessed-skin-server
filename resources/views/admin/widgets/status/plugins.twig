@@ -1,10 +1,10 @@
-<div class="card card-green">
-  <div class="card-header">
+<f-card>
+  <f-card-header>
     <h3 class="card-title">
       {{ trans('admin.status.plugins', {amount: plugins|length}) }}
     </h3>
-  </div>
-  <div class="card-body">
+  </f-card-header>
+  <f-card-body>
     <table class="table table-bordered table-striped">
       <tbody>
         {% for plugin in plugins %}
@@ -15,5 +15,5 @@
         {% endfor %}
       </tbody>
     </table>
-  </div>
-</div>
+  </f-card-body>
+</f-card>

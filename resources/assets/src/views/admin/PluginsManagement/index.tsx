@@ -189,33 +189,33 @@ const PluginsManagement: React.FC = () => {
         )}
       </div>
       <div className="col-lg-4">
-        <div className="card card-primary card-outline">
-          <div className="card-header">
-            <h3 className="card-title">{t('admin.uploadArchive')}</h3>
-          </div>
-          <div className="card-body">
+        <f-card>
+          <f-card-header>
+            <h3>{t('admin.uploadArchive')}</h3>
+          </f-card-header>
+          <f-card-body>
             <p>{t('admin.uploadArchiveNotice')}</p>
             <FileInput
               file={file}
               accept="application/zip"
               onChange={handleFileChange}
             />
-          </div>
-          <div className="card-footer">
+          </f-card-body>
+          <f-card-footer>
             <button
-              className="btn btn-primary float-right"
+              className="btn btn-primary"
               disabled={isUploading}
               onClick={handleUpload}
             >
               {isUploading ? <Loading /> : t('general.submit')}
             </button>
-          </div>
-        </div>
-        <div className="card card-primary card-outline">
-          <div className="card-header">
-            <h3 className="card-title">{t('admin.downloadRemote')}</h3>
-          </div>
-          <div className="card-body">
+          </f-card-footer>
+        </f-card>
+        <f-card>
+          <f-card-header>
+            <h3>{t('admin.downloadRemote')}</h3>
+          </f-card-header>
+          <f-card-body>
             <p>{t('admin.downloadRemoteNotice')}</p>
             <div className="form-group">
               <label htmlFor="zip-url">URL</label>
@@ -228,17 +228,17 @@ const PluginsManagement: React.FC = () => {
                 onChange={handleUrlChange}
               />
             </div>
-          </div>
-          <div className="card-footer">
+          </f-card-body>
+          <f-card-footer>
             <button
-              className="btn btn-primary float-right"
+              className="btn btn-primary"
               disabled={isDownloading}
               onClick={handleSubmitUrl}
             >
               {isDownloading ? <Loading /> : t('general.submit')}
             </button>
-          </div>
-        </div>
+          </f-card-footer>
+        </f-card>
       </div>
     </div>
   )

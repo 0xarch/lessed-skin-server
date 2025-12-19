@@ -112,7 +112,7 @@ const PluginsMarket: React.FC = () => {
   const pagedPlugins = searchedPlugins.slice((page - 1) * 10, page * 10)
 
   return (
-    <div className="card">
+    <f-card>
       <div className="card-header">
         <input
           type="text"
@@ -123,13 +123,13 @@ const PluginsMarket: React.FC = () => {
         />
       </div>
       {isLoading ? (
-        <div className="card-body">
+        <f-card-body>
           <Loading />
-        </div>
+        </f-card-body>
       ) : searchedPlugins.length === 0 ? (
-        <div className="card-body text-center">{t('general.noResult')}</div>
+        <f-card-body>{t('general.noResult')}</f-card-body>
       ) : (
-        <div className="card-body table-responsive p-0">
+        <f-card-body class="table-responsive">
           <table className="table table-striped">
             <thead>
               <tr>
@@ -153,14 +153,14 @@ const PluginsMarket: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </div>
+        </f-card-body>
       )}
-      <div className="card-footer">
-        <div className="float-right">
+      <f-card-footer>
+        <div className="float-right immersive">
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
-      </div>
-    </div>
+      </f-card-footer>
+    </f-card>
   )
 }
 
