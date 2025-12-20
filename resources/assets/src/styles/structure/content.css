@@ -41,6 +41,10 @@
     margin-top: calc(0 - var(--content-cover-width));
     margin-bottom: calc(0 - var(--content-cover-width));
     mask-clip: padding-box;
+
+    &:has(.modal.show) {
+      mask-image: none;
+    }
   }
 }
 
