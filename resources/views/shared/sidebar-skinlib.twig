@@ -3,7 +3,9 @@
     <span class="brand-text font-weight-light">{{ site_name }}</span>
   </a> #}
   <div class="sidebar">
+    {% if auth_check() %}
     {{ include('shared.user-panel') }}
+    {% endif %}
     <nav class="mt-2">
       <ul
         class="nav nav-pills nav-sidebar flex-column nav-child-indent"
