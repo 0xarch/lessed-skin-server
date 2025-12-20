@@ -38,7 +38,7 @@ const Row: React.FC<Props> = (props) => {
         <span>{player.name}</span>
         <ButtonEdit title={t('user.player.edit-pname')} onClick={handleEdit} />
       </td>
-      <td className="d-flex">
+      <td>
         <button className="btn btn-warning" onClick={props.onReset}>
           {t('user.player.delete-texture')}
         </button>

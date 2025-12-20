@@ -12,6 +12,7 @@ import { TextureType } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import FileInput from '@/components/FileInput'
 import ViewerSkeleton from '@/components/ViewerSkeleton'
+import { Card } from '@/components/_FluentComponents'
 
 const Previewer = React.lazy(() => import('@/components/Viewer'))
 
@@ -122,8 +123,8 @@ const Upload: React.FC = () => {
 
   return (
     <>
-      <div className="card card-primary">
-        <div className="card-body">
+      <Card>
+        <body>
           <div className="form-group">
             <label htmlFor="texture-name">
               {t('skinlib.upload.texture-name')}
@@ -139,8 +140,7 @@ const Upload: React.FC = () => {
           </div>
           <div className="form-group">
             <label>{t('skinlib.upload.texture-type')}</label>
-            <br />
-            <label className="mr-4">
+            <label>
               <input
                 type="radio"
                 className="mr-1"
@@ -151,7 +151,7 @@ const Upload: React.FC = () => {
               />
               Steve
             </label>
-            <label className="mr-4">
+            <label>
               <input
                 type="radio"
                 className="mr-1"
@@ -162,7 +162,7 @@ const Upload: React.FC = () => {
               />
               Alex
             </label>
-            <label className="mr-4">
+            <label>
               <input
                 type="radio"
                 className="mr-1"
@@ -186,8 +186,17 @@ const Upload: React.FC = () => {
               dangerouslySetInnerHTML={{ __html: contentPolicy }}
             />
           )}
-        </div>
-        <div className="card-footer">
+
+          {isPrivate && (
+            <div className="callout callout-info mt-3">{privacyNotice}</div>
+          )}
+          {!isPrivate && award > 0 && (
+            <div className="callout callout-success mt-3">
+              {t('skinlib.upload.award', { score: award })}
+            </div>
+          )}
+        </body>
+        <footer>
           <div className="container px-0 d-flex justify-content-between">
             <label
               className="mt-2"
@@ -231,16 +240,8 @@ const Upload: React.FC = () => {
               </div>
             </div>
           )}
-          {isPrivate && (
-            <div className="callout callout-info mt-3">{privacyNotice}</div>
-          )}
-          {!isPrivate && award > 0 && (
-            <div className="callout callout-success mt-3">
-              {t('skinlib.upload.award', { score: award })}
-            </div>
-          )}
-        </div>
-      </div>
+        </footer>
+      </Card>
       {container &&
         ReactDOM.createPortal(
           <React.Suspense fallback={<ViewerSkeleton />}>

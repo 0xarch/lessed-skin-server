@@ -238,7 +238,7 @@ const Closet: React.FC = () => {
           )}
         </f-card-body>
         <f-card-footer>
-          <div className="float-right">
+          <div className="float-right immersive">
             <Pagination
               page={page}
               totalPages={totalPages}
@@ -252,8 +252,6 @@ const Closet: React.FC = () => {
         cape={cape?.hash}
         isAlex={skin?.type === TextureType.Alex}
       >
-        {/* <div className="d-flex justify-content-between">
-        </div> */}
         <button className="btn btn-primary" onClick={applyToPlayer}>
           {t('user.useAs')}
         </button>

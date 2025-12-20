@@ -12,6 +12,7 @@ import InfoBox from './InfoBox'
 import SignButton from './SignButton'
 import * as scoreUtils from './scoreUtils'
 import { ScoreInfo } from '@/scripts/types'
+import { Card } from '@/components/_FluentComponents'
 
 type SignReturn = {
   score: number
@@ -66,7 +67,7 @@ const Dashboard: React.FC = () => {
       setLoading(false)
     }
     fetchInfo()
-  }, [])
+  }, [setTweenedScore])
 
   const handleSign = useCallback(async () => {
     setLoading(true)
@@ -90,18 +91,18 @@ const Dashboard: React.FC = () => {
       toast.error(message)
     }
     setLoading(false)
-  }, [])
+  }, [canSignAfterZero, lastSign, setTweenedScore, signGap])
 
   return (
-    <div className="card immersive">
-      <div className="card-header">
-        <h3 className="card-title">{t('user.used.title')}</h3>
-      </div>
-      <div className="card-body">
+    <Card>
+      <header>
+        <h3>{t('user.used.title')}</h3>
+      </header>
+      <body>
         <div className="row">
           <div className="col-md-7">
             <InfoBox
-              color="teal"
+              color="primary"
               icon="gamepad"
               name={t('user.used.players')}
               used={players}
@@ -110,7 +111,7 @@ const Dashboard: React.FC = () => {
             />
             {storage > 1024 ? (
               <InfoBox
-                color="maroon"
+                color="primary"
                 icon="hdd"
                 name={t('user.used.storage')}
                 used={~~(storage / 1024)}
@@ -119,7 +120,7 @@ const Dashboard: React.FC = () => {
               />
             ) : (
               <InfoBox
-                color="maroon"
+                color="primary"
                 icon="hdd"
                 name={t('user.used.storage')}
                 used={storage}
@@ -136,8 +137,8 @@ const Dashboard: React.FC = () => {
             <ScoreNotice>{t('user.score-notice')}</ScoreNotice>
           </div>
         </div>
-      </div>
-      <div className="card-footer">
+      </body>
+      <footer>
         <SignButton
           isLoading={loading}
           lastSign={lastSign}
@@ -145,8 +146,8 @@ const Dashboard: React.FC = () => {
           signGap={signGap}
           onClick={handleSign}
         />
-      </div>
-    </div>
+      </footer>
+    </Card>
   )
 }
 
