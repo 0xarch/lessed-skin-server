@@ -8,7 +8,7 @@ import type { Player, Paginator } from '@/scripts/types'
 import { toast, showModal } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import Pagination from '@/components/Pagination'
-import Header from '../UsersManagement/Header'
+import { Card as FluentCard } from '@/components/_FluentComponents'
 import Card from './Card'
 import LoadingCard from './LoadingCard'
 import Row from './Row'
@@ -163,8 +163,8 @@ const PlayersManagement: React.FC = () => {
   }
 
   return (
-    <f-card>
-      <Header className="card-header">
+    <FluentCard>
+      <header style={{ display: 'flex', flexWrap: 'wrap' }}>
         <form className="input-group" onSubmit={handleSubmitQuery}>
           <input
             type="text"
@@ -180,7 +180,7 @@ const PlayersManagement: React.FC = () => {
             </button>
           </div>
         </form>
-        <div className="btn-group btn-group-toggle">
+        <div className="btn-group btn-group-toggle ml-auto">
           <label
             className={`btn ${isTableMode ? 'active' : ''}`}
             title="Table Mode"
@@ -206,11 +206,11 @@ const PlayersManagement: React.FC = () => {
             <i className="fas fa-grip-vertical"></i>
           </label>
         </div>
-      </Header>
+      </header>
       {players.length === 0 && !isLoading ? (
-        <div className="card-body text-center">{t('general.noResult')}</div>
+        <body>{t('general.noResult')}</body>
       ) : isTableMode ? (
-        <div className="card-body table-responsive p-0">
+        <body className="table-responsive">
           <table className={`table ${isLoading ? '' : 'table-striped'}`}>
             <thead>
               <tr>
@@ -237,9 +237,9 @@ const PlayersManagement: React.FC = () => {
                   ))}
             </tbody>
           </table>
-        </div>
+        </body>
       ) : (
-        <f-card-body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        <body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : players.map((player, i) => (
@@ -252,19 +252,19 @@ const PlayersManagement: React.FC = () => {
                   onDelete={() => handleDelete(player)}
                 />
               ))}
-        </f-card-body>
+        </body>
       )}
-      <f-card-footer>
+      <footer>
         <div className="float-right immersive">
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
-      </f-card-footer>
+      </footer>
       <ModalUpdateTexture
         open={textureUpdating > -1}
         onSubmit={handleUpdateTexture}
         onClose={handleCloseModalUpdateTexture}
       />
-    </f-card>
+    </FluentCard>
   )
 }
 

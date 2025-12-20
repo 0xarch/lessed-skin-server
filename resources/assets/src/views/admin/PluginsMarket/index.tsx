@@ -9,6 +9,7 @@ import Loading from '@/components/Loading'
 import Pagination from '@/components/Pagination'
 import type { Plugin } from './types'
 import Row from './Row'
+import { Card } from '@/components/_FluentComponents'
 
 enableMapSet()
 
@@ -112,8 +113,8 @@ const PluginsMarket: React.FC = () => {
   const pagedPlugins = searchedPlugins.slice((page - 1) * 10, page * 10)
 
   return (
-    <f-card>
-      <div className="card-header">
+    <Card>
+      <header>
         <input
           type="text"
           className="form-control"
@@ -121,15 +122,15 @@ const PluginsMarket: React.FC = () => {
           value={search}
           onChange={handleSearchChange}
         />
-      </div>
+      </header>
       {isLoading ? (
-        <f-card-body>
+        <body>
           <Loading />
-        </f-card-body>
+        </body>
       ) : searchedPlugins.length === 0 ? (
-        <f-card-body>{t('general.noResult')}</f-card-body>
+        <body>{t('general.noResult')}</body>
       ) : (
-        <f-card-body class="table-responsive">
+        <body className="table-responsive">
           <table className="table table-striped">
             <thead>
               <tr>
@@ -153,14 +154,14 @@ const PluginsMarket: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </f-card-body>
+        </body>
       )}
-      <f-card-footer>
+      <footer>
         <div className="float-right immersive">
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
-      </f-card-footer>
-    </f-card>
+      </footer>
+    </Card>
   )
 }
 

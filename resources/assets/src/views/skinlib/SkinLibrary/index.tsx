@@ -15,6 +15,7 @@ import FilterSelector from './FilterSelector'
 import Button from './Button'
 import Item from './Item'
 import type { Filter, LibraryItem } from './types'
+import { Card } from '@/components/_FluentComponents'
 
 const SkinLibrary: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -187,8 +188,8 @@ const SkinLibrary: React.FC = () => {
         </span>
       </div>
       <section className="content">
-        <f-card>
-          <f-card-header>
+        <Card>
+          <header>
             <div className="form-group d-flex justify-content-between">
               <form onSubmit={handleFormSubmit}>
                 <div className="input-group">
@@ -248,8 +249,8 @@ const SkinLibrary: React.FC = () => {
                 </div>
               </div>
             </div>
-          </f-card-header>
-          <f-card-body>
+          </header>
+          <body>
             {isLoading ? (
               <div className="overlay">
                 <Loading />
@@ -270,8 +271,8 @@ const SkinLibrary: React.FC = () => {
             ) : (
               <p className="text-center">{t('general.noResult')}</p>
             )}
-          </f-card-body>
-          <f-card-footer>
+          </body>
+          <footer>
             <div className="float-right immersive">
               <Pagination
                 page={page}
@@ -279,8 +280,8 @@ const SkinLibrary: React.FC = () => {
                 onChange={setPage}
               />
             </div>
-          </f-card-footer>
-        </f-card>
+          </footer>
+        </Card>
       </section>
     </div>
   )

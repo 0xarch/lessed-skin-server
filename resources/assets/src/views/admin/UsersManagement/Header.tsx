@@ -1,7 +1,7 @@
-import styled from '@emotion/styled'
 import { lessThan, Breakpoint } from '@/styles/breakpoints'
+import { css } from '@emotion/react'
 
-const Header = styled.div`
+const Header = css`
   display: flex !important;
   & > div {
     margin-left: auto;

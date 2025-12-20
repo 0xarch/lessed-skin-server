@@ -38,10 +38,6 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       }
     })
 
-    if (bodyElements.length === 0) {
-      throw new Error('Card组件必须包含至少一个<body>元素')
-    }
-
     headerElement = headerElement!
     footerElement = footerElement!
 

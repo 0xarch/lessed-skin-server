@@ -16,6 +16,7 @@ import ModalApply from '@/views/user/Closet/ModalApply'
 import removeClosetItem from '@/views/user/Closet/removeClosetItem'
 import setAsAvatar from '@/views/user/Closet/setAsAvatar'
 import addClosetItem from './addClosetItem'
+import { Card } from '@/components/_FluentComponents'
 
 export type Badge = {
   color: string
@@ -338,11 +339,11 @@ const Show: React.FC = () => {
           </React.Suspense>,
           container,
         )}
-      <f-card>
-        <f-card-header>
+      <Card>
+        <header>
           <h3>{t('skinlib.show.detail')}</h3>
-        </f-card-header>
-        <f-card-body>
+        </header>
+        <body>
           <div className="container">
             <div className="row mt-2 mb-4">
               <div className="col-4">{t('skinlib.show.name')}</div>
@@ -440,15 +441,15 @@ const Show: React.FC = () => {
               </div>
             </div>
           </div>
-        </f-card-body>
-      </f-card>
+        </body>
+      </Card>
       {canEdit && (
-        <f-card>
-          <f-card-header>
+        <Card>
+          <header>
             <h3>{t('admin.operationsTitle')}</h3>
             <p>{t('skinlib.show.manage-notice')}</p>
-          </f-card-header>
-          <f-card-footer>
+          </header>
+          <footer>
             <button className="btn btn-warning" onClick={handlePrivacyClick}>
               {texture.public
                 ? t('skinlib.setAsPrivate')
@@ -460,8 +461,8 @@ const Show: React.FC = () => {
             >
               {t('skinlib.show.delete-texture')}
             </button>
-          </f-card-footer>
-        </f-card>
+          </footer>
+        </Card>
       )}
       <ModalApply
         show={showModalApply}
