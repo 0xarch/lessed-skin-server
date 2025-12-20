@@ -283,11 +283,14 @@ const Show: React.FC = () => {
                   {t('skinlib.addToCloset')}
                 </button>
               ) : (
-                <div className="d-flex justify-content-between align-items-center">
-                  <div>
+                <div
+                  className="d-flex justify-content-between align-items-center"
+                  style={{ flex: 1 }}
+                >
+                  <div className="btn-group">
                     {liked && (
                       <button
-                        className="btn btn-outline-success mr-2"
+                        className="btn btn-success"
                         onClick={handleOpenModalApply}
                       >
                         {t('skinlib.apply')}
@@ -295,14 +298,14 @@ const Show: React.FC = () => {
                     )}
                     {liked ? (
                       <button
-                        className="btn btn-outline-primary mr-2"
+                        className="btn btn-primary"
                         onClick={handleRemoveItemClick}
                       >
                         {t('skinlib.removeFromCloset')}
                       </button>
                     ) : (
                       <button
-                        className="btn btn-outline-primary mr-2"
+                        className="btn btn-primary"
                         onClick={handleAddItemClick}
                       >
                         {t('skinlib.addToCloset')}
@@ -310,7 +313,7 @@ const Show: React.FC = () => {
                     )}
                     {texture.type !== TextureType.Cape && (
                       <button
-                        className="btn btn-outline-info mr-2"
+                        className="btn btn-outline-info"
                         onClick={handleSetAsAvatar}
                       >
                         {t('user.setAsAvatar')}
@@ -318,14 +321,14 @@ const Show: React.FC = () => {
                     )}
                     {canBeDownloaded && (
                       <button
-                        className="btn btn-outline-info mr-2"
+                        className="btn btn-outline-info"
                         onClick={handleDownloadClick}
                       >
                         {t('skinlib.show.download')}
                       </button>
                     )}
                     <button
-                      className="btn btn-outline-info mr-2"
+                      className="btn btn-outline-info"
                       onClick={handleReport}
                     >
                       {t('skinlib.report.title')}
@@ -344,11 +347,11 @@ const Show: React.FC = () => {
           </React.Suspense>,
           container,
         )}
-      <div className="card card-primary">
-        <div className="card-header">
-          <h3 className="card-title">{t('skinlib.show.detail')}</h3>
-        </div>
-        <div className="card-body">
+      <f-card>
+        <f-card-header>
+          <h3>{t('skinlib.show.detail')}</h3>
+        </f-card-header>
+        <f-card-body>
           <div className="container">
             <div className="row mt-2 mb-4">
               <div className="col-4">{t('skinlib.show.name')}</div>
@@ -446,32 +449,28 @@ const Show: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </f-card-body>
+      </f-card>
       {canEdit && (
-        <div className="card card-warning">
-          <div className="card-header">
-            <h3 className="card-title">{t('admin.operationsTitle')}</h3>
-          </div>
-          <div className="card-body">
+        <f-card>
+          <f-card-header>
+            <h3>{t('admin.operationsTitle')}</h3>
             <p>{t('skinlib.show.manage-notice')}</p>
-          </div>
-          <div className="card-footer">
-            <div className="container d-flex justify-content-between">
-              <button className="btn btn-warning" onClick={handlePrivacyClick}>
-                {texture.public
-                  ? t('skinlib.setAsPrivate')
-                  : t('skinlib.setAsPublic')}
-              </button>
-              <button
-                className="btn btn-danger"
-                onClick={handleDeleteTextureClick}
-              >
-                {t('skinlib.show.delete-texture')}
-              </button>
-            </div>
-          </div>
-        </div>
+          </f-card-header>
+          <f-card-footer>
+            <button className="btn btn-warning" onClick={handlePrivacyClick}>
+              {texture.public
+                ? t('skinlib.setAsPrivate')
+                : t('skinlib.setAsPublic')}
+            </button>
+            <button
+              className="btn btn-danger"
+              onClick={handleDeleteTextureClick}
+            >
+              {t('skinlib.show.delete-texture')}
+            </button>
+          </f-card-footer>
+        </f-card>
       )}
       <ModalApply
         show={showModalApply}

@@ -9,12 +9,9 @@ const Card = styled.div`
   width: 245px;
   transition-property: box-shadow;
   transition-duration: 0.3s;
+  background-color: var(--bg-color);
   &:hover {
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  }
-
-  .card-body {
-    background-color: var(--card-bg-color);
   }
 
   img {
@@ -75,8 +72,8 @@ const Item: React.FC<Props> = (props) => {
   }
 
   return (
-    <a href={link} className="ml-3 mr-2 mb-2 d-block" target="_blank">
-      <Card className="card">
+    <a href={link} target="_blank">
+      <Card className="card immersive">
         <div className="card-body">
           <a href={link} target="_blank">
             <picture>
@@ -99,9 +96,7 @@ const Item: React.FC<Props> = (props) => {
           </div>
           <div className="d-flex justify-content-between">
             <div className="d-flex align-items-center">
-              <Badge className="badge">
-                {humanizeType(item.type)}
-              </Badge>
+              <Badge className="badge">{humanizeType(item.type)}</Badge>
               <NickNameBadge
                 className="badge name-badge"
                 title={t('skinlib.show.uploader')}

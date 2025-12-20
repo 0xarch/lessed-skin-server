@@ -171,27 +171,25 @@ const SkinLibrary: React.FC = () => {
   return (
     <div className="container">
       <div className="content-header">
-        <div className="container-fluid d-flex justify-content-between row">
-          <h1>{t('general.skinlib')}</h1>
-          <span>
-            {uploader ? (
-              <>
-                <i className="fas fa-user mr-1"></i>
-                {t('skinlib.filter.uploader', { uid: uploader })}
-              </>
-            ) : (
-              <>
-                <i className="fas fa-user-friends mr-1"></i>
-                {t('skinlib.filter.allUsers')}
-              </>
-            )}
-          </span>
-        </div>
+        <h1>{t('general.skinlib')}</h1>
+        <span>
+          {uploader ? (
+            <>
+              <i className="fas fa-user mr-1"></i>
+              {t('skinlib.filter.uploader', { uid: uploader })}
+            </>
+          ) : (
+            <>
+              <i className="fas fa-user-friends mr-1"></i>
+              {t('skinlib.filter.allUsers')}
+            </>
+          )}
+        </span>
       </div>
       <section className="content">
-        <div className="card">
-          <div className="card-body">
-            <div className="form-group pt-0 mb-3 d-flex justify-content-between">
+        <f-card>
+          <f-card-header>
+            <div className="form-group d-flex justify-content-between">
               <form onSubmit={handleFormSubmit}>
                 <div className="input-group">
                   <div className="input-group-prepend">
@@ -219,7 +217,7 @@ const SkinLibrary: React.FC = () => {
                   </div>
                 </div>
               </form>
-              <div className="d-none d-sm-block">
+              <div className="d-none">
                 <div className="btn-group">
                   <Button
                     bg="olive"
@@ -250,7 +248,13 @@ const SkinLibrary: React.FC = () => {
                 </div>
               </div>
             </div>
-            {items.length > 0 ? (
+          </f-card-header>
+          <f-card-body>
+            {isLoading ? (
+              <div className="overlay">
+                <Loading />
+              </div>
+            ) : items.length > 0 ? (
               <div className="d-flex flex-wrap">
                 {items.map((item, i) => (
                   <Item
@@ -264,24 +268,19 @@ const SkinLibrary: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <p className="text-center m-5">{t('general.noResult')}</p>
+              <p className="text-center">{t('general.noResult')}</p>
             )}
-          </div>
-          <div className="card-footer">
-            <div className="d-flex justify-content-center">
+          </f-card-body>
+          <f-card-footer>
+            <div className="float-right immersive">
               <Pagination
                 page={page}
                 totalPages={totalPages}
                 onChange={setPage}
               />
             </div>
-          </div>
-          {isLoading && (
-            <div className="overlay">
-              <Loading />
-            </div>
-          )}
-        </div>
+          </f-card-footer>
+        </f-card>
       </section>
     </div>
   )
