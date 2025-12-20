@@ -15,26 +15,53 @@ window.addEventListener('load', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (window.matchMedia('(min-width: 768px)').matches) {
+  const DekstopClientMedia = window.matchMedia('(min-width: 768px)')
+
+  if (DekstopClientMedia.matches) {
     // Current client is Desktop
     if (localStorage.getItem('LSS/WebUI/Sidebar/Status') == 'closed') {
       document.body.classList.add('sidebar-collapse')
     }
   }
 
-  function toggleSidebarStatus(status: boolean) {
-    localStorage.setItem('LSS/WebUI/Sidebar/Status', status ? 'closed' : 'open')
+  function toggleSidebarStatusInLocalStorage(status: boolean) {
+    DekstopClientMedia.matches &&
+      localStorage.setItem(
+        'LSS/WebUI/Sidebar/Status',
+        status ? 'closed' : 'open',
+      )
   }
 
+  let maskElement: JQuery | null
   $('[data-widget="pushmenu"]')?.click(() => {
     const status = document.body.classList.toggle(`sidebar-collapse`)
-    toggleSidebarStatus(status)
+    maskElement?.remove()
+    if (!DekstopClientMedia.matches && status) {
+      const mask = $('<div class="content-mask"></div>')
+      maskElement = mask
+
+      mask.css({
+        position: 'absolute',
+        inset: '0',
+        'z-index': '5000',
+        'border-top-left-radius': 'var(--f-radius)',
+      })
+
+      $('.content-wrapper').append(mask)
+
+      mask.on('click', function (e) {
+        e.stopPropagation()
+        document.body.classList.remove('sidebar-collapse')
+        $(this).remove()
+      })
+    }
+    toggleSidebarStatusInLocalStorage(status)
     return void 0
   })
   $('.main-sidebar')?.click(() => {
     document.body.classList.contains('sidebar-collapse') &&
       document.body.classList.remove(`sidebar-collapse`)
-    toggleSidebarStatus(false)
+    toggleSidebarStatusInLocalStorage(false)
     return void 0
   })
   // 初始化所有树形视图为收起状态

@@ -12,10 +12,17 @@
   margin: 0;
   flex-wrap: wrap;
 
+  will-change: transform;
+  transition: transform 0.25s cubic-bezier(0.075, 0.82, 0.165, 1);
+
   & a {
     color: var(--accent-color);
     text-decoration: none;
   }
+}
+
+.sidebar-collapse .main-footer {
+  transform: translateX(var(--sidebar-open-width));
 }
 
 @media (min-width: 768px) {
@@ -29,6 +36,7 @@
   }
 
   .sidebar-collapse .main-footer {
+    transform: none;
     margin-left: var(--sidebar-close-width);
   }
 }
