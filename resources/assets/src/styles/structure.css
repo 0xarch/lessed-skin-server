@@ -45,7 +45,7 @@ body > .wrapper {
   margin-left: 8px;
   color: var(--accent-color);
 
-  & i,
+  & :not(button, .btn) i,
   & .input-group-text {
     margin-right: 8px;
     cursor: default;
@@ -53,6 +53,23 @@ body > .wrapper {
 
   & button {
     border-radius: 0;
+    min-width: 2.25rem;
+    min-height: 2.25rem;
+  }
+}
+
+.btn-group {
+  & > button,
+  & > .btn {
+    border-radius: 0;
+
+    &:first-child {
+      border-radius: var(--f-widget-radius) var(--f-widget-radius) 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 var(--f-widget-radius) var(--f-widget-radius);
+    }
   }
 }
 
@@ -131,6 +148,10 @@ body > .wrapper {
 
 .d-flex {
   display: flex;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
 }
 
 .flex-column,
