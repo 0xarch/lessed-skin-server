@@ -255,7 +255,7 @@ f-card {
       }
     }
 
-    & > .card-title,
+    & .card-title,
     & > :is(h1, h2, h3, h4, h5, h6) {
       font-size: 1.5rem;
       font-weight: 300;
@@ -266,7 +266,7 @@ f-card {
       }
     }
 
-    & > .card-subtitle,
+    & .card-subtitle,
     & > p,
     & f-subtitle {
       margin-top: var(--f-content-radius);

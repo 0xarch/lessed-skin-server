@@ -6,6 +6,7 @@ import * as fetch from '@/scripts/net'
 import { toast, showModal } from '@/scripts/notify'
 import FileInput from '@/components/FileInput'
 import Loading from '@/components/Loading'
+import Card from '@/components/Fluent/Card'
 import InfoBox from './InfoBox'
 import type { Plugin } from './types'
 
@@ -25,7 +26,7 @@ const PluginsManagement: React.FC = () => {
       setIsLoading(false)
     }
     getPlugins()
-  }, [])
+  }, [setPlugins])
 
   const handleEnable = async (plugin: Plugin, i: number) => {
     const {
@@ -189,19 +190,19 @@ const PluginsManagement: React.FC = () => {
         )}
       </div>
       <div className="col-lg-4">
-        <f-card>
-          <f-card-header>
+        <Card>
+          <header>
             <h3>{t('admin.uploadArchive')}</h3>
-          </f-card-header>
-          <f-card-body>
+          </header>
+          <body>
             <p>{t('admin.uploadArchiveNotice')}</p>
             <FileInput
               file={file}
               accept="application/zip"
               onChange={handleFileChange}
             />
-          </f-card-body>
-          <f-card-footer>
+          </body>
+          <footer>
             <button
               className="btn btn-primary"
               disabled={isUploading}
@@ -209,13 +210,13 @@ const PluginsManagement: React.FC = () => {
             >
               {isUploading ? <Loading /> : t('general.submit')}
             </button>
-          </f-card-footer>
-        </f-card>
-        <f-card>
-          <f-card-header>
+          </footer>
+        </Card>
+        <Card>
+          <header>
             <h3>{t('admin.downloadRemote')}</h3>
-          </f-card-header>
-          <f-card-body>
+          </header>
+          <body>
             <p>{t('admin.downloadRemoteNotice')}</p>
             <div className="form-group">
               <label htmlFor="zip-url">URL</label>
@@ -228,8 +229,8 @@ const PluginsManagement: React.FC = () => {
                 onChange={handleUrlChange}
               />
             </div>
-          </f-card-body>
-          <f-card-footer>
+          </body>
+          <footer>
             <button
               className="btn btn-primary"
               disabled={isDownloading}
@@ -237,8 +238,8 @@ const PluginsManagement: React.FC = () => {
             >
               {isDownloading ? <Loading /> : t('general.submit')}
             </button>
-          </f-card-footer>
-        </f-card>
+          </footer>
+        </Card>
       </div>
     </div>
   )

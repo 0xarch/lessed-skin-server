@@ -15,7 +15,6 @@ const Card: React.FC<CardProps> = ({ children, ...props }) => {
   let headerCount = 0
   let footerCount = 0
 
-  // 遍历和分类子元素
   Children.forEach(childrenArray, (child) => {
     if (!isValidElement(child)) return
 
@@ -38,7 +37,6 @@ const Card: React.FC<CardProps> = ({ children, ...props }) => {
     }
   })
 
-  // 验证必须至少有一个body
   if (bodyElements.length === 0) {
     throw new Error('Card组件必须包含至少一个<body>元素')
   }
@@ -49,10 +47,10 @@ const Card: React.FC<CardProps> = ({ children, ...props }) => {
   return jsx(
     'div',
     {
-      className: 'fluent-card',
+      className: `fluent-card ${props.className}`,
       ...props,
     },
-    // 渲染header部分
+
     headerElement &&
       jsx(
         'header',
@@ -65,7 +63,6 @@ const Card: React.FC<CardProps> = ({ children, ...props }) => {
         headerElement.props.children,
       ),
 
-    // 渲染所有body部分，转换为section标签
     bodyElements.map((body, index) =>
       jsx(
         'section',
@@ -78,7 +75,6 @@ const Card: React.FC<CardProps> = ({ children, ...props }) => {
       ),
     ),
 
-    // 渲染footer部分
     footerElement &&
       jsx(
         'footer',
