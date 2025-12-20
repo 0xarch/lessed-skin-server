@@ -80,30 +80,33 @@ const InfoBox: React.FC<Props> = (props) => {
           {plugin.description}
         </Description>
       </body>
-      <footer>
+      <footer className="flex-wrap">
         {plugin.readme && (
-          <ActionButton
+          <a
+            className="btn"
             href={`${props.baseUrl}/admin/plugins/readme/${plugin.name}`}
             title={t('admin.pluginReadme')}
           >
-            <i className="fas fa-question" />
-          </ActionButton>
+            {t('admin.pluginReadme')}
+          </a>
         )}
         {plugin.enabled && plugin.config && (
-          <ActionButton
+          <a
+            className="btn btn-primary"
             href={`${props.baseUrl}/admin/plugins/config/${plugin.name}`}
             title={t('admin.configurePlugin')}
           >
-            <i className="fas fa-cog" />
-          </ActionButton>
+            {t('admin.configurePlugin')}
+          </a>
         )}
-        <ActionButton
+        <a
+          className="btn btn-danger"
           href="#"
           title={t('admin.deletePlugin')}
           onClick={handleDelete}
         >
-          <i className="fas fa-trash" />
-        </ActionButton>
+          {t('admin.deletePlugin')}
+        </a>
       </footer>
     </Card>
   )
