@@ -61,6 +61,7 @@
 
   .sidebar-collapse .content-wrapper {
     transform: none;
+    filter: none;
     margin: 64px 0px 0px var(--sidebar-close-width);
   }
 }
