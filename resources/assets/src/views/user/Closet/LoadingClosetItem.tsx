@@ -1,16 +1,17 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import Skeleton from 'react-loading-skeleton'
-import { Card, DropdownButton } from './styles'
+import { DropdownButton } from './styles'
+import { Card } from '@/components/_FluentComponents'
 
 const ItemNameSkeleton = styled(Skeleton)`
   width: 150px;
 `
 
 const LoadingClosetItem: React.FC = () => (
-  <Card className="card mr-3 mb-3">
-    <div className="card-body"></div>
-    <div className="card-footer pb-2 pt-2 pl-1 pr-1">
+  <Card>
+    <body></body>
+    <footer>
       <div className="container d-flex justify-content-between">
         <ItemNameSkeleton />
         <span className="d-inline-block">
@@ -19,7 +20,7 @@ const LoadingClosetItem: React.FC = () => (
           </DropdownButton>
         </span>
       </div>
-    </div>
+    </footer>
   </Card>
 )
 

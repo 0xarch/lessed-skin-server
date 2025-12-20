@@ -4,6 +4,7 @@ import type { ClosetItem as ClosetItemType } from '@/scripts/types'
 import setAsAvatar from './setAsAvatar'
 import { DropdownButton } from './styles'
 import styled from '@emotion/styled'
+import { Card } from '@/components/_FluentComponents'
 
 interface Props {
   item: ClosetItemType
@@ -30,14 +31,14 @@ const ClosetItem: React.FC<Props> = (props) => {
   const handleSetAsAvatar = () => setAsAvatar(item.tid)
 
   return (
-    <f-card>
-      <f-card-body onClick={handleItemClick}>
+    <Card>
+      <body onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
           <Img src={previewPNG} alt={item.pivot.item_name} />
         </picture>
-      </f-card-body>
-      <f-card-footer>
+      </body>
+      <footer>
         <div className="container d-flex justify-content-between">
           <span className="text-truncate" title={item.pivot.item_name}>
             {item.pivot.item_name}
@@ -70,8 +71,8 @@ const ClosetItem: React.FC<Props> = (props) => {
             </div>
           </span>
         </div>
-      </f-card-footer>
-    </f-card>
+      </footer>
+    </Card>
   )
 }
 

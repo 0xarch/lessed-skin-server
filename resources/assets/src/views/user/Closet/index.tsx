@@ -18,7 +18,7 @@ import LoadingClosetItem from './LoadingClosetItem'
 import Previewer from './Previewer'
 import ModalApply from './ModalApply'
 import removeClosetItem from './removeClosetItem'
-import { NavTabs } from '@/components/_FluentComponents'
+import { Card, NavTabs } from '@/components/_FluentComponents'
 
 type Category = 'skin' | 'cape'
 
@@ -163,8 +163,8 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <f-card ref={containerRef}>
-        <f-card-header>
+      <Card ref={containerRef}>
+        <header>
           <div className="d-flex justify-content-between">
             <NavTabs
               tabs={[
@@ -200,8 +200,8 @@ const Closet: React.FC = () => {
               />
             </div>
           </div>
-        </f-card-header>
-        <f-card-body>
+        </header>
+        <body>
           {isLoading ? (
             <div className="d-flex flex-wrap">
               {new Array(perPageRef.current).fill(null).map((_, i) => (
@@ -236,8 +236,8 @@ const Closet: React.FC = () => {
               ))}
             </div>
           )}
-        </f-card-body>
-        <f-card-footer>
+        </body>
+        <footer>
           <div className="float-right immersive">
             <Pagination
               page={page}
@@ -245,8 +245,8 @@ const Closet: React.FC = () => {
               onChange={handlePageChange}
             />
           </div>
-        </f-card-footer>
-      </f-card>
+        </footer>
+      </Card>
       <Previewer
         skin={skin?.hash}
         cape={cape?.hash}
