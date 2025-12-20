@@ -235,7 +235,6 @@ f-card {
   & > header {
     z-index: 3;
     display: block;
-    overflow: hidden;
     padding: var(--f-content-padding);
     color: var(--card-color);
     border-radius: var(--f-content-radius) var(--f-content-radius) 0 0;

@@ -42,7 +42,8 @@ body > .wrapper {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  overflow: hidden;
+  overflow: visible;
+  position: relative;
 }
 
 .input-group-append {
