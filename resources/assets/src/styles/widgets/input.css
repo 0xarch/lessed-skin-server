@@ -81,3 +81,8 @@ textarea.form-control {
     border-color: var(--accent-color);
   }
 }
+
+textarea,
+code {
+  font-family: 'Cascadia Mono', 'Hack', 'JetBrains Mono', monospace;
+}
