@@ -312,25 +312,16 @@ const Show: React.FC = () => {
                       </button>
                     )}
                     {texture.type !== TextureType.Cape && (
-                      <button
-                        className="btn btn-outline-info"
-                        onClick={handleSetAsAvatar}
-                      >
+                      <button className="btn" onClick={handleSetAsAvatar}>
                         {t('user.setAsAvatar')}
                       </button>
                     )}
                     {canBeDownloaded && (
-                      <button
-                        className="btn btn-outline-info"
-                        onClick={handleDownloadClick}
-                      >
+                      <button className="btn" onClick={handleDownloadClick}>
                         {t('skinlib.show.download')}
                       </button>
                     )}
-                    <button
-                      className="btn btn-outline-info"
-                      onClick={handleReport}
-                    >
+                    <button className="btn" onClick={handleReport}>
                       {t('skinlib.report.title')}
                     </button>
                   </div>

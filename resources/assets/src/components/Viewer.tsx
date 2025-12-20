@@ -5,7 +5,6 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import * as skinview3d from 'skinview3d'
 import { t } from '@/scripts/i18n'
-import * as cssUtils from '@/styles/utils'
 import * as breakpoints from '@/styles/breakpoints'
 import SkinSteve from '../../../misc/textures/steve.png'
 import bg1 from '../../../misc/backgrounds/1.webp'
@@ -18,6 +17,12 @@ import bg7 from '../../../misc/backgrounds/7.webp'
 
 const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7]
 export const PICTURES_COUNT = backgrounds.length
+
+const CenteredDiv = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 
 interface Props {
   skin?: string
@@ -46,15 +51,16 @@ const ActionButton = styled.i`
 const cssViewer = css`
   flex: 1 1 auto;
   ${breakpoints.greaterThan(breakpoints.Breakpoint.lg)} {
-    min-height: 500px;
+    min-height: 500px !important;
   }
-  min-height: 300px;
+  min-height: 300px !important;
   width: 100%;
   height: 100%;
 
   canvas {
     display: flex;
     justify-content: center;
+    border-radius: var(--f-radius);
   }
 `
 
@@ -186,15 +192,6 @@ const Viewer: React.FC<Props> = (props) => {
     }
   }
 
-  const setWhite = () => {
-    viewRef.current.background = '#fff'
-  }
-  const setGray = () => {
-    viewRef.current.background = '#6c757d'
-  }
-  const setBlack = () => {
-    viewRef.current.background = '#000'
-  }
   const setPrevPicture = () => {
     setBgPicture((index) => {
       if (bgPicture <= 0) {
@@ -215,16 +212,15 @@ const Viewer: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="card immersive">
+    <div className="fluent-card">
       <div className="card-header">
-        {/* <div className="d-flex justify-content-between"> */}
-        <h3 className="card-title">
+        <h3>
           <span>{t('general.texturePreview')}</span>
           {props.showIndicator && (
             <span className="badge bg-olive ml-1">{indicator}</span>
           )}
         </h3>
-        <div className="card-subtitle">
+        <p className="card-subtitle">
           <ActionButton
             className={`fas fa-tablet ${props.cape ? '' : 'd-none'}`}
             data-toggle="tooltip"
@@ -255,45 +251,19 @@ const Viewer: React.FC<Props> = (props) => {
             title={t('general.rotation')}
             onClick={toggleRotate}
           ></ActionButton>
-        </div>
-        {/* </div> */}
+        </p>
       </div>
-      <div ref={containerWrapperRef} css={cssViewer} className="p-0">
+      <div className="card-body" ref={containerWrapperRef} css={cssViewer}>
         <canvas ref={containerRef}></canvas>
       </div>
       <div className="card-footer">
-        <div className="mt-2 mb-3 d-flex">
-          <div
-            className="btn-color bg-white rounded-pill mr-2 elevation-2"
-            title={t('colors.white')}
-            onClick={setWhite}
-          />
-          <div
-            className="btn-color bg-black rounded-pill mr-2 elevation-2"
-            title={t('colors.black')}
-            onClick={setBlack}
-          />
-          <div
-            className="btn-color bg-gray rounded-pill mr-2 elevation-2"
-            title={t('colors.gray')}
-            onClick={setGray}
-          />
-          <div
-            className="btn-color bg-green rounded-pill mr-2 elevation-2"
-            css={cssUtils.center}
-            title={t('colors.prev')}
-            onClick={setPrevPicture}
-          >
+        <div className="d-flex">
+          <CenteredDiv title={t('colors.prev')} onClick={setPrevPicture}>
             <i className="fas fa-arrow-left"></i>
-          </div>
-          <div
-            className="btn-color bg-green rounded-pill mr-2 elevation-2"
-            css={cssUtils.center}
-            title={t('colors.next')}
-            onClick={setNextPicture}
-          >
+          </CenteredDiv>
+          <CenteredDiv title={t('colors.next')} onClick={setNextPicture}>
             <i className="fas fa-arrow-right"></i>
-          </div>
+          </CenteredDiv>
         </div>
         {props.children}
       </div>
