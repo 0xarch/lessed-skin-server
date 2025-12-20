@@ -12,15 +12,15 @@ interface QuickCardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 interface QuickCardSectionProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 type QuickCardBodyType = React.ReactElement<QuickCardSectionProps>
 
 interface QuickCardProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'children'> {
-  header?: React.ReactElement<QuickCardSectionProps>
-  body: QuickCardBodyType | QuickCardBodyType[]
+  header?: React.ReactElement<QuickCardSectionProps> | QuickCardHeaderProps
+  body?: QuickCardBodyType | QuickCardBodyType[]
   footer?: React.ReactElement<QuickCardSectionProps>
 }
 
@@ -144,7 +144,9 @@ const QuickCard: ReturnType<
       if (!header) return null
 
       if (!isQuickCardHeader(header)) {
-        throw new Error('header 必须使用 QuickCardHeader 组件')
+        // 尝试替代QuickCardHeader渲染
+        header = jsx(QuickCardHeader, header)
+        // throw new Error('header 必须使用 QuickCardHeader 组件')
       }
 
       return jsx(
@@ -160,13 +162,15 @@ const QuickCard: ReturnType<
     // 验证并渲染 body
     const renderBody = () => {
       if (!body) {
-        throw new Error('QuickCard 组件必须包含 body')
+        return null
+        // throw new Error('QuickCard 组件必须包含 body')
       }
 
       const bodyArray = Array.isArray(body) ? body : [body]
 
       if (bodyArray.length === 0) {
-        throw new Error('QuickCard 组件必须包含至少一个 body')
+        return null
+        // throw new Error('QuickCard 组件必须包含至少一个 body')
       }
 
       return bodyArray.map((item, index) => {
