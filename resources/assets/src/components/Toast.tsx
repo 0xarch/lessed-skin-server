@@ -26,9 +26,9 @@ const wrapper = css`
   transition-duration: 0.3s;
   background-color: var(--accent-color);
   color: var(--accent-on-color);
-  font-size: 18px;
-  padding: 12px;
-  border-radius: var(--radius);
+  font-size: 1.15rem;
+  padding: 0.25rem 0.25rem 0.25rem 1rem;
+  border-radius: var(--f-widget-radius);
 `
 // const shadow = css`
 //   box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
@@ -67,7 +67,7 @@ const Toast: React.FC<Props> = (props) => {
         <span>{props.children}</span>
         <button
           type="button"
-          className="mr-2 ml-1 close"
+          className="mr-2 ml-1 close timed"
           onClick={props.onClose}
         >
           &times;

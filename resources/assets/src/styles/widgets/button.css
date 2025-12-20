@@ -61,6 +61,33 @@ button.close {
   min-width: unset;
 }
 
+@property --close-anim-step {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+button.close.timed {
+  --close-anim-step: 0deg;
+  animation: button_close_timed_anim 3s linear forwards;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 0deg,
+    transparent var(--close-anim-step),
+    var(--card-bg-color) var(--close-anim-step)
+  );
+}
+
+@keyframes button_close_timed_anim {
+  from {
+    --close-anim-step: 0deg;
+  }
+
+  to {
+    --close-anim-step: 360deg;
+  }
+}
+
 .card:not(.immersive) > footer > :is(button, .btn),
 .card:not(.immersive) .card-footer > :is(button, .btn) {
   height: 48px;
