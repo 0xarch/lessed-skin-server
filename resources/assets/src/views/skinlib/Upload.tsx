@@ -181,23 +181,32 @@ const Upload: React.FC = () => {
           />
 
           {contentPolicy && (
-            <div
-              className="callout callout-warning"
-              dangerouslySetInnerHTML={{ __html: contentPolicy }}
-            />
+            <>
+              <br />
+              <div
+                className="callout callout-warning"
+                dangerouslySetInnerHTML={{ __html: contentPolicy }}
+              />
+            </>
           )}
 
           {isPrivate && (
-            <div className="callout callout-info mt-3">{privacyNotice}</div>
+            <>
+              <br />
+              <div className="callout callout-info mt-3">{privacyNotice}</div>
+            </>
           )}
           {!isPrivate && award > 0 && (
-            <div className="callout callout-success mt-3">
-              {t('skinlib.upload.award', { score: award })}
-            </div>
+            <>
+              <br />
+              <div className="callout callout-success mt-3">
+                {t('skinlib.upload.award', { score: award })}
+              </div>
+            </>
           )}
         </body>
         <footer>
-          <div className="container px-0 d-flex justify-content-between">
+          <div className="container d-flex justify-content-between">
             <label
               className="mt-2"
               htmlFor="is-private"
