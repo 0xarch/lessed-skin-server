@@ -55,13 +55,11 @@
 .callout {
   background-color: var(--callout-bg-color);
   color: var(--callout-color);
-  border: 1px solid var(--outline-light-color);
+  border: 0.1rem solid var(--outline-light-color);
   margin-bottom: calc(var(--grid-gutter) / 2);
-  padding: 2px 8px;
+  padding: 0.5rem;
   border-radius: var(--radius);
-  min-height: 48px;
-  display: flex;
-  align-items: center;
+  min-height: 2rem;
 
   &::before {
     content: '';
