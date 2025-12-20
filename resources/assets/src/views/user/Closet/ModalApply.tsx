@@ -80,6 +80,7 @@ const ModalApply: React.FC<Props> = (props) => {
               onChange={handleSearch}
             />
           </div>
+          <br />
           {players
             .filter((player) => player.name.includes(search))
             .map((player) => (
