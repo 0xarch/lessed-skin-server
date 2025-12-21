@@ -1,7 +1,9 @@
 <mdui-top-app-bar>
-  <mdui-button id="sidebar-toggle-button">抽屉</mdui-button>
+  <mdui-button-icon id="sidebar-toggle-button" icon="menu"></mdui-button-icon>
   <mdui-top-app-bar-title class="brand-link">{{ site_name }}</mdui-top-app-bar-title>
 
+  <div style="flex-grow: 1"></div>
+  
   <ul class="navbar-nav ml-auto">
     {% if auth_check() %}
       {{ include('shared.notifications') }}

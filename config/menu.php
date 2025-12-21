@@ -24,19 +24,19 @@ $menu['user'] = [
 ];
 
 $menu['admin'] = [
-    ['title' => 'general.dashboard',      'link' => 'admin',                'icon' => 'fa-tachometer-alt'],
-    ['title' => 'general.user-manage',    'link' => 'admin/users',          'icon' => 'fa-users'],
-    ['title' => 'general.player-manage',  'link' => 'admin/players',        'icon' => 'fa-gamepad'],
-    ['title' => 'general.report-manage',  'link' => 'admin/reports',        'icon' => 'fa-flag'],
-    ['title' => 'general.customize',      'link' => 'admin/customize',      'icon' => 'fa-paint-brush'],
+    ['title' => 'general.dashboard',      'link' => 'admin',                'icon' => 'dashboard'],
+    ['title' => 'general.user-manage',    'link' => 'admin/users',          'icon' => 'manage_accounts'],
+    ['title' => 'general.player-manage',  'link' => 'admin/players',        'icon' => 'gamepad'],
+    ['title' => 'general.report-manage',  'link' => 'admin/reports',        'icon' => 'report'],
+    ['title' => 'general.customize',      'link' => 'admin/customize',      'icon' => 'dashboard_customize'],
     // ['title' => 'general.i18n',           'link' => 'admin/i18n',           'icon' => 'fa-globe'],
-    ['title' => 'general.score-options',  'link' => 'admin/score',          'icon' => 'fa-credit-card'],
-    ['title' => 'general.options',        'link' => 'admin/options',        'icon' => 'fa-cog'],
-    ['title' => 'general.res-options',    'link' => 'admin/resource',       'icon' => 'fa-atom'],
-    ['title' => 'general.status',         'link' => 'admin/status',         'icon' => 'fa-battery-three-quarters'],
-    ['title' => 'general.plugin-manage',  'link' => 'admin/plugins/manage', 'icon' => 'fa-plug'],
-    ['title' => 'general.plugin-market',  'link' => 'admin/plugins/market', 'icon' => 'fa-shopping-bag'],
-    ['title' => 'general.plugin-configs', 'id' => 'plugin-configs',       'icon' => 'fa-cogs', 'children' => []],
+    ['title' => 'general.score-options',  'link' => 'admin/score',          'icon' => 'credit_score'],
+    ['title' => 'general.options',        'link' => 'admin/options',        'icon' => 'settings'],
+    ['title' => 'general.res-options',    'link' => 'admin/resource',       'icon' => 'image'],
+    ['title' => 'general.status',         'link' => 'admin/status',         'icon' => 'query_stats'],
+    ['title' => 'general.plugin-manage',  'link' => 'admin/plugins/manage', 'icon' => 'extension'],
+    ['title' => 'general.plugin-market',  'link' => 'admin/plugins/market', 'icon' => 'shop'],
+    ['title' => 'general.plugin-configs', 'id' => 'plugin-configs',       'icon' => 'extension', 'children' => []],
     // ['title' => 'general.check-update',   'link' => 'admin/update',         'icon' => 'fa-arrow-up'],
 ];
 

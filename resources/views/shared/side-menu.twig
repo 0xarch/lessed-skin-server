@@ -1,3 +1,9 @@
-{% for item in items %}
-  {{ include('shared.side-menu-item', {item: item}) }}
-{% endfor %}
+{% if design == 'mdui' %}
+  {% for item in items %}
+    {{ include('shared.md-sidemenu-item', {item: item}) }}
+  {% endfor %}
+{% else %}
+  {% for item in items %}
+    {{ include('shared.side-menu-item', {item: item}) }}
+  {% endfor %}
+{% endif %}

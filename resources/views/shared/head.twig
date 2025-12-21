@@ -5,6 +5,7 @@
 <meta name="theme-color" content="{{ theme_color }}">
 <meta name="keywords" content="{{ seo.keywords }}">
 <meta name="description" content="{{ seo.description }}">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
 {{ seo.extra|striptags('<meta>')|raw }}
 {% if custom_cdn_host %}
   <link rel="preconnect" href="{{ custom_cdn_host }}" id="cdn-host" crossorigin>

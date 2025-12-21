@@ -1,0 +1,27 @@
+{% if item.children %}
+  <mdui-list>
+    <mdui-collapse>
+      <mdui-collapse-item>
+        <mdui-list-item slot="header" icon="{{ item.icon }}" end-icon="expand_more" rounded>{{ trans(item.title) }}</mdui-list-item>
+          <div style="margin-left: 2.5rem">
+            {% for child in item.children %}
+              {{ include('shared.md-sidemenu-item', {item: child}) }}
+            {% endfor %}
+          </div>
+      </mdui-collapse-item>
+    </mdui-collapse>
+  </mdui-list>
+{% else %}
+  <mdui-list-item
+    href="{{ url(item.link) }}"
+    {% if attribute(item, 'new-tab') %}
+      target="_blank"
+      rel="noopener noreferrer"
+    {% endif %}
+    rounded
+    icon="{{ item.icon }}"
+    {{ item.active ? 'active' }}
+  >
+    {{ trans(item.title) }}
+  </mdui-list-item>
+{% endif %}
