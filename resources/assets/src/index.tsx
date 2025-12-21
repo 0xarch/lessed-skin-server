@@ -1,6 +1,8 @@
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import $ from 'jquery'
+import 'mdui/mdui.css'
+import 'mdui'
 import './scripts/app'
 import routes from './scripts/route'
 import '@fortawesome/fontawesome-free/css/all.min.css'
