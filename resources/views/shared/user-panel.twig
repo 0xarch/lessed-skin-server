@@ -1,19 +1,21 @@
-<div class="user-panel mt-3 mb-3 {{ badges|length > 0 ? 'pb-2' }}">
+<div style="margin: 0 1rem">
   <div class="d-flex">
-    <div class="image">
-      <picture>
-        <source srcset="{{ avatar }}" type="image/webp">
-        <img src="{{ avatar_png }}" class="bs-avatar" alt="User Image">
-      </picture>
-    </div>
-    <div class="info">
-      <a class="d-block" data-mark="nickname">{{ user.nickname ?? user.email }}</a>
-    </div>
+    <mdui-button variant="elevated" class="topbar-avatar-button">
+      <mdui-avatar slot="icon">
+        <picture>
+          <source srcset="{{ avatar }}" type="image/webp">
+          <img src="{{ avatar_png }}" alt="User Image">
+        </picture>
+      </mdui-avatar>
+      {{ user.nickname ?? user.email }}
+    </mdui-button>
   </div>
 
-  <div class="mt-3 ml-2 mr-2 d-flex flex-wrap">
+
+  <div class="d-flex flex-wrap" style="margin-top: 1rem">
     {% for badge in badges %}
-      <span class="badge bg-{{ badge.color }} mb-1 mr-2">{{ badge.text }}</span>
+      <mdui-badge>{{ badge.text }}</mdui-badge>
     {% endfor %}
   </div>
+  <mdui-divider style="margin: .5rem 0"></mdui-divider>
 </div>

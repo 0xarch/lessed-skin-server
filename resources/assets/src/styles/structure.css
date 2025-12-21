@@ -217,3 +217,11 @@ body > .wrapper {
 text {
   fill: currentColor;
 }
+
+/* MDUI Element HACK */
+
+.topbar-avatar-button {
+  &::part(button) {
+    padding-left: 0;
+  }
+}

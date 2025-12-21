@@ -9,11 +9,11 @@
 */
 
 $menu['user'] = [
-    ['title' => 'general.dashboard',      'link' => 'user',         'icon' => 'fa-tachometer-alt'],
-    ['title' => 'general.my-closet',      'link' => 'user/closet',  'icon' => 'fa-star'],
-    ['title' => 'general.player-manage',  'link' => 'user/player',  'icon' => 'fa-users'],
-    ['title' => 'general.my-reports',     'link' => 'user/reports', 'icon' => 'fa-flag'],
-    ['title' => 'general.profile',        'link' => 'user/profile', 'icon' => 'fa-user'],
+    ['title' => 'general.dashboard',      'link' => 'user',         'icon' => 'dashboard'],
+    ['title' => 'general.my-closet',      'link' => 'user/closet',  'icon' => 'storage'],
+    ['title' => 'general.player-manage',  'link' => 'user/player',  'icon' => 'gamepad'],
+    ['title' => 'general.my-reports',     'link' => 'user/reports', 'icon' => 'report'],
+    ['title' => 'general.profile',        'link' => 'user/profile', 'icon' => 'manage_accounts'],
     // [
     //     'title' => 'general.developer',
     //     'icon' => 'fa-code-branch',
@@ -41,7 +41,7 @@ $menu['admin'] = [
 ];
 
 $menu['explore'] = [
-    ['title' => 'general.skinlib',         'link' => 'skinlib',              'icon' => 'fa-archive'],
+    ['title' => 'general.skinlib',         'link' => 'skinlib',              'icon' => 'archive'],
 ];
 
 return $menu;

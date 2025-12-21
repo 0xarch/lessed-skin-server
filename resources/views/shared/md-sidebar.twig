@@ -1,30 +1,35 @@
 <mdui-navigation-drawer close-on-overlay-click id="main-sidebar" open>
   {% if scope == 'user' %}
-    <nav class="mt-2">
     {{ include('shared.user-panel') }}
-      <ul
-        class="nav nav-pills nav-sidebar flex-column nav-child-indent"
-        data-widget="treeview"
-        role="menu">
-        <li class="nav-header">{{ trans('general.user-center') }}</li>
-        {{ include('shared.side-menu', {type: 'user'}) }}
-        <li class="nav-header">{{ trans('general.explore') }}</li>
-        {{ include('shared.side-menu', {type: 'explore'}) }}
-        {% if auth_user().permission %}
-          {# <li class="nav-header">{{ trans('general.manage') }}</li> #}
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url('admin') }}">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>{{ trans('general.admin-panel') }}</p>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-    </nav>
+    <mdui-list>
+      <mdui-collapse value="user">
+        <mdui-collapse-item value="user">
+          <mdui-list-item slot="header" icon="admin_panel_settings" end-icon="expand_more" rounded>
+            {{ trans('general.user-center') }}
+          </mdui-list-item>
+          <div style="margin-left: 2.5rem">
+            {{ include('shared.side-menu', {type: 'user', design: 'mdui'}) }}
+          </div>
+        </mdui-collapse-item>
+      </mdui-collapse>
+      <mdui-collapse value="explore">
+        <mdui-collapse-item value="explore">
+          <mdui-list-item slot="header" icon="explore" end-icon="expand_more" rounded>
+            {{ trans('general.explore') }}
+          </mdui-list-item>
+          <div style="margin-left: 2.5rem">
+            {{ include('shared.side-menu', {type: 'explore', design: 'mdui'}) }}
+            {% if auth_user().permission %}
+              <mdui-list-item href="{{ url('admin') }}" icon="admin_panel_settings" rounded>{{ trans('general.admin-panel') }}</mdui-list-item>
+            {% endif %}
+          </div>
+        </mdui-collapse-item>
+      </mdui-collapse>
+    </mdui-list>
   {% elseif scope == 'admin' %}
     {{ include('shared.user-panel') }}
     <mdui-list>
-      <mdui-collapse>
+      <mdui-collapse value="admin">
         <mdui-collapse-item value="admin">
           <mdui-list-item slot="header" icon="admin_panel_settings" end-icon="expand_more" rounded>
             {{ trans('general.admin-panel') }}
@@ -33,12 +38,9 @@
             {{ include('shared.side-menu', {type: 'admin', design: 'mdui'}) }}
           </div>
         </mdui-collapse-item>
-        <mdui-collapse-item value="back">
-          <mdui-list-item slot="header" icon="arrow_back" rounded>{{ trans('general.back') }}</mdui-list-item>
-          <mdui-list-item href="{{ url('user') }}" icon="dashboard" rounded>{{ trans('general.user-center') }}</mdui-list-item>
-          <mdui-list-item href="{{ url('skinlib') }}" icon="archive" rounded>{{ trans('general.skinlib') }}</mdui-list-item>
-        </mdui-collapse-item>
       </mdui-collapse>
+      <mdui-list-item href="{{ url('user') }}" icon="dashboard" rounded>{{ trans('general.user-center') }}</mdui-list-item>
+      <mdui-list-item href="{{ url('skinlib') }}" icon="archive" rounded>{{ trans('general.skinlib') }}</mdui-list-item>
     </mdui-list>
   {% endif %}
 </mdui-navigation-drawer>
