@@ -1,19 +1,15 @@
-<f-card>
-  <f-card-header>
-    <h3 class="card-title">
-      {{ trans('admin.status.plugins', {amount: plugins|length}) }}
-    </h3>
-  </f-card-header>
-  <f-card-body>
-    <table class="table table-bordered table-striped">
-      <tbody>
-        {% for plugin in plugins %}
-          <tr>
-            <td>{{ plugin.title }}</td>
-            <td>{{ plugin.version }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </f-card-body>
-</f-card>
+<mdui-card class="md-card mdui-prose" variant="filled">
+  <h3 class="card-title">
+    {{ trans('admin.status.plugins', {amount: plugins|length}) }}
+  </h3>
+  <table class="table table-bordered table-striped">
+    <tbody>
+      {% for plugin in plugins %}
+        <tr>
+          <td>{{ plugin.title }}</td>
+          <td>{{ plugin.version }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</mdui-card>

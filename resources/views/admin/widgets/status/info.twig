@@ -1,22 +1,18 @@
-<f-card>
-  <f-card-header>
-    <h3>{{ trans('admin.status.info') }}</h3>
-  </f-card-header>
-  <f-card-body>
-    <table class="mdui-table">
-      <tbody>
-        {% for category, info in detail %}
+<mdui-card class="md-card mdui-prose">
+  <h3>{{ trans('admin.status.info') }}</h3>
+  <table class="mdui-table">
+    <tbody>
+      {% for category, info in detail %}
+        <tr>
+          <th colspan="2">{{ trans("admin.status.#{category}.name") }}</th>
+        </tr>
+        {% for key, value in info %}
           <tr>
-            <th colspan="2">{{ trans("admin.status.#{category}.name") }}</th>
+            <td>{{ trans("admin.status.#{category}.#{key}") }}</td>
+            <td>{{ value }}</td>
           </tr>
-          {% for key, value in info %}
-            <tr>
-              <td>{{ trans("admin.status.#{category}.#{key}") }}</td>
-              <td>{{ value }}</td>
-            </tr>
-          {% endfor %}
         {% endfor %}
-      </tbody>
-    </table>
-  </f-card-body>
-</f-card>
+      {% endfor %}
+    </tbody>
+  </table>
+</mdui-card>

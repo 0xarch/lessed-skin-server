@@ -220,8 +220,16 @@ text {
 
 /* MDUI Element HACK */
 
+:not(:defined) {
+  visibility: hidden;
+}
+
 .topbar-avatar-button {
   &::part(button) {
     padding-left: 0;
   }
+}
+
+.md-card {
+  padding: 1rem;
 }
