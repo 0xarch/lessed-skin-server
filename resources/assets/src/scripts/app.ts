@@ -17,6 +17,14 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   setColorScheme('#005cbd', { target: $('body')?.[0] })
+
+  const sidebarToggler = $('#sidebar-toggle-button')
+  const sidebarRoot = $('#main-sidebar')[0]
+  sidebarToggler.on('click', () => {
+    // @ts-ignore
+    sidebarRoot.open = !sidebarRoot.open
+  })
+
   const DekstopClientMedia = window.matchMedia('(min-width: 768px)')
 
   if (DekstopClientMedia.matches) {

@@ -1,0 +1,19 @@
+<mdui-top-app-bar>
+  <mdui-button id="sidebar-toggle-button">抽屉</mdui-button>
+  <mdui-top-app-bar-title class="brand-link">{{ site_name }}</mdui-top-app-bar-title>
+
+  <ul class="navbar-nav ml-auto">
+    {% if auth_check() %}
+      {{ include('shared.notifications') }}
+      {# {{ include('shared.languages') }} #}
+      {{ include('shared.user-menu') }}
+    {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{{ url('auth/login') }}">
+          <i class="icon fas fa-sign-in"></i>
+          {{ trans('general.login') }}
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</mdui-top-app-bar>
