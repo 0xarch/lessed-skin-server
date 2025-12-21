@@ -9,7 +9,7 @@
     <mdui-layout style="height: 100vh">
       {{ include('shared.md-header') }}
       {{ include('shared.md-sidebar', {scope: 'admin'}) }}
-      <mdui-layout-main>
+      <mdui-layout-main class="d-flex flex-column">
         <div class="content-header">
           <div class="container-fluid">
             <div class="d-flex justify-content-between flex-wrap">
@@ -22,7 +22,7 @@
             </div>
           </div>
         </div>
-        <section class="content">
+        <section class="content" style="flex: 1">
           <div class="container-fluid">
             {% block content %}{% endblock %}
           </div>
