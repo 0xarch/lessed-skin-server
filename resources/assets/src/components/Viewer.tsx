@@ -14,6 +14,7 @@ import bg4 from '../../../misc/backgrounds/4.webp'
 import bg5 from '../../../misc/backgrounds/5.webp'
 import bg6 from '../../../misc/backgrounds/6.webp'
 import bg7 from '../../../misc/backgrounds/7.webp'
+import { Card, CardHeader } from './_FluentComponents'
 
 const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7]
 export const PICTURES_COUNT = backgrounds.length
@@ -56,10 +57,14 @@ const cssViewer = css`
   min-height: 300px !important;
   width: 100%;
   height: 100%;
+  position: relative;
 
   canvas {
-    display: flex;
-    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
     border-radius: var(--f-radius);
   }
 `
@@ -114,7 +119,7 @@ const Viewer: React.FC<Props> = (props) => {
   const [containerWrapperRef, containerMeasure] = useMeasure<HTMLDivElement>()
   useEffect(() => {
     viewRef.current.setSize(containerMeasure.width, containerMeasure.height)
-  })
+  }, [containerMeasure.width, containerMeasure.height])
 
   useEffect(() => {
     const viewer = viewRef.current
@@ -212,33 +217,26 @@ const Viewer: React.FC<Props> = (props) => {
   }
 
   return (
-    <div className="fluent-card">
-      <div className="card-header">
-        <h3>
-          <span>{t('general.texturePreview')}</span>
-          {props.showIndicator && (
-            <span className="badge bg-olive ml-1">{indicator}</span>
-          )}
-        </h3>
-        <p className="card-subtitle">
+    <Card>
+      <CardHeader
+        title={t('general.texturePreview')}
+        subtitle={props.showIndicator ? indicator : ''}
+      />
+      <div className="card-body" ref={containerWrapperRef} css={cssViewer}>
+        <canvas ref={containerRef}></canvas>
+        <div className="btn-group">
           <ActionButton
             className={`fas fa-tablet ${props.cape ? '' : 'd-none'}`}
-            data-toggle="tooltip"
-            data-placement="bottom"
             title={t('general.switchCapeElytra')}
             onClick={toggleBackEquippment}
           ></ActionButton>
           <ActionButton
             className={`fas fa-person-running`}
-            data-toggle="tooltip"
-            data-placement="bottom"
             title={t('general.switchAnimation')}
             onClick={toggleAnimation}
           ></ActionButton>
           <ActionButton
             className={`fas fa-${paused ? 'play' : 'pause'}`}
-            data-toggle="tooltip"
-            data-placement="bottom"
             title={
               paused ? t('general.playAnimation') : t('general.pauseAnimation')
             }
@@ -246,17 +244,12 @@ const Viewer: React.FC<Props> = (props) => {
           ></ActionButton>
           <ActionButton
             className="fas fa-rotate-right"
-            data-toggle="tooltip"
-            data-placement="bottom"
             title={t('general.rotation')}
             onClick={toggleRotate}
           ></ActionButton>
-        </p>
+        </div>
       </div>
-      <div className="card-body" ref={containerWrapperRef} css={cssViewer}>
-        <canvas ref={containerRef}></canvas>
-      </div>
-      <div className="card-footer">
+      <footer>
         <div className="d-flex">
           <CenteredDiv title={t('colors.prev')} onClick={setPrevPicture}>
             <i className="fas fa-arrow-left"></i>
@@ -266,8 +259,8 @@ const Viewer: React.FC<Props> = (props) => {
           </CenteredDiv>
         </div>
         {props.children}
-      </div>
-    </div>
+      </footer>
+    </Card>
   )
 }
 

@@ -1,5 +1,6 @@
 import React, { isValidElement, Children, forwardRef } from 'react'
 import { jsx } from '@emotion/react'
+import CardHeader from './CardHeader'
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode
@@ -11,30 +12,22 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
 
     let headerElement: React.ReactElement | null = null
     const bodyElements: React.ReactElement[] = []
+    const normalBodyElements: React.ReactElement[] = []
     let footerElement: React.ReactElement | null = null
-
-    let headerCount = 0
-    let footerCount = 0
 
     Children.forEach(childrenArray, (child) => {
       if (!isValidElement(child)) return
 
       const elementType = child.type as keyof JSX.IntrinsicElements
 
-      if (elementType === 'header') {
-        headerCount++
-        if (headerCount > 1) {
-          throw new Error('Card组件只能包含一个<header>元素')
-        }
+      if (elementType === 'header' || child.type == CardHeader) {
         headerElement = child
       } else if (elementType === 'footer') {
-        footerCount++
-        if (footerCount > 1) {
-          throw new Error('Card组件只能包含一个<footer>元素')
-        }
         footerElement = child
       } else if (elementType === 'body') {
         bodyElements.push(child)
+      } else {
+        normalBodyElements.push(child)
       }
     })
 
@@ -50,16 +43,18 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
       },
 
       headerElement &&
-        jsx(
-          'header',
-          {
-            className: `card-header ${
-              headerElement.props.className || ''
-            }`.trim(),
-            ...headerElement.props,
-          },
-          headerElement.props.children,
-        ),
+        (headerElement.type == CardHeader
+          ? headerElement
+          : jsx(
+              'header',
+              {
+                className: `card-header ${
+                  headerElement.props.className || ''
+                }`.trim(),
+                ...headerElement.props,
+              },
+              headerElement.props.children,
+            )),
 
       bodyElements.map((body, index) =>
         jsx(
@@ -72,6 +67,8 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
           body.props.children,
         ),
       ),
+
+      normalBodyElements,
 
       footerElement &&
         jsx(
