@@ -1,6 +1,7 @@
 import JQuery from 'jquery'
 import { ModalOptions, ModalResult } from './components/Modal'
 import { Toast } from './scripts/toast'
+/// <reference types="mdui/jsx.zh-cn.d.ts" />
 
 declare global {
   // eslint-disable-next-line no-redeclare

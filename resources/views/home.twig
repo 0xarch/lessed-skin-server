@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ locale }}">
+<html lang="{{ locale }}" class="mdui-theme-auto">
   <head>
     {{ include('shared.head') }}
     <link rel="preload" as="image" href="{{ home_pic_url }}">
@@ -64,11 +64,11 @@
           </p>
           <p>
             {% if auth_check() %}
-              <a href="{{ url('user') }}" class="main-button">
+              <mdui-button href="{{ url('user') }}">
                 {{ trans('general.user-center') }}
-              </a>
+              </mdui-button>
             {% else %}
-              <a href="{{ url('auth/register') }}" class="main-button">
+              <a href="{{ url('auth/register') }}">
                 {{ trans('general.register') }}
               </a>
             {% endif %}

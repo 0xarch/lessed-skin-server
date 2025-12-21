@@ -8,6 +8,7 @@ import './event'
 import './notification'
 import './emailVerification'
 import './logout'
+import { setColorScheme } from 'mdui'
 // import './darkMode'
 
 window.addEventListener('load', () => {
@@ -15,6 +16,7 @@ window.addEventListener('load', () => {
 })
 
 document.addEventListener('DOMContentLoaded', () => {
+  setColorScheme('#005cbd', { target: $('body')?.[0] })
   const DekstopClientMedia = window.matchMedia('(min-width: 768px)')
 
   if (DekstopClientMedia.matches) {
