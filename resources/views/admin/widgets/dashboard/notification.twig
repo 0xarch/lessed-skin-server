@@ -1,7 +1,5 @@
-<div class="card immersive">
-  <div class="card-header">
-    <h3 class="card-title">{{ trans('admin.notifications.send.title') }}</h3>
-  </div>
+<mdui-card class="md-card mdui-prose">
+  <h3 class="card-title">{{ trans('admin.notifications.send.title') }}</h3>
   <form method="post" action="{{ url('/admin/notifications/send') }}">
     {{ csrf_field() }}
     <div class="card-body">
@@ -12,9 +10,21 @@
       {% if sent_result %}
         <div class="callout callout-success">{{ sent_result }}</div>
       {% endif %}
+      <h4>{{ trans('admin.notifications.receiver.title') }}</h4>
+      <br class="md-br">
+      <mdui-radio-group name="receiver" required>
+        <mdui-radio value="all" class="d-flex">{{ trans('admin.notifications.receiver.all') }}</mdui-radio>
+        <mdui-radio value="normal" class="d-flex">{{ trans('admin.notifications.receiver.normal') }}</mdui-radio>
+        <mdui-radio value="uid" class="d-flex md-radio-unclickable-control">
+          <mdui-text-field label="{{ trans('admin.notifications.receiver.uid') }}" type="number" name="uid" variant="outlined"></mdui-text-field>
+        </mdui-radio>
+        <mdui-radio value="email" class="d-flex md-radio-unclickable-control">
+          <mdui-text-field label="{{ trans('admin.notifications.receiver.email') }}" type="email" name="email" variant="outlined"></mdui-text-field>
+        </mdui-radio>
+      </mdui-radio-group>
       <div class="form-group">
-        <label>{{ trans('admin.notifications.receiver.title') }}</label>
-        <div class="radio">
+        {# <label>{{ trans('admin.notifications.receiver.title') }}</label> #}
+        {# <div class="radio">
         <label>
           <input type="radio" name="receiver" value="all" required>
           {{ trans('admin.notifications.receiver.all') }}
@@ -25,8 +35,8 @@
             <input type="radio" name="receiver" value="normal" required>
             {{ trans('admin.notifications.receiver.normal') }}
           </label>
-        </div>
-        <div class="radio">
+        </div> #}
+        {# <div class="radio">
           <label>
             <input type="radio" name="receiver" value="uid" required>
             {{ trans('admin.notifications.receiver.uid') }} &nbsp;
@@ -39,23 +49,17 @@
             {{ trans('admin.notifications.receiver.email') }} &nbsp;
             <input type="email" name="email" class="form-control">
           </label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label>{{ trans('admin.notifications.title') }}</label>
-        <input type="text" name="title" class="form-control" required>
-      </div>
-      <div class="form-group">
-        <label>{{ trans('admin.notifications.content') }}</label>
-        <textarea name="content" class="form-control" rows="3"></textarea>
+        </div> #}
       </div>
     </div>
-    <div class="card-footer">
-      <input
-        type="submit"
-        value="{{ trans('general.submit') }}"
-        class="btn btn-primary"
-      >
-    </div>
+    <mdui-text-field label="{{ trans('admin.notifications.title') }}" type="text" name="title"></mdui-text-field>
+    <br class="md-br">
+    <mdui-text-field label="{{ trans('admin.notifications.content') }}" type="text" name="content" rows="4"></mdui-text-field>
+    <br class="md-br">
+    <mdui-button
+      type="submit"
+    >
+      {{ trans('general.submit') }}
+    </mdui-button>
   </form>
-</div>
+</mdui-card>
