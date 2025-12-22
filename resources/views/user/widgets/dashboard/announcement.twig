@@ -1,15 +1,12 @@
-<f-card id="announcement-box">
-  <f-card-header>
-    <h3>{{ trans('user.announcement') }}</h3>
-  </f-card-header>
-  <f-card-body>
+<mdui-card id="announcement-box" class="md-card mdui-prose">
+  <h3>{{ trans('user.announcement') }}</h3>
+  <mdui-divider class="md-br"></mdui-divider>
+  <div>
     {{ announcement|raw }}
-  </f-card-body>
+  </div>
   {% if auth_user().permission %}
-    <f-card-footer>
-      <a href="{{ url('/admin/options') }}">
-        <i class="fas fa-edit"></i>
-      </a>
-    </f-card-footer>
+    <mdui-divider class="md-br"></mdui-divider>
+      <mdui-button-icon href="{{ url('/admin/options') }}" icon="edit">
+      </mdui-button-icon>
   {% endif %}
-</f-card>
+</mdui-card>
