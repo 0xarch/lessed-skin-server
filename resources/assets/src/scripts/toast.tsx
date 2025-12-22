@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { nanoid } from 'nanoid'
 import * as emitter from './event'
 import ToastBox, { ToastType } from '../components/Toast'
+import { snackbar } from 'mdui'
 
 type QueueElement = { id: string; type: ToastType; message: string }
 type ToastQueue = QueueElement[]
@@ -53,33 +54,52 @@ export const ToastContainer: React.FC = () => {
 }
 
 export class Toast {
-  private container: HTMLDivElement
+  // private container: HTMLDivElement
 
   constructor(render?: (element: JSX.Element) => void) {
-    this.container = document.createElement('div')
-    document.body.appendChild(this.container)
-
-    if (render) {
-      render(<ToastContainer />)
-    } else {
-      ReactDOM.render(<ToastContainer />, this.container)
-    }
+    // this.container = document.createElement('div')
+    // document.body.appendChild(this.container)
+    // if (render) {
+    //   render(<ToastContainer />)
+    // } else {
+    //   ReactDOM.render(<ToastContainer />, this.container)
+    // }
   }
 
   success(message: string) {
-    emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'success', message })
+    snackbar({
+      message,
+      placement: 'top',
+    })
+    console.error('Deprecated toast.success called. Use snackbar instead.')
+    // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'success', message })
   }
 
   info(message: string) {
-    emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'info', message })
+    snackbar({
+      message,
+      placement: 'top',
+    })
+    console.error('Deprecated toast.success called. Use snackbar instead.')
+    // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'info', message })
   }
 
   warning(message: string) {
-    emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'warning', message })
+    snackbar({
+      message,
+      placement: 'top',
+    })
+    console.error('Deprecated toast.warning called. Use snackbar instead.')
+    // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'warning', message })
   }
 
   error(message: string) {
-    emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'error', message })
+    snackbar({
+      message,
+      placement: 'top',
+    })
+    console.error('Deprecated toast.error called. Use snackbar instead.')
+    // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'error', message })
   }
 
   clear() {
@@ -87,7 +107,7 @@ export class Toast {
   }
 
   dispose() {
-    ReactDOM.unmountComponentAtNode(this.container)
-    this.container.remove()
+    // ReactDOM.unmountComponentAtNode(this.container)
+    // this.container.remove()
   }
 }
