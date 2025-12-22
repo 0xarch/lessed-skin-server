@@ -8,7 +8,7 @@ import './event'
 import './notification'
 import './emailVerification'
 import './logout'
-import { RangeSlider, setColorScheme } from 'mdui'
+import { breakpoint, NavigationDrawer, RangeSlider, setColorScheme } from 'mdui'
 // import './darkMode'
 
 window.addEventListener('load', () => {
@@ -17,13 +17,30 @@ window.addEventListener('load', () => {
 
 document.addEventListener('DOMContentLoaded', () => {
   setColorScheme('#005cbd', { target: $('body')?.[0] })
+  function toggleSidebarStatusInLocalStorage(status: boolean) {
+    DekstopClientMedia.matches &&
+      localStorage.setItem(
+        'LSS/WebUI/Sidebar/Status',
+        status ? 'closed' : 'open',
+      )
+  }
 
   const sidebarToggler = $('#sidebar-toggle-button')
-  const sidebarRoot = $('#main-sidebar')[0]
+  const sidebarRoot = $<NavigationDrawer>('#main-sidebar')[0]
   sidebarToggler.on('click', () => {
-    // @ts-ignore
-    sidebarRoot.open = !sidebarRoot.open
+    if (sidebarRoot) {
+      sidebarRoot.open = !sidebarRoot.open
+      if (!breakpoint().down('md'))
+        toggleSidebarStatusInLocalStorage(sidebarRoot.open)
+    }
   })
+
+  if (sidebarRoot && !breakpoint().down('md')) {
+    // MDUI Desktop
+    if (localStorage.getItem('LSS/WebUI/Sidebar/Status') == 'closed') {
+      sidebarRoot.open = true
+    }
+  }
 
   const DekstopClientMedia = window.matchMedia('(min-width: 768px)')
 
@@ -32,14 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('LSS/WebUI/Sidebar/Status') == 'closed') {
       document.body.classList.add('sidebar-collapse')
     }
-  }
-
-  function toggleSidebarStatusInLocalStorage(status: boolean) {
-    DekstopClientMedia.matches &&
-      localStorage.setItem(
-        'LSS/WebUI/Sidebar/Status',
-        status ? 'closed' : 'open',
-      )
   }
 
   let maskElement: JQuery | null
