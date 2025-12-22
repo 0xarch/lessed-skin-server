@@ -5,7 +5,8 @@ export default async function handler(event: Event) {
   event.preventDefault()
 
   const form = event.target as HTMLFormElement
-  const nickname: string = form.nickname.value
+  const formData = new FormData(form)
+  const nickname: string = formData.get('nickname') as string
 
   const { code, message }: ResponseBody = await post(
     '/user/profile?action=nickname',

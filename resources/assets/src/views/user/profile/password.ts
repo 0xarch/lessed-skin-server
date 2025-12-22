@@ -6,9 +6,10 @@ export default async function handler(event: Event) {
   event.preventDefault()
 
   const form = event.target as HTMLFormElement
-  const oldPassword = form.oldPassword.value
-  const newPassword = form.newPassword.value
-  const confirmPassword = form.confirm.value
+  const formData = new FormData(form)
+  const oldPassword = formData.get('oldPassword') as string
+  const newPassword = formData.get('newPassword') as string
+  const confirmPassword = formData.get('confirm') as string
 
   if (newPassword !== confirmPassword) {
     toast.error(t('auth.invalidConfirmPwd'))
