@@ -23,7 +23,7 @@ if (container) {
 
 async function handleMDUINotifications(notificationContainer: HTMLElement) {
   try {
-    const { alert } = await import('mdui/functions/alert.js')
+    const { dialog } = await import('mdui/functions/dialog.js')
     const notificationItems =
       notificationContainer.querySelectorAll('.notification-item')
 
@@ -54,48 +54,53 @@ async function handleMDUINotifications(notificationContainer: HTMLElement) {
 
           const data = await response.json()
 
-          await alert({
+          dialog({
             headline: data.title,
-            description: data.content,
-            confirmText: t('general.confirm'),
-            onConfirm: () => {
-              const badge = notificationContainer.querySelector('mdui-badge')
-              const listItem = item.closest('mdui-list-item')
+            body: data.content,
+            actions: [
+              {
+                text: t('general.confirm'),
+                onClick: () => {
+                  const badge =
+                    notificationContainer.querySelector('mdui-badge')
+                  const listItem = item.closest('mdui-list-item')
 
-              if (listItem) {
-                listItem.remove()
-              }
-
-              const remainingItems =
-                notificationContainer.querySelectorAll('.notification-item')
-              const notificationCount = remainingItems.length
-
-              if (badge) {
-                if (notificationCount > 0) {
-                  badge.textContent = notificationCount.toString()
-                } else {
-                  badge.remove()
-                  const button = notificationContainer.querySelector(
-                    'mdui-button[slot="trigger"]',
-                  )
-                  if (button) {
-                    button.setAttribute('icon', 'notifications_none')
+                  if (listItem) {
+                    listItem.remove()
                   }
 
-                  const list = document.querySelector('mdui-list')
-                  if (list && list.children.length === 0) {
-                    const noNotifications =
-                      document.createElement('mdui-list-item')
-                    noNotifications.className =
-                      'text-muted text-center no-notifications'
-                    noNotifications.textContent =
-                      document.querySelector('.no-notifications')
-                        ?.textContent || t('user.no-unread')
-                    list.appendChild(noNotifications)
+                  const remainingItems =
+                    notificationContainer.querySelectorAll('.notification-item')
+                  const notificationCount = remainingItems.length
+
+                  if (badge) {
+                    if (notificationCount > 0) {
+                      badge.textContent = notificationCount.toString()
+                    } else {
+                      badge.remove()
+                      const button = notificationContainer.querySelector(
+                        'mdui-button[slot="trigger"]',
+                      )
+                      if (button) {
+                        button.setAttribute('icon', 'notifications_none')
+                      }
+
+                      const list = document.querySelector('mdui-list')
+                      if (list && list.children.length === 0) {
+                        const noNotifications =
+                          document.createElement('mdui-list-item')
+                        noNotifications.className =
+                          'text-muted text-center no-notifications'
+                        noNotifications.textContent =
+                          document.querySelector('.no-notifications')
+                            ?.textContent || t('user.no-unread')
+                        list.appendChild(noNotifications)
+                      }
+                    }
                   }
-                }
-              }
-            },
+                },
+              },
+            ],
           })
         } catch (error) {
           console.error('Error fetching notification:', error)
