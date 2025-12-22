@@ -15,10 +15,10 @@ body > .wrapper {
   background-color: var(--bg-color);
 }
 
-@import './structure/navbar.css';
-@import './structure/sidebar.css';
-@import './structure/content.css';
-@import './structure/footer.css';
+/* @import './structure/navbar.css'; */
+/* @import './structure/sidebar.css'; */
+/* @import './structure/content.css'; */
+/* @import './structure/footer.css'; */
 
 @import './structure/dropdown.css';
 @import './structure/modal.css';

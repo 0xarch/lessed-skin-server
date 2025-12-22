@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="{{ locale }}">
+<html lang="{{ locale }}" class="mdui-theme-auto">
   <head>
     {{ include('shared.head') }}
     <title>{% block title %}{% endblock %} - {{ site_name }}</title>
   </head>
 
-  <body class="hold-transition layout-top-nav">
-    <div class="wrapper">
+  <body>
+    <mdui-layout style="height: 100vh">
       {# <nav class="main-header navbar navbar-expand navbar-{{ navbar_color }} navbar-{{ color_mode }} ml-0">
         <div class="container">
           <div class="navbar-header">
@@ -31,17 +31,18 @@
           </div>
         </div>
       </nav> #}
-      {{ include('shared.header') }}
-      {{ include('shared.sidebar-skinlib', {scope: 'user'}) }}
+      {{ include('shared.md-header') }}
+      {{ include('shared.md-sidebar-skinlib', {scope: 'user'}) }}
 
-      {% block content %}{% endblock %}
-
-      <footer class="main-footer">
-        {# <div class="container"> #}
-          {{ include('shared.copyright') }}
-        {# </div> #}
-      </footer>
-    </div>
+      <mdui-layout-main class="d-flex flex-column content-wrapper">
+        {% block content %}{% endblock %}
+        <footer class="main-footer">
+          {# <div class="container"> #}
+            {{ include('shared.copyright') }}
+          {# </div> #}
+        </footer>
+      </mdui-layout-main>
+    </mdui-layout>
     {% block before_foot %}{% endblock %}
     {{ include('shared.foot') }}
   </body>
