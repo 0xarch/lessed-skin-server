@@ -1,13 +1,21 @@
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { showModal } from '@/scripts/notify'
 import urls from '@/scripts/urls'
+import { snackbar, confirm } from 'mdui'
 
 export default async function setAsAvatar(tid: number) {
   try {
-    await showModal({
-      title: t('user.setAvatar'),
-      text: t('user.setAvatarNotice'),
+    await new Promise((resolve, reject) => {
+      confirm({
+        headline: t('user.setAvatar'),
+        description: t('user.setAvatarNotice'),
+        confirmText: t('general.confirm'),
+        cancelText: t('general.cancel'),
+        onConfirm: resolve,
+        onCancel: reject,
+        onClose: reject,
+      })
     })
   } catch {
     return
@@ -18,13 +26,19 @@ export default async function setAsAvatar(tid: number) {
     { tid },
   )
   if (code === 0) {
-    toast.success(message)
+    snackbar({
+      message,
+      placement: 'top',
+    })
     document
       .querySelectorAll<HTMLImageElement>('[alt="User Image"]')
       .forEach((el) => {
         el.src = `${blessing.base_url}/avatar/${tid}`
       })
   } else {
-    toast.error(message)
+    snackbar({
+      message,
+      placement: 'top',
+    })
   }
 }

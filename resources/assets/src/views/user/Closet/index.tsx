@@ -4,7 +4,7 @@ import debounce from 'lodash.debounce'
 import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { showModal } from '@/scripts/notify'
 import {
   ClosetItem as Item,
   Texture,
@@ -18,7 +18,7 @@ import LoadingClosetItem from './LoadingClosetItem'
 import Previewer from './Previewer'
 import ModalApply from './ModalApply'
 import removeClosetItem from './removeClosetItem'
-import { Card, NavTabs } from '@/components/_FluentComponents'
+import { alert, prompt, snackbar } from 'mdui'
 
 type Category = 'skin' | 'cape'
 
@@ -115,15 +115,24 @@ const Closet: React.FC = () => {
   const renameItem = async (item: Item, index: number) => {
     let name: string
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('user.renameClosetItem'),
-        input: item.pivot.item_name,
-        validator: (value: string) => {
-          if (!value) {
-            return t('skinlib.emptyNewTextureName')
-          }
-        },
+      const value = await new Promise<string>((resolve, reject) => {
+        prompt({
+          description: t('user.renameClosetItem'),
+          confirmText: t('user.renameItem'),
+          cancelText: t('general.cancel'),
+          onConfirm: (value) => {
+            if (!value) {
+              alert({
+                description: t('skinlib.emptyNewTextureName'),
+              })
+              return false
+            }
+            resolve(value)
+            return true
+          },
+          onCancel: reject,
+          onClose: reject,
+        })
       })
       name = value
     } catch {
@@ -135,13 +144,13 @@ const Closet: React.FC = () => {
       { name },
     )
     if (code === 0) {
-      toast.success(message)
+      snackbar({ message, placement: 'top', closeable: true })
       setItems((items) => {
         items[index] = { ...item, pivot: { ...item.pivot, item_name: name } }
         return items.slice()
       })
     } else {
-      toast.error(message)
+      snackbar({ message, placement: 'top' })
     }
   }
 
@@ -155,7 +164,10 @@ const Closet: React.FC = () => {
 
   const applyToPlayer = () => {
     if (!skin && !cape) {
-      toast.info(t('user.emptySelectedTexture'))
+      snackbar({
+        message: t('user.emptySelectedTexture'),
+        placement: 'top',
+      })
       return
     }
     setShowModalApply(true)
@@ -163,82 +175,89 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <Card ref={containerRef}>
-        <header>
-          <div className="d-flex justify-content-between">
-            <NavTabs
-              tabs={[
-                {
-                  type: 'event',
-                  title: t('general.skin'),
-                  onClick: switchCategoryToSkin,
-                },
-                {
-                  type: 'event',
-                  title: t('general.cape'),
-                  onClick: switchCategoryToCape,
-                },
-                {
-                  type: 'hyperlink',
-                  href: `${blessing.base_url}/skinlib/upload`,
-                  title: t('user.closet.upload'),
-                  class: 'd-none d-md-block',
-                },
-              ]}
-              active={
-                category === 'skin' ? 0 : category === TextureType.Cape ? 1 : -1
-              }
-            />
-            <div className="mr-3 my-2 my-lg-0">
-              <input
-                type="search"
-                value={search}
-                className="form-control mr-sm-2"
-                aria-label="Search"
-                placeholder={t('user.typeToSearch')}
-                onChange={handleSearch}
-              />
-            </div>
-          </div>
-        </header>
-        <body>
-          {isLoading ? (
-            <div className="d-flex flex-wrap">
-              {new Array(perPageRef.current).fill(null).map((_, i) => (
-                <LoadingClosetItem key={i} />
-              ))}
-            </div>
-          ) : items.length === 0 ? (
-            <div className="text-center p-3">
-              {search ? (
-                t('general.noResult')
-              ) : (
-                <span
-                  dangerouslySetInnerHTML={{
-                    __html: t('user.emptyClosetMsg', {
-                      url: `${blessing.base_url}/skinlib?filter=${category}`,
-                    }),
-                  }}
-                ></span>
-              )}
-            </div>
-          ) : (
-            <div className="d-flex flex-wrap">
-              {items.map((item, i) => (
-                <ClosetItem
-                  key={item.tid}
-                  item={item}
-                  selected={isSelected(item)}
-                  onClick={handleSelect}
-                  onRename={() => renameItem(item, i)}
-                  onRemove={() => removeItem(item)}
-                />
-              ))}
-            </div>
-          )}
-        </body>
+      <mdui-card ref={containerRef} class="md-card mdui-prose">
+        <mdui-tabs value="tab-skin">
+          <mdui-tab value="tab-skin" onClick={switchCategoryToSkin}>
+            {t('general.skin')}
+          </mdui-tab>
+          <mdui-tab value="tab-cape" onClick={switchCategoryToCape}>
+            {t('general.cape')}
+          </mdui-tab>
+          <mdui-tab-panel slot="panel" value="tab-skin">
+            {isLoading ? (
+              <div className="d-flex flex-wrap">
+                {new Array(perPageRef.current).fill(null).map((_, i) => (
+                  <LoadingClosetItem key={i} />
+                ))}
+              </div>
+            ) : items.length === 0 ? (
+              <div className="text-center p-3">
+                {search ? (
+                  t('general.noResult')
+                ) : (
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t('user.emptyClosetMsg', {
+                        url: `${blessing.base_url}/skinlib?filter=${category}`,
+                      }),
+                    }}
+                  ></span>
+                )}
+              </div>
+            ) : (
+              <div className="d-flex flex-wrap">
+                {items.map((item, i) => (
+                  <ClosetItem
+                    key={item.tid}
+                    item={item}
+                    selected={isSelected(item)}
+                    onClick={handleSelect}
+                    onRename={() => renameItem(item, i)}
+                    onRemove={() => removeItem(item)}
+                  />
+                ))}
+              </div>
+            )}
+          </mdui-tab-panel>
+          <mdui-tab-panel slot="panel" value="tab-cape">
+            {isLoading ? (
+              <div className="d-flex flex-wrap">
+                {new Array(perPageRef.current).fill(null).map((_, i) => (
+                  <LoadingClosetItem key={i} />
+                ))}
+              </div>
+            ) : items.length === 0 ? (
+              <div className="text-center p-3">
+                {search ? (
+                  t('general.noResult')
+                ) : (
+                  <span
+                    dangerouslySetInnerHTML={{
+                      __html: t('user.emptyClosetMsg', {
+                        url: `${blessing.base_url}/skinlib?filter=${category}`,
+                      }),
+                    }}
+                  ></span>
+                )}
+              </div>
+            ) : (
+              <div className="d-flex flex-wrap">
+                {items.map((item, i) => (
+                  <ClosetItem
+                    key={item.tid}
+                    item={item}
+                    selected={isSelected(item)}
+                    onClick={handleSelect}
+                    onRename={() => renameItem(item, i)}
+                    onRemove={() => removeItem(item)}
+                  />
+                ))}
+              </div>
+            )}
+          </mdui-tab-panel>
+        </mdui-tabs>
         <footer>
-          <div className="float-right immersive">
+          <div style={{ marginLeft: 'auto', width: 'fit-content' }}>
             <Pagination
               page={page}
               totalPages={totalPages}
@@ -246,18 +265,17 @@ const Closet: React.FC = () => {
             />
           </div>
         </footer>
-      </Card>
+      </mdui-card>
       <Previewer
         skin={skin?.hash}
         cape={cape?.hash}
         isAlex={skin?.type === TextureType.Alex}
       >
-        <button className="btn btn-primary" onClick={applyToPlayer}>
-          {t('user.useAs')}
-        </button>
-        <button className="btn btn-default" onClick={resetSelected}>
+        <mdui-button onClick={applyToPlayer}>{t('user.useAs')}</mdui-button>
+        <mdui-divider vertical class="md-br" />
+        <mdui-button variant="outlined" onClick={resetSelected}>
           {t('user.resetSelected')}
-        </button>
+        </mdui-button>
       </Previewer>
       <ModalApply
         show={showModalApply}

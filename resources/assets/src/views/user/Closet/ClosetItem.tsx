@@ -31,48 +31,43 @@ const ClosetItem: React.FC<Props> = (props) => {
   const handleSetAsAvatar = () => setAsAvatar(item.tid)
 
   return (
-    <Card>
-      <body onClick={handleItemClick}>
+    <mdui-card class="md-short-card">
+      <div onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
           <Img src={previewPNG} alt={item.pivot.item_name} />
         </picture>
-      </body>
+      </div>
       <footer>
         <div className="container d-flex justify-content-between">
           <span className="text-truncate" title={item.pivot.item_name}>
             {item.pivot.item_name}
           </span>
           <span>
-            <DropdownButton
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              <i className="fas fa-cog" />
-            </DropdownButton>
-            <div className="dropdown-menu">
-              <a href="#" className="dropdown-item" onClick={props.onRename}>
-                {t('user.renameItem')}
-              </a>
-              <a href="#" className="dropdown-item" onClick={props.onRemove}>
-                {t('user.removeItem')}
-              </a>
-              <a
-                href={`${blessing.base_url}/skinlib/show/${item.tid}`}
-                className="dropdown-item"
-                target="_blank"
-              >
-                {t('user.viewInSkinlib')}
-              </a>
-              <a href="#" className="dropdown-item" onClick={handleSetAsAvatar}>
-                {t('user.setAsAvatar')}
-              </a>
-            </div>
+            <mdui-dropdown>
+              <mdui-button-icon icon="more_vert" slot="trigger" />
+              <mdui-menu>
+                <mdui-menu-item onClick={props.onRename}>
+                  {t('user.renameItem')}
+                </mdui-menu-item>
+                <mdui-menu-item onClick={props.onRemove}>
+                  {t('user.removeItem')}
+                </mdui-menu-item>
+                <mdui-menu-item
+                  href={`${blessing.base_url}/skinlib/show/${item.tid}`}
+                  target="_blank"
+                >
+                  {t('user.viewInSkinlib')}
+                </mdui-menu-item>
+                <mdui-menu-item onClick={handleSetAsAvatar}>
+                  {t('user.setAsAvatar')}
+                </mdui-menu-item>
+              </mdui-menu>
+            </mdui-dropdown>
           </span>
         </div>
       </footer>
-    </Card>
+    </mdui-card>
   )
 }
 

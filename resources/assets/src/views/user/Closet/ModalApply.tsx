@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
-import $ from 'jquery'
+import React, { useState, useEffect, useRef } from 'react'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { toast } from '@/scripts/notify'
 import type { Player } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import Loading from '@/components/Loading'
-import Modal from '@/components/Modal'
+import { Dialog, snackbar } from 'mdui'
 
 const baseUrl = blessing.base_url
 
@@ -22,6 +20,8 @@ const ModalApply: React.FC<Props> = (props) => {
   const [players, setPlayers] = useState<Player[]>([])
   const [search, setSearch] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+
+  const modalRef = useRef<Dialog>(null)
 
   useEffect(() => {
     if (!props.show) {
@@ -50,21 +50,34 @@ const ModalApply: React.FC<Props> = (props) => {
       },
     )
     if (code === 0) {
-      toast.success(message)
-      $('#modal-apply').modal('hide')
+      snackbar({
+        message,
+        placement: 'top',
+        closeable: true,
+      })
+      if (modalRef.current) modalRef.current.open = false
     } else {
-      toast.error(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
     }
   }
 
+  useEffect(() => {
+    modalRef.current?.addEventListener('close', () => {
+      props.onClose()
+    })
+  })
+
   return (
-    <Modal
-      show={props.show}
+    <mdui-dialog
+      open={props.show}
       id="modal-apply"
-      title={t('user.closet.use-as.title')}
-      flexFooter
-      footer={<></>}
-      onClose={props.onClose}
+      headline={t('user.closet.use-as.title')}
+      ref={modalRef}
+      close-on-esc
+      close-on-overlay-click
     >
       {isLoading ? (
         <Loading />
@@ -72,42 +85,45 @@ const ModalApply: React.FC<Props> = (props) => {
         <p>{t('user.closet.use-as.empty')}</p>
       ) : (
         <>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              placeholder={t('user.typeToSearch')}
-              onChange={handleSearch}
-            />
-          </div>
+          <mdui-text-field
+            variant="outlined"
+            end-icon="search"
+            onChange={handleSearch}
+            placeholder={t('user.typeToSearch')}
+          />
           <br />
           {players
             .filter((player) => player.name.includes(search))
             .map((player) => (
-              <button
-                key={player.pid}
-                className="btn btn-block btn-outline-info text-left"
-                title={player.name}
-                onClick={() => handleSelect(player)}
-              >
-                <picture>
-                  <source
-                    srcSet={`${baseUrl}/avatar/${player.tid_skin}?3d&size=45`}
-                    type="image/webp"
-                  />
-                  <img
-                    src={`${baseUrl}/avatar/${player.tid_skin}?3d&png&size=45`}
-                    alt={player.name}
-                    width={45}
-                    height={45}
-                  />
-                </picture>
-                <span className="ml-1">{player.name}</span>
-              </button>
+              <>
+                <br className="md-br" />
+                <mdui-button
+                  key={player.pid}
+                  title={player.name}
+                  onClick={() => handleSelect(player)}
+                  variant="elevated"
+                >
+                  <mdui-avatar slot="icon">
+                    <picture>
+                      <source
+                        srcSet={`${baseUrl}/avatar/${player.tid_skin}?3d&size=45`}
+                        type="image/webp"
+                      />
+                      <img
+                        src={`${baseUrl}/avatar/${player.tid_skin}?3d&png&size=45`}
+                        alt={player.name}
+                        width={45}
+                        height={45}
+                      />
+                    </picture>
+                  </mdui-avatar>
+                  {player.name}
+                </mdui-button>
+              </>
             ))}
         </>
       )}
-    </Modal>
+    </mdui-dialog>
   )
 }
 
