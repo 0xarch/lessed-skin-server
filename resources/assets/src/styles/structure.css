@@ -238,9 +238,13 @@ text {
   }
 }
 
+.md-short-card {
+  padding: 1rem;
+}
+
 .md-br {
   display: block;
-  margin: 0.5rem 0;
+  margin: 0.5rem;
 }
 
 .md-radio-unclickable-control {
