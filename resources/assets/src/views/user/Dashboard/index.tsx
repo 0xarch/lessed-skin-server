@@ -4,7 +4,6 @@ import { hot } from 'react-hot-loader/root'
 import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { toast } from '@/scripts/notify'
 import useTween from '@/scripts/hooks/useTween'
 import urls from '@/scripts/urls'
 import * as breakpoints from '@/styles/breakpoints'
@@ -12,7 +11,7 @@ import InfoBox from './InfoBox'
 import SignButton from './SignButton'
 import * as scoreUtils from './scoreUtils'
 import { ScoreInfo } from '@/scripts/types'
-import { Card } from '@/components/_FluentComponents'
+import { Dialog, snackbar } from 'mdui'
 
 type SignReturn = {
   score: number
@@ -76,7 +75,10 @@ const Dashboard: React.FC = () => {
     >(urls.user.sign())
 
     if (code === 0) {
-      toast.success(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
       setLastSign(new Date())
       setTweenedScore(data.score)
       setScore(data.score)
@@ -86,19 +88,31 @@ const Dashboard: React.FC = () => {
         signGap,
         canSignAfterZero,
       )
-      toast.warning(scoreUtils.remainingTimeText(remainingTime))
+      snackbar({
+        message: scoreUtils.remainingTimeText(remainingTime),
+        placement: 'top',
+      })
     } else {
-      toast.error(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
     }
     setLoading(false)
   }, [canSignAfterZero, lastSign, setTweenedScore, signGap])
 
+  const handleScoreNotice = () => {
+    const noticeDialog = $<Dialog>('#user-modal-score-instruction')?.[0]
+    if (noticeDialog) {
+      noticeDialog.open = true
+    }
+  }
+
   return (
-    <Card>
-      <header>
-        <h3>{t('user.used.title')}</h3>
-      </header>
-      <body>
+    // @ts-ignore
+    <mdui-card class="md-card mdui-prose">
+      <h3>{t('user.used.title')}</h3>
+      <section>
         <div className="row">
           <div className="col-md-7">
             <InfoBox
@@ -112,7 +126,7 @@ const Dashboard: React.FC = () => {
             {storage > 1024 ? (
               <InfoBox
                 color="primary"
-                icon="hdd"
+                icon="storage"
                 name={t('user.used.storage')}
                 used={~~(storage / 1024)}
                 unused={~~(score / storageRate / 1024)}
@@ -121,7 +135,7 @@ const Dashboard: React.FC = () => {
             ) : (
               <InfoBox
                 color="primary"
-                icon="hdd"
+                icon="storage"
                 name={t('user.used.storage')}
                 used={storage}
                 unused={score / storageRate}
@@ -131,23 +145,20 @@ const Dashboard: React.FC = () => {
           </div>
           <div className="col-md-5 text-center">
             <ScoreTitle>{t('user.cur-score')}</ScoreTitle>
-            <Score data-toggle="modal" data-target="#modal-score-instruction">
-              {~~tweenedScore}
-            </Score>
+            <Score onClick={handleScoreNotice}>{~~tweenedScore}</Score>
             <ScoreNotice>{t('user.score-notice')}</ScoreNotice>
           </div>
         </div>
-      </body>
-      <footer>
-        <SignButton
-          isLoading={loading}
-          lastSign={lastSign}
-          canSignAfterZero={canSignAfterZero}
-          signGap={signGap}
-          onClick={handleSign}
-        />
-      </footer>
-    </Card>
+      </section>
+      <br className="md-br" />
+      <SignButton
+        isLoading={loading}
+        lastSign={lastSign}
+        canSignAfterZero={canSignAfterZero}
+        signGap={signGap}
+        onClick={handleSign}
+      />
+    </mdui-card>
   )
 }
 

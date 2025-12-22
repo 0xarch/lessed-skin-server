@@ -5,6 +5,25 @@
 {% block content %}
   {{ include('shared.grid') }}
 
+  <mdui-dialog id="user-modal-score-instruction"
+    headline="{{ trans('user.score-intro.title') }}"
+    close-on-overlay-click
+    close-on-esc
+  >
+    <div slot="description">
+      {{ score_intro|nl2br }}
+      <mdui-divider class="md-br"></mdui-divider>
+      <div class="row">
+        {% for key, value in rates %}
+          <div class="col-md-4">
+            <p class="text-center">
+              {{ trans("user.score-intro.rates.#{key}", {score: value}) }}
+            </p>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </mdui-dialog>
   <div id="modal-score-instruction" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
