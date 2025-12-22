@@ -1,3 +1,4 @@
+import { ButtonIcon } from 'mdui'
 import React from 'react'
 
 interface Props {
@@ -5,6 +6,8 @@ interface Props {
   active?: boolean
   title?: string
   className?: string
+  icon?: string
+  variant?: ButtonIcon['variant']
   onClick?(): void
 }
 
@@ -27,13 +30,32 @@ const PaginationItem: React.FC<Props> = (props) => {
     }
   }
 
-  return (
-    <li className={classes.join(' ')} title={props.title} onClick={handleClick}>
-      <a href="#" className="page-link" aria-disabled={props.disabled}>
-        {props.children}
-      </a>
-    </li>
-  )
+  if (!props.icon) {
+    return (
+      <mdui-button-icon
+        className={classes.join(' ')}
+        title={props.title}
+        onClick={handleClick}
+        disabled={props.disabled}
+        variant={props.variant}
+      >
+        <span aria-disabled={props.disabled} style={{ fontSize: 'medium' }}>
+          {props.children}
+        </span>
+      </mdui-button-icon>
+    )
+  } else {
+    return (
+      <mdui-button-icon
+        className={classes.join(' ')}
+        title={props.title}
+        onClick={handleClick}
+        disabled={props.disabled}
+        icon={props.icon}
+        variant={props.variant}
+      />
+    )
+  }
 }
 
 export default PaginationItem

@@ -217,50 +217,50 @@ const Viewer: React.FC<Props> = (props) => {
   }
 
   return (
-    <Card>
-      <CardHeader
-        title={t('general.texturePreview')}
-        subtitle={props.showIndicator ? indicator : ''}
-      />
+    // @ts-ignore
+    <mdui-card class="md-card mdui-prose">
+      <h3>
+        {t('general.texturePreview')}
+        {props.showIndicator && indicator ? (
+          <mdui-badge>{indicator}</mdui-badge>
+        ) : (
+          ''
+        )}
+      </h3>
+      <div>
+        <mdui-button
+          icon={paused ? 'play_arrow' : 'paused'}
+          onClick={togglePause}
+        >
+          {paused ? t('general.playAnimation') : t('general.pauseAnimation')}
+        </mdui-button>
+        <mdui-button-icon icon="run_circle" onClick={toggleAnimation} />
+        <mdui-button-icon icon="tablet" onClick={toggleBackEquippment} />
+        <mdui-button-icon icon="rotate_right" onClick={toggleRotate} />
+        <br />
+        <mdui-button
+          icon="navigate_before"
+          onClick={setPrevPicture}
+          variant="tonal"
+        >
+          {t('colors.prev')}
+        </mdui-button>
+        &nbsp;
+        <mdui-button
+          end-icon="navigate_next"
+          onClick={setNextPicture}
+          variant="tonal"
+        >
+          {t('colors.next')}
+        </mdui-button>
+      </div>
+      <mdui-divider class="md-br" />
       <div className="card-body" ref={containerWrapperRef} css={cssViewer}>
         <canvas ref={containerRef}></canvas>
-        <div className="btn-group">
-          <ActionButton
-            className={`fas fa-tablet ${props.cape ? '' : 'd-none'}`}
-            title={t('general.switchCapeElytra')}
-            onClick={toggleBackEquippment}
-          ></ActionButton>
-          <ActionButton
-            className={`fas fa-person-running`}
-            title={t('general.switchAnimation')}
-            onClick={toggleAnimation}
-          ></ActionButton>
-          <ActionButton
-            className={`fas fa-${paused ? 'play' : 'pause'}`}
-            title={
-              paused ? t('general.playAnimation') : t('general.pauseAnimation')
-            }
-            onClick={togglePause}
-          ></ActionButton>
-          <ActionButton
-            className="fas fa-rotate-right"
-            title={t('general.rotation')}
-            onClick={toggleRotate}
-          ></ActionButton>
-        </div>
       </div>
-      <footer>
-        <div className="d-flex">
-          <CenteredDiv title={t('colors.prev')} onClick={setPrevPicture}>
-            <i className="fas fa-arrow-left"></i>
-          </CenteredDiv>
-          <CenteredDiv title={t('colors.next')} onClick={setNextPicture}>
-            <i className="fas fa-arrow-right"></i>
-          </CenteredDiv>
-        </div>
-        {props.children}
-      </footer>
-    </Card>
+      <mdui-divider class="md-br" />
+      <footer className="d-flex">{props.children}</footer>
+    </mdui-card>
   )
 }
 

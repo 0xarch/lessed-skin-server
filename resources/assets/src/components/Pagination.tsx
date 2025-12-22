@@ -26,18 +26,14 @@ const Pagination: React.FC<Props> = (props) => {
         title={t('vendor.datatable.prev')}
         disabled={page === 1}
         onClick={() => onChange(page - 1)}
-      >
-        {labels.prev}
-        <span className="d-inline d-sm-none ml-1">
-          {t('vendor.datatable.prev')}
-        </span>
-      </PaginationItem>
+        icon="navigate_before"
+      />
       {totalPages < 8 ? (
         Array.from({ length: totalPages }).map((_, i) => (
           <PaginationItem
             key={i}
             className="d-none d-sm-block"
-            active={page === i + 1}
+            variant={page === i + 1 ? 'filled' : 'standard'}
             onClick={() => onChange(i + 1)}
           >
             {i + 1}
@@ -111,12 +107,8 @@ const Pagination: React.FC<Props> = (props) => {
         title={t('vendor.datatable.next')}
         disabled={page === totalPages}
         onClick={() => onChange(page + 1)}
-      >
-        <span className="d-inline d-sm-none mr-1">
-          {t('vendor.datatable.next')}
-        </span>
-        {labels.next}
-      </PaginationItem>
+        icon="navigate_next"
+      />
     </ul>
   )
 }
