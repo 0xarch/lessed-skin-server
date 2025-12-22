@@ -5,7 +5,7 @@ import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import useTexture from '@/scripts/hooks/useTexture'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { showModal } from '@/scripts/notify'
 import { Player, TextureType, ScoreInfo } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import Row from './Row'
@@ -13,6 +13,7 @@ import LoadingRow from './LoadingRow'
 import Previewer from './Previewer'
 import ModalAddPlayer from './ModalAddPlayer'
 import ModalReset from './ModalReset'
+import { snackbar } from 'mdui'
 
 const Players: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([])
@@ -82,19 +83,29 @@ const Players: React.FC = () => {
       { name },
     )
     if (code === 0) {
-      toast.success(message)
+      snackbar({
+        message,
+        placement: 'top',
+        closeable: true,
+      })
       setPlayers((players) => {
         players[index] = { ...player, name }
         return players.slice()
       })
     } else {
-      toast.error(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
     }
   }
 
   const resetTexture = async (skin: boolean, cape: boolean) => {
     if (!skin && !cape) {
-      toast.warning(t('user.noClearChoice'))
+      snackbar({
+        message: t('user.noClearChoice'),
+        placement: 'top',
+      })
       return
     }
 
@@ -110,7 +121,11 @@ const Players: React.FC = () => {
       `${urls.user.player.clear(selected)}?${search.toString()}`,
     )
     if (code === 0) {
-      toast.success(message)
+      snackbar({
+        message,
+        placement: 'top',
+        closeable: true,
+      })
       if (skin) {
         setSkin(0)
       }
@@ -130,7 +145,10 @@ const Players: React.FC = () => {
         return players.slice()
       })
     } else {
-      toast.error(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
     }
   }
 
@@ -149,11 +167,18 @@ const Players: React.FC = () => {
       urls.user.player.delete(player.pid),
     )
     if (code === 0) {
-      toast.success(message)
+      snackbar({
+        message,
+        placement: 'top',
+        closeable: true,
+      })
       const { pid } = player
       setPlayers((players) => players.filter((player) => player.pid !== pid))
     } else {
-      toast.error(message)
+      snackbar({
+        message,
+        placement: 'top',
+      })
     }
   }
 
@@ -165,62 +190,60 @@ const Players: React.FC = () => {
 
   return (
     <>
-      <div className="card immersive">
-        <div className="card-header">
-          <input
-            type="text"
-            className="form-control"
-            placeholder={t('user.typeToSearch')}
-            onChange={handleSearch}
-          />
-        </div>
-        <div className="card-body p-0 table-responsive">
-          <table className="table table-hover">
-            <thead>
+      <mdui-card class="md-card mdui-prose">
+        <mdui-text-field
+          type="text"
+          placeholder={t('user.typeToSearch')}
+          onChange={handleSearch}
+        />
+        <table className="table table-hover">
+          <thead>
+            <tr>
+              <th style={{ width: '12%' }}>PID</th>
+              <th>{t('general.player.player-name')}</th>
+              <th style={{ width: '50%' }}>{t('user.player.operation')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading ? (
+              new Array(playersCount)
+                .fill(null)
+                .map((_, i) => <LoadingRow key={i} />)
+            ) : players.length === 0 ? (
               <tr>
-                <th style={{ width: '12%' }}>PID</th>
-                <th>{t('general.player.player-name')}</th>
-                <th style={{ width: '50%' }}>{t('user.player.operation')}</th>
+                <td className="text-center" colSpan={3}>
+                  {t('general.noResult')}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {isLoading ? (
-                new Array(playersCount)
-                  .fill(null)
-                  .map((_, i) => <LoadingRow key={i} />)
-              ) : players.length === 0 ? (
-                <tr>
-                  <td className="text-center" colSpan={3}>
-                    {t('general.noResult')}
-                  </td>
-                </tr>
-              ) : (
-                players
-                  .filter(({ name }) => name.includes(search))
-                  .map((player, i) => (
-                    <Row
-                      key={player.pid}
-                      player={player}
-                      selected={selected === player.pid}
-                      onClick={() => selectPlayer(player)}
-                      onEditName={() => editName(player, i)}
-                      onReset={openModalReset}
-                      onDelete={deletePlayer}
-                    />
-                  ))
-              )}
-            </tbody>
-          </table>
-        </div>
+            ) : (
+              players
+                .filter(({ name }) => name.includes(search))
+                .map((player, i) => (
+                  <Row
+                    key={player.pid}
+                    player={player}
+                    selected={selected === player.pid}
+                    onClick={() => selectPlayer(player)}
+                    onEditName={() => editName(player, i)}
+                    onReset={openModalReset}
+                    onDelete={deletePlayer}
+                  />
+                ))
+            )}
+          </tbody>
+        </table>
         {playersCount >= score / playersRate ? null : (
           <div className="card-footer">
-            <button className="btn btn-primary" onClick={openModalAddPlayer}>
-              <i className="fas fa-plus mr-1"></i>
-              <span>{t('user.player.add-player')}</span>
-            </button>
+            <mdui-button
+              variant="tonal"
+              icon="add"
+              onClick={openModalAddPlayer}
+            >
+              {t('user.player.add-player')}
+            </mdui-button>
           </div>
         )}
-      </div>
+      </mdui-card>
 
       <Previewer
         skin={skin.url}

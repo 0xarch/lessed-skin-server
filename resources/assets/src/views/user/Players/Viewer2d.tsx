@@ -20,10 +20,8 @@ interface Props {
 
 const Viewer2d: React.FC<Props> = (props) => {
   return (
-    <div className="card">
-      <div className="card-header">
-        <h3 className="card-title">{t('general.texturePreview')}</h3>
-      </div>
+    <mdui-card class="md-card mdui-prose">
+      <h3 className="card-title">{t('general.texturePreview')}</h3>
       <div className="card-body">
         <TexturePreview className="mb-5">
           <span>{t('general.skin')}</span>
@@ -43,7 +41,7 @@ const Viewer2d: React.FC<Props> = (props) => {
         </TexturePreview>
       </div>
       <div className="card-footer">{props.children}</div>
-    </div>
+    </mdui-card>
   )
 }
 
