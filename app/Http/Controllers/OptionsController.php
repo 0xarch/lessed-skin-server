@@ -24,19 +24,19 @@ class OptionsController extends Controller
             // $form->checkbox('fixed_bg')->label();
 
             $form->select('copyright_prefer')
-                    ->option('0', 'Powered with ❤ by Blessing Skin Server.')
-                    ->option('1', 'Powered by Blessing Skin Server.')
-                    ->option('2', 'Proudly powered by Blessing Skin Server.')
-                    ->option('3', '由 Blessing Skin Server 强力驱动。')
-                    ->option('4', '采用 Blessing Skin Server 搭建。')
-                    ->option('5', '使用 Blessing Skin Server 稳定运行。')
-                    ->option('6', '自豪地采用 Blessing Skin Server。')
+                ->option('0', 'Powered with ❤ by Blessing Skin Server.')
+                ->option('1', 'Powered by Blessing Skin Server.')
+                ->option('2', 'Proudly powered by Blessing Skin Server.')
+                ->option('3', '由 Blessing Skin Server 强力驱动。')
+                ->option('4', '采用 Blessing Skin Server 搭建。')
+                ->option('5', '使用 Blessing Skin Server 稳定运行。')
+                ->option('6', '自豪地采用 Blessing Skin Server。')
                 ->description();
 
             $form->textarea('copyright_text')->rows(6)->description();
         })->handle(function () {
-            Option::set('copyright_prefer_'.config('app.locale'), request('copyright_prefer'));
-            Option::set('copyright_text_'.config('app.locale'), request('copyright_text'));
+            Option::set('copyright_prefer_' . config('app.locale'), request('copyright_prefer'));
+            Option::set('copyright_text_' . config('app.locale'), request('copyright_text'));
         });
 
         $customJsCss = Option::form('customJsCss', OptionForm::AUTO_DETECT, function ($form) {
@@ -59,15 +59,43 @@ class OptionsController extends Controller
         return view('admin.customize', [
             'colors' => [
                 'navbar' => [
-                    'primary', 'secondary', 'success', 'danger', 'indigo',
-                    'purple', 'pink', 'teal', 'cyan', 'dark', 'gray',
-                    'fuchsia', 'maroon', 'olive', 'navy',
-                    'lime', 'light', 'warning', 'white', 'orange',
+                    'primary',
+                    'secondary',
+                    'success',
+                    'danger',
+                    'indigo',
+                    'purple',
+                    'pink',
+                    'teal',
+                    'cyan',
+                    'dark',
+                    'gray',
+                    'fuchsia',
+                    'maroon',
+                    'olive',
+                    'navy',
+                    'lime',
+                    'light',
+                    'warning',
+                    'white',
+                    'orange',
                 ],
                 'sidebar' => [
-                    'primary', 'warning', 'info', 'danger', 'success', 'indigo',
-                    'navy', 'purple', 'fuchsia', 'pink', 'maroon', 'orange',
-                    'lime', 'teal', 'olive',
+                    'primary',
+                    'warning',
+                    'info',
+                    'danger',
+                    'success',
+                    'indigo',
+                    'navy',
+                    'purple',
+                    'fuchsia',
+                    'pink',
+                    'maroon',
+                    'orange',
+                    'lime',
+                    'teal',
+                    'olive',
                 ],
             ],
             'forms' => [
@@ -114,7 +142,7 @@ class OptionsController extends Controller
 
             $form->checkbox('sign_after_zero')->label()->hint();
         })->after(function () {
-            $sign_score = request('sign_score_from').','.request('sign_score_to');
+            $sign_score = request('sign_score_from') . ',' . request('sign_score_to');
             Option::set('sign_score', $sign_score);
         })->with([
             'sign_score_from' => @explode(',', option('sign_score'))[0],
@@ -159,27 +187,26 @@ class OptionsController extends Controller
 
             $form->text('regs_per_ip');
 
-            $form->group('max_upload_file_size')
-                    ->text('max_upload_file_size')->addon('KB')
-                    ->hint(trans('options.general.max_upload_file_size.hint', ['size' => ini_get('upload_max_filesize')]));
+            $form->text('max_upload_file_size')->suffix('KB')
+                ->hint(trans('options.general.max_upload_file_size.hint', ['size' => ini_get('upload_max_filesize')]));
 
-            $form->group('max_texture_width')
-                    ->text('max_texture_width')->addon('px')
-                    ->hint(trans('options.general.max_texture_width.hint'));
+
+            $form->text('max_texture_width')->suffix('px')
+                ->hint(trans('options.general.max_texture_width.hint'));
 
             $form->select('player_name_rule')
-                    ->option('official', trans('options.general.player_name_rule.official'))
-                    ->option('cjk', trans('options.general.player_name_rule.cjk'))
-                    ->option('utf8', trans('options.general.player_name_rule.utf8'))
-                    ->option('custom', trans('options.general.player_name_rule.custom'));
+                ->option('official', trans('options.general.player_name_rule.official'))
+                ->option('cjk', trans('options.general.player_name_rule.cjk'))
+                ->option('utf8', trans('options.general.player_name_rule.utf8'))
+                ->option('custom', trans('options.general.player_name_rule.custom'));
 
             $form->text('custom_player_name_regexp')->hint()->placeholder();
 
-            $form->group('player_name_length')
-                ->text('player_name_length_min')
-                ->addon('~')
-                ->text('player_name_length_max')
-                ->addon(trans('options.general.player_name_length.suffix'));
+            $form->group('player_name_length');
+            $form->text('player_name_length_min')->hidden();
+            $form->text('player_name_length_max')->hidden();
+
+            $form->rangeslider('player_name_length')->min(3)->max(16)->step(1)->name('player_name_length_min','player_name_length_max');
 
             $form->checkbox('auto_del_invalid_texture')->label()->hint();
 
@@ -193,15 +220,15 @@ class OptionsController extends Controller
 
             $form->textarea('content_policy')->rows(3)->description();
         })->handle(function () {
-            Option::set('site_name_'.config('app.locale'), request('site_name'));
-            Option::set('site_description_'.config('app.locale'), request('site_description'));
-            Option::set('content_policy_'.config('app.locale'), request('content_policy'));
+            Option::set('site_name_' . config('app.locale'), request('site_name'));
+            Option::set('site_description_' . config('app.locale'), request('site_description'));
+            Option::set('content_policy_' . config('app.locale'), request('content_policy'));
         });
 
         $announ = Option::form('announ', OptionForm::AUTO_DETECT, function ($form) {
             $form->textarea('announcement')->rows(10)->description();
         })->renderWithoutTable()->handle(function () {
-            Option::set('announcement_'.config('app.locale'), request('announcement'));
+            Option::set('announcement_' . config('app.locale'), request('announcement'));
         });
 
         $meta = Option::form('meta', OptionForm::AUTO_DETECT, function ($form) {
@@ -210,7 +237,7 @@ class OptionsController extends Controller
             $form->textarea('meta_extras')->rows(6);
         })->handle();
 
-        $recaptcha = Option::form('recaptcha', 'reCAPTCHA', function ($form) {
+        $recaptcha = Option::form('recaptcha', 'reCAPTCHA', function (OptionForm $form) {
             $form->text('recaptcha_sitekey', 'sitekey');
             $form->text('recaptcha_secretkey', 'secretkey');
             $form->checkbox('recaptcha_invisible')->label();

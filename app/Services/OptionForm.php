@@ -14,6 +14,7 @@ use ReflectionClass;
  * @method OptionFormTextarea textarea(string $id, string|null $name)
  * @method OptionFormSelect   select(string $id, string|null $name)
  * @method OptionFormGroup    group(string $id, string|null $name)
+ * @method OptionFormRangeSlider     rangeslider(string $id, string|null $name)
  */
 class OptionForm
 {
@@ -41,7 +42,7 @@ class OptionForm
     protected $alwaysCallback;
 
     protected $renderWithoutTable = false;
-    protected $renderInputTagsOnly = false;
+    protected $renderInputTagsOnly = true;
     protected $renderWithoutSubmitButton = false;
 
     /**
@@ -63,7 +64,7 @@ class OptionForm
      */
     public function __call(string $method, array $params): OptionFormItem
     {
-        if (!in_array($method, ['text', 'checkbox', 'textarea', 'select', 'group'])) {
+        if (!in_array($method, ['text', 'checkbox', 'textarea', 'select', 'group', 'rangeslider'])) {
             throw new BadMethodCallException("Method [$method] does not exist on option form.");
         }
 
@@ -72,7 +73,7 @@ class OptionForm
             $params[1] = Arr::get(trans("options.$this->id.$params[0]"), 'title', trans("options.$this->id.$params[0]"));
         }
 
-        $class = new ReflectionClass('App\Services\OptionForm'.Str::title($method));
+        $class = new ReflectionClass('App\Services\OptionForm' . Str::title($method));
         // Use ReflectionClass to create a new OptionFormItem instance
         $item = $class->newInstanceArgs($params);
         $item->setParentId($this->id);
@@ -130,7 +131,7 @@ class OptionForm
         ], $info);
 
         $info['class'] = array_merge(
-            ['btn', 'btn-'.$info['style']],
+            ['btn', 'btn-' . $info['style']],
             (array) Arr::get($info, 'class')
         );
         $this->buttons[] = $info;
@@ -321,7 +322,7 @@ class OptionForm
                 'style' => 'primary',
                 'text' => trans('general.submit'),
                 'type' => 'submit',
-                'name' => 'submit_'.$this->id,
+                'name' => 'submit_' . $this->id,
             ]);
         }
 
@@ -419,6 +420,8 @@ class OptionFormItem
 class OptionFormText extends OptionFormItem
 {
     protected $placeholder = '';
+    protected $suffix = '';
+    protected $hidden = '';
 
     public function placeholder($placeholder = OptionForm::AUTO_DETECT)
     {
@@ -432,13 +435,97 @@ class OptionFormText extends OptionFormItem
         return $this;
     }
 
+    public function suffix($suffix = OptionForm::AUTO_DETECT)
+    {
+        if ($suffix == OptionForm::AUTO_DETECT) {
+            $key = "options.$this->parentId.$this->id.placeholder";
+            $suffix = trans()->has($key) ? trans($key) : '';
+        }
+
+        $this->suffix = $suffix;
+
+        return $this;
+    }
+
+    public function hidden(){
+        $this->hidden = 'type=hidden';
+    }
+
     public function render()
     {
+        $label = $this->name;
+
+        if (is_array($label)) {
+            $label = implode(', ', $label);
+        }
+
         return view('forms.text')->with([
             'id' => $this->id,
             'value' => $this->value,
             'disabled' => $this->disabled,
+            'label' => $this->name,
             'placeholder' => $this->placeholder,
+            'suffix' => $this->suffix,
+            'hidden' => $this->hidden
+        ]);
+    }
+}
+
+class OptionFormRangeSlider extends OptionFormItem
+{
+    protected $min = '';
+    protected $max = '';
+    protected $step = '';
+    protected $minn = '';
+    protected $maxn = '';
+
+    public function min($v = OptionForm::AUTO_DETECT)
+    {
+        $this->min = $v;
+
+        return $this;
+    }
+
+    public function max($v = OptionForm::AUTO_DETECT)
+    {
+        $this->max = $v;
+
+        return $this;
+    }
+
+    public function step($v = OptionForm::AUTO_DETECT)
+    {
+        $this->step = $v;
+
+        return $this;
+    }
+
+    public function name($v1, $v2)
+    {
+        $this->minn = $v1;
+        $this->maxn = $v2;
+
+        return $this;
+    }
+
+    public function render()
+    {
+        $label = $this->name;
+
+        if (is_array($label)) {
+            $label = implode(', ', $label);
+        }
+
+        return view('forms.rangeslider')->with([
+            'id' => $this->id,
+            'value' => $this->value,
+            'disabled' => $this->disabled,
+            'label' => $this->name,
+            'min' => $this->min,
+            'max' => $this->max,
+            'step' => $this->step,
+            'minname' => $this->minn,
+            'maxname' => $this->maxn
         ]);
     }
 }
@@ -457,6 +544,7 @@ class OptionFormCheckbox extends OptionFormItem
 
         return $this;
     }
+
 
     public function render()
     {
@@ -482,10 +570,20 @@ class OptionFormTextarea extends OptionFormItem
 
     public function render()
     {
+        $label = $this->name;
+        $description = null;
+
+        if (is_array($label)) {
+            // $description = Arr::get($label,1,'');
+            $description = implode(', ', $label);
+            $label = Arr::get($label, 0, '');
+        }
         return view('forms.textarea')->with([
             'id' => $this->id,
             'rows' => $this->rows,
             'value' => $this->value,
+            'label' => (string)$label,
+            'placeholder' => (string)$description,
             'disabled' => $this->disabled,
         ]);
     }
@@ -508,6 +606,7 @@ class OptionFormSelect extends OptionFormItem
             'id' => $this->id,
             'options' => (array) $this->options,
             'selected' => $this->value,
+            'label' => $this->name,
             'disabled' => $this->disabled,
         ]);
     }
@@ -550,7 +649,7 @@ class OptionFormGroup extends OptionFormItem
         $rendered = [];
 
         foreach ($this->items as $item) {
-            $rendered[] = view('forms.'.$item['type'])->with([
+            $rendered[] = view('forms.' . $item['type'])->with([
                 'id' => $item['id'],
                 'value' => $item['value'],
                 'placeholder' => Arr::get($item, 'placeholder'),

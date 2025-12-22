@@ -1,8 +1,14 @@
-<input
+<mdui-text-field
   type="text"
-  class="form-control"
   name="{{ id }}"
-  {{ disabled ? 'disabled=disabled' : '' }}
-  value="{{ value }}"
+  value="{{ value}}"
+  label="{{ label }}"
+  {{ disabled ? 'disabled' : '' }}
   placeholder="{{ placeholder }}"
+  variant="outlined"
+  style="{{ hidden ? 'display: none !important' }}"
 >
+{% if suffix %}
+<div slot="end-icon" style="font-size: medium">{{ suffix }}</div>
+{% endif %}
+</mdui-text-field>

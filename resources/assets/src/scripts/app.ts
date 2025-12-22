@@ -8,7 +8,7 @@ import './event'
 import './notification'
 import './emailVerification'
 import './logout'
-import { setColorScheme } from 'mdui'
+import { RangeSlider, setColorScheme } from 'mdui'
 // import './darkMode'
 
 window.addEventListener('load', () => {
@@ -99,5 +99,37 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       $icon.css('transform', 'rotate(0deg)')
     }
+  })
+})
+
+// Handle MDUI RangeSlider
+document.addEventListener('DOMContentLoaded', () => {
+  const minNameRequired = $<RangeSlider>('[value-min-name]')
+  const maxNameRequired = $<RangeSlider>('[value-max-name]')
+  minNameRequired.each((i, e) => {
+    const formElement = e.closest('form')
+    const matchedElement = formElement?.querySelector<HTMLInputElement>(
+      `[name="${e.getAttribute('value-min-name')}"]`,
+    )
+    if (matchedElement) {
+      e.value = [Number(matchedElement.value), e.value[1]!]
+    }
+    e.addEventListener('input', (ev) => {
+      // @ts-ignore
+      matchedElement.value = e.value[0]
+    })
+  })
+  maxNameRequired.each((i, e) => {
+    const formElement = e.closest('form')
+    const matchedElement = formElement?.querySelector<HTMLInputElement>(
+      `[name="${e.getAttribute('value-max-name')}"]`,
+    )
+    if (matchedElement) {
+      e.value = [e.value[0]!, Number(matchedElement.value)]
+    }
+    e.addEventListener('input', (ev) => {
+      // @ts-ignore
+      matchedElement.value = e.value[1]
+    })
   })
 })

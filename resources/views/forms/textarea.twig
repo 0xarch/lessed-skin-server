@@ -1,6 +1,8 @@
-<textarea
-  class="form-control"
+<mdui-text-field
   rows="{{ rows }}"
   name="{{ id }}"
-  {{ disabled ? 'disabled=disabled' : '' }}
->{{ value }}</textarea>
+  value="{{ value}}"
+  label="{{ label }}"
+  placeholder="{{ placeholder }}"
+  {{ disabled ? 'disabled' : '' }}
+></mdui-text-field>

@@ -1,10 +1,15 @@
-<select class="form-control" name="{{ id }}" {{ disabled ? 'disabled=disabled' : '' }}>
+<mdui-select
+  name="{{ id }}"
+  {{ disabled ? 'disabled=disabled' : '' }}
+  label="{{ label }}"
+  value= "{{ selected }}"
+  variant="outlined"
+>
   {% for option in options %}
-    <option
+    <mdui-menu-item
       value="{{ option.value }}"
-      {{ selected == option.value ? 'selected=selected' : '' }}
     >
       {{ option.name }}
-    </option>
+    </mdui-menu-item>
   {% endfor %}
-</select>
+</mdui-select>
