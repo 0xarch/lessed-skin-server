@@ -1,23 +1,24 @@
-<form class="card immersive" method="post" id="change-email">
-  <div class="card-header">
+<mdui-card class="md-card mdui-prose">
+  <form method="post" id="change-email">
     <h3 class="card-title">
       {{ trans('user.profile.email.title') }}
     </h3>
-  </div>
-  <div class="card-body">
-    <div class="form-group">
-      <input type="email" class="form-control" name="email" required
-        value="{{ user.email }}"
-        placeholder="{{ trans('user.profile.email.new') }}">
-    </div>
-    <div class="form-group">
-      <input type="password" class="form-control" name="password" required
-        placeholder="{{ trans('user.profile.email.password') }}" autocomplete="current-password">
-    </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-primary" type="submit">
+    <mdui-text-field type="email" name="email" required
+      value="{{ user.email }}"
+      label="{{ trans('user.profile.email.new') }}"
+      variant="outlined"
+    ></mdui-text-field>
+    <br class="md-br"/>
+    <mdui-text-field type="password" name="password" required
+      value="{{ user.email }}"
+      label="{{ trans('user.profile.email.password') }}"
+      autocomplete="current-password"
+      toggle-password
+      variant="outlined"
+    ></mdui-text-field>
+    <br class="md-br">
+    <mdui-button type="submit">
       {{ trans('user.profile.email.button') }}
-    </button>
-  </div>
-</form>
+    </mdui-button>
+  </form>
+</mdui-card>

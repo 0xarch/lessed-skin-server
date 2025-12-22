@@ -1,18 +1,17 @@
-<form class="card immersive" method="post" id="change-nickname">
-  <div class="card-header">
-    <h3 class="card-title">
+<mdui-card class="md-card mdui-prose">
+  <form method="post" id="change-nickname">
+    <h3>
       {{ trans('user.profile.nickname.title') }}
     </h3>
-  </div>
-  <div class="card-body">
-    <div class="form-group">
-      <input type="text" class="form-control" name="nickname" required
-        value="{{ user.nickname }}">
-    </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-primary" type="submit">
+    <mdui-text-field type="text"
+      name="nickname" required
+      value="{{ user.nickname }}"
+      label="{{ trans('user.profile.nickname.title') }}"
+      variant="outlined"
+    ></mdui-text-field>
+    <br class="md-br">
+    <mdui-button type="submit">
       {{ trans('general.submit') }}
-    </button>
-  </div>
-</form>
+    </mdui-button>
+  </form>
+</mdui-card>

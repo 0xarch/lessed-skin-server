@@ -1,15 +1,11 @@
-<div class="card immersive">
-  <div class="card-header">
-    <h3 class="card-title">
-      {{ trans('user.profile.avatar.title') }}
-    </h3>
-    <div class="card-subtitle">
-      {{ trans('user.profile.avatar.notice')|raw }}
-    </div>
-  </div>
-  <div class="card-footer">
-    <button class="btn btn-primary" id="reset-avatar">
-      {{ trans('user.profile.avatar.reset') }}
-    </button>
-  </div>
-</div>
+<mdui-card class="md-card mdui-prose">
+  <h3>
+    {{ trans('user.profile.avatar.title') }}
+  </h3>
+  <p>
+    {{ trans('user.profile.avatar.notice')|raw }}
+  </p>
+  <mdui-button id="reset-avatar">
+    {{ trans('user.profile.avatar.reset') }}
+  </mdui-button>
+</mdui-card>
