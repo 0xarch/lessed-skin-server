@@ -232,4 +232,19 @@ text {
 
 .md-card {
   padding: 1rem;
+  width: 100%;
+  & + .md-card {
+    margin-top: 1rem;
+  }
+}
+
+.md-br {
+  display: block;
+  margin: 0.5rem 0;
+}
+
+.md-radio-unclickable-control {
+  &::part(control) {
+    pointer-events: none;
+  }
 }
