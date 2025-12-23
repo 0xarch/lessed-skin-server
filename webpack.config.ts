@@ -33,8 +33,8 @@ export default function (env?: Env): webpack.Configuration {
       home: '@/scripts/homePage.ts',
       // app: ['react-hot-loader/patch', '@/index.tsx'],
       style: [
-        '@fortawesome/fontawesome-free/css/all.min.css',
-        '@/fonts/minecraft.css',
+        // '@fortawesome/fontawesome-free/css/all.min.css',
+        // '@/fonts/minecraft.css',
         '@/styles/common.css',
         '@/styles/preload.css',
       ],

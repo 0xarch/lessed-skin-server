@@ -7,6 +7,7 @@ import './scripts/app'
 import routes from './scripts/route'
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@/fonts/minecraft.css'
+import '@/fonts/material-icons.css'
 
 Object.assign(window, { React, ReactDOM, $ })
 
