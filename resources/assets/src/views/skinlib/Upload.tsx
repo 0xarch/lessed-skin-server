@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { hot } from 'react-hot-loader/root'
 import { t } from '@/scripts/i18n'
@@ -13,6 +13,7 @@ import urls from '@/scripts/urls'
 import FileInput from '@/components/FileInput'
 import ViewerSkeleton from '@/components/ViewerSkeleton'
 import { Card } from '@/components/_FluentComponents'
+import { Checkbox, RadioGroup, TextField } from 'mdui'
 
 const Previewer = React.lazy(() => import('@/components/Viewer'))
 
@@ -33,19 +34,14 @@ const Upload: React.FC = () => {
   const closetItemCost = useBlessingExtra<number>('closetItemCost')
 
   const container = useMount('#previewer')
+  const textureNameRef = useRef<HTMLInputElement>(null)
+  const textureTypeRef = useRef<RadioGroup>(null)
+  const isPrivateCheckRef = useRef<Checkbox>(null)
 
   useEmitMounted()
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
-  }
-
   const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setType(event.target.value as TextureType)
-  }
-
-  const handlePrivateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsPrivate(event.target.checked)
   }
 
   const handleFileChange = async (
@@ -121,79 +117,84 @@ const Upload: React.FC = () => {
   const size = file?.size ?? 0
   const scoreCost = Math.ceil(size / 1024) * costRatio + closetItemCost
 
+  useEffect(() => {
+    const textureInput = textureNameRef.current
+    if (textureInput) {
+      textureInput.addEventListener('change', () => {
+        setName(textureInput.value)
+      })
+    }
+    const textureType = textureTypeRef.current
+    if (textureType) {
+      textureType.addEventListener('change', () => {
+        setType(textureType.value as TextureType)
+      })
+    }
+    const isPrivateCheck = isPrivateCheckRef.current
+    if (isPrivateCheck) {
+      isPrivateCheck.addEventListener('change', () => {
+        setIsPrivate(isPrivateCheck.checked)
+      })
+    }
+  })
+
   return (
     <>
-      <Card>
-        <body>
-          <div className="form-group">
-            <label htmlFor="texture-name">
-              {t('skinlib.upload.texture-name')}
-            </label>
-            <input
-              className="form-control"
-              id="texture-name"
-              type="text"
-              placeholder={nameRule}
-              value={name}
-              onChange={handleNameChange}
+      <mdui-card class="md-card mdui-prose">
+        <mdui-text-field
+          label={t('skinlib.upload.texture-name')}
+          id="texture-name"
+          placeholder={nameRule}
+          value={name}
+          ref={textureNameRef}
+        />
+        <br className="md-br" />
+        <h4>{t('skinlib.upload.texture-type')}</h4>
+        <mdui-radio-group ref={textureTypeRef} value={type}>
+          <mdui-radio value="steve">Steve</mdui-radio>
+          <mdui-radio value="alex">Alex</mdui-radio>
+          <mdui-radio value="cape">{t('general.cape')}</mdui-radio>
+        </mdui-radio-group>
+        <br className="md-br" />
+        <FileInput
+          file={file}
+          accept="image/png, image/x-png"
+          onChange={handleFileChange}
+        />
+
+        {contentPolicy && (
+          <>
+            <br />
+            <div
+              className="callout callout-warning"
+              dangerouslySetInnerHTML={{ __html: contentPolicy }}
             />
+          </>
+        )}
+        <br className="md-br" />
+        <footer>
+          <div className="container d-flex justify-content-between">
+            <mdui-checkbox
+              id="is-private"
+              checked={isPrivate}
+              ref={isPrivateCheckRef}
+            >
+              {t('skinlib.upload.set-as-private')}
+            </mdui-checkbox>
+            <mdui-button
+              disabled={isUploading}
+              onClick={handleUpload}
+              loading={isUploading}
+            >
+              {t('skinlib.upload.button')}
+            </mdui-button>
           </div>
-          <div className="form-group">
-            <label>{t('skinlib.upload.texture-type')}</label>
-            <label>
-              <input
-                type="radio"
-                className="mr-1"
-                name="type"
-                value="steve"
-                checked={type === TextureType.Steve}
-                onChange={handleTypeChange}
-              />
-              Steve
-            </label>
-            <label>
-              <input
-                type="radio"
-                className="mr-1"
-                name="type"
-                value="alex"
-                checked={type === TextureType.Alex}
-                onChange={handleTypeChange}
-              />
-              Alex
-            </label>
-            <label>
-              <input
-                type="radio"
-                className="mr-1"
-                name="type"
-                value="cape"
-                checked={type === TextureType.Cape}
-                onChange={handleTypeChange}
-              />
-              {t('general.cape')}
-            </label>
-          </div>
-          <FileInput
-            file={file}
-            accept="image/png, image/x-png"
-            onChange={handleFileChange}
-          />
-
-          {contentPolicy && (
-            <>
-              <br />
-              <div
-                className="callout callout-warning"
-                dangerouslySetInnerHTML={{ __html: contentPolicy }}
-              />
-            </>
-          )}
-
           {isPrivate && (
             <>
               <br />
-              <div className="callout callout-info mt-3">{privacyNotice}</div>
+              <mdui-card class="md-card mdui-prose" variant="outlined">
+                {privacyNotice}
+              </mdui-card>
             </>
           )}
           {!isPrivate && award > 0 && (
@@ -204,53 +205,24 @@ const Upload: React.FC = () => {
               </div>
             </>
           )}
-        </body>
-        <footer>
-          <div className="container d-flex justify-content-between">
-            <label
-              className="mt-2"
-              htmlFor="is-private"
-              title={t('skinlib.upload.privacy-notice')}
-            >
-              <input
-                type="checkbox"
-                id="is-private"
-                className="mr-1"
-                checked={isPrivate}
-                onChange={handlePrivateChange}
-              />
-              {t('skinlib.upload.set-as-private')}
-            </label>
-            <button
-              className="btn btn-success"
-              disabled={isUploading}
-              onClick={handleUpload}
-            >
-              {isUploading ? (
-                <>
-                  <i className="fas fa-spinner fa-spin mr-1" />
-                  <span>{t('skinlib.uploading')}</span>
-                </>
-              ) : (
-                t('skinlib.upload.button')
-              )}
-            </button>
-          </div>
           {file && (
-            <div
-              className={`callout callout-${
-                currentScore > scoreCost ? 'success' : 'danger'
-              } mt-3`}
-            >
-              <div>{t('skinlib.upload.cost', { score: scoreCost })}</div>
-              <div>
-                {t('user.cur-score')}
-                <span className="ml-1">{currentScore}</span>
+            <>
+              <br className="md-br" />
+              <div
+                className={`callout callout-${
+                  currentScore > scoreCost ? 'success' : 'danger'
+                } mt-3`}
+              >
+                <div>{t('skinlib.upload.cost', { score: scoreCost })}</div>
+                <div>
+                  {t('user.cur-score')}
+                  <span className="ml-1">{currentScore}</span>
+                </div>
               </div>
-            </div>
+            </>
           )}
         </footer>
-      </Card>
+      </mdui-card>
       {container &&
         ReactDOM.createPortal(
           <React.Suspense fallback={<ViewerSkeleton />}>
