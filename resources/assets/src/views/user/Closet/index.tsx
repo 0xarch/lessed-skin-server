@@ -175,7 +175,7 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <mdui-card ref={containerRef} class="md-card mdui-prose">
+      <mdui-card ref={containerRef} class="md-tab-card mdui-prose">
         <mdui-tabs value="tab-skin">
           <mdui-tab value="tab-skin" onClick={switchCategoryToSkin}>
             {t('general.skin')}
@@ -205,7 +205,7 @@ const Closet: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="d-flex flex-wrap">
+              <div className="d-flex flex-wrap md-card">
                 {items.map((item, i) => (
                   <ClosetItem
                     key={item.tid}
@@ -241,7 +241,7 @@ const Closet: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="d-flex flex-wrap">
+              <div className="d-flex flex-wrap md-card">
                 {items.map((item, i) => (
                   <ClosetItem
                     key={item.tid}

@@ -1,9 +1,5 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react'
 import { t } from '@/scripts/i18n'
 import type { Player } from '@/scripts/types'
-import ButtonEdit from '@/components/ButtonEdit'
-import * as cssUtils from '@/styles/utils'
 
 interface Props {
   player: Player
@@ -25,26 +21,28 @@ const Row: React.FC<Props> = (props) => {
     props.onDelete(player)
   }
 
-  const selected =
-    props.selected &&
-    css`
-      background: var(--callout-bg-color);
-    `
-
   return (
-    <tr css={[cssUtils.pointerCursor, selected]} onClick={props.onClick}>
+    <tr onClick={props.onClick}>
       <td>{player.pid}</td>
       <td>
-        <span>{player.name}</span>
-        <ButtonEdit title={t('user.player.edit-pname')} onClick={handleEdit} />
+        <mdui-button variant="text" end-icon="edit" onClick={handleEdit}>
+          {player.name}
+        </mdui-button>
       </td>
       <td>
-        <button className="btn btn-warning" onClick={props.onReset}>
+        <mdui-button variant="text" onClick={props.onReset}>
           {t('user.player.delete-texture')}
-        </button>
-        <button className="btn btn-danger ml-2" onClick={handleDelete}>
+        </mdui-button>
+        <mdui-button
+          variant="text"
+          onClick={handleDelete}
+          style={{
+            backgroundColor: '--mdui-color-error',
+            color: '--mdui-color-on-error',
+          }}
+        >
           {t('user.player.delete-player')}
-        </button>
+        </mdui-button>
       </td>
     </tr>
   )

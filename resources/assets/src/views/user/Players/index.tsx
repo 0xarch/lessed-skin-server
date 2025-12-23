@@ -5,7 +5,6 @@ import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import useTexture from '@/scripts/hooks/useTexture'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal } from '@/scripts/notify'
 import { Player, TextureType, ScoreInfo } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import Row from './Row'
@@ -13,7 +12,7 @@ import LoadingRow from './LoadingRow'
 import Previewer from './Previewer'
 import ModalAddPlayer from './ModalAddPlayer'
 import ModalReset from './ModalReset'
-import { snackbar } from 'mdui'
+import { confirm, prompt, snackbar } from 'mdui'
 
 const Players: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([])
@@ -24,7 +23,8 @@ const Players: React.FC = () => {
   const [search, setSearch] = useState('')
   const [showModalAddPlayer, setShowModalAddPlayer] = useState(false)
   const [showModalReset, setShowModalReset] = useState(false)
-  const playersCount = useBlessingExtra<number>('count')
+  const initialPlayersCount = useBlessingExtra<number>('count')
+  const [playersCount, setPlayersCount] = useState(initialPlayersCount)
   const [score, setScore] = useState(0)
   const [playersRate, setPlayersRate] = useState(1)
 
@@ -47,6 +47,7 @@ const Players: React.FC = () => {
       if (players.length === 1) {
         selectPlayer(players[0]!)
       }
+      setPlayersCount(players.length)
       setIsLoading(false)
     }
     getPlayers()
@@ -58,20 +59,29 @@ const Players: React.FC = () => {
 
   const handleAdd = (player: Player) => {
     setPlayers((players) => [...players, player])
+    setPlayersCount(playersCount + 1)
   }
 
   const editName = async (player: Player, index: number) => {
     let name: string
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('user.changePlayerName'),
-        input: player.name,
-        validator: (value: string) => {
-          if (!value) {
-            return t('user.emptyPlayerName')
-          }
-        },
+      const value = await new Promise<string>((resolve, reject) => {
+        prompt({
+          headline: t('user.changePlayerName'),
+          validator: (value: string) => {
+            if (!value) {
+              return t('user.emptyPlayerName')
+            }
+            return ''
+          },
+          confirmText: t('general.confirm'),
+          cancelText: t('general.cancel'),
+          onConfirm: (value) => {
+            resolve(value)
+            return true
+          },
+          onCancel: reject,
+        })
       })
       name = value
     } catch {
@@ -154,10 +164,15 @@ const Players: React.FC = () => {
 
   const deletePlayer = async (player: Player) => {
     try {
-      await showModal({
-        title: t('user.deletePlayer'),
-        text: t('user.deletePlayerNotice'),
-        okButtonType: 'danger',
+      await new Promise((resolve, reject) => {
+        confirm({
+          headline: t('user.deletePlayer'),
+          description: t('user.deletePlayerNotice'),
+          confirmText: t('general.confirm'),
+          cancelText: t('general.cancel'),
+          onConfirm: resolve,
+          onCancel: reject,
+        })
       })
     } catch {
       return
@@ -174,6 +189,7 @@ const Players: React.FC = () => {
       })
       const { pid } = player
       setPlayers((players) => players.filter((player) => player.pid !== pid))
+      setPlayersCount(playersCount - 1)
     } else {
       snackbar({
         message,
@@ -199,9 +215,9 @@ const Players: React.FC = () => {
         <table className="table table-hover">
           <thead>
             <tr>
-              <th style={{ width: '12%' }}>PID</th>
+              <th>PID</th>
               <th>{t('general.player.player-name')}</th>
-              <th style={{ width: '50%' }}>{t('user.player.operation')}</th>
+              <th>{t('user.player.operation')}</th>
             </tr>
           </thead>
           <tbody>
@@ -232,17 +248,14 @@ const Players: React.FC = () => {
             )}
           </tbody>
         </table>
-        {playersCount >= score / playersRate ? null : (
-          <div className="card-footer">
-            <mdui-button
-              variant="tonal"
-              icon="add"
-              onClick={openModalAddPlayer}
-            >
-              {t('user.player.add-player')}
-            </mdui-button>
-          </div>
-        )}
+        <mdui-button
+          variant="tonal"
+          icon="add"
+          disabled={playersCount > score / playersRate}
+          onClick={openModalAddPlayer}
+        >
+          {t('user.player.add-player')}
+        </mdui-button>
       </mdui-card>
 
       <Previewer

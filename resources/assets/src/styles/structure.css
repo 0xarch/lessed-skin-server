@@ -15,7 +15,7 @@ body > .wrapper {
   background-color: var(--bg-color);
 }
 
-/* @import './structure/navbar.css'; */
+@import './structure/navbar.css';
 /* @import './structure/sidebar.css'; */
 /* @import './structure/content.css'; */
 /* @import './structure/footer.css'; */
@@ -233,7 +233,15 @@ text {
 .md-card {
   padding: 1rem;
   width: 100%;
-  & + .md-card {
+  & + :is(.md-card, .md-tab-card) {
+    margin-top: 1rem;
+  }
+}
+
+.md-tab-card {
+  padding-bottom: 1rem;
+  width: 100%;
+  & + :is(.md-card, .md-tab-card) {
     margin-top: 1rem;
   }
 }

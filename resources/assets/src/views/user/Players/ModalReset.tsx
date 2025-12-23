@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { t } from '@/scripts/i18n'
-import Modal from '@/components/Modal'
+import { Checkbox, Dialog } from 'mdui'
 
 interface Props {
   show: boolean
@@ -12,13 +12,9 @@ const ModalReset: React.FC<Props> = (props) => {
   const [skin, setSkin] = useState(false)
   const [cape, setCape] = useState(false)
 
-  const handleSkinChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSkin(event.target.checked)
-  }
-
-  const handleCapeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setCape(event.target.checked)
-  }
+  const modalRef = useRef<Dialog>(null)
+  const skinCheckboxRef = useRef<Checkbox>(null)
+  const capeCheckboxRef = useRef<Checkbox>(null)
 
   const handleConfirm = () => {
     props.onSubmit(skin, cape)
@@ -30,32 +26,51 @@ const ModalReset: React.FC<Props> = (props) => {
     props.onClose()
   }
 
+  useEffect(() => {
+    const dialog = modalRef.current
+    if (!dialog) return
+    dialog.addEventListener('confirm', () => {
+      handleConfirm()
+      dialog.open = false
+    })
+    dialog.addEventListener('close', () => {
+      handleClose()
+    })
+
+    const skinBox = skinCheckboxRef.current
+
+    skinBox?.addEventListener('change', () => {
+      setSkin(skinBox.checked)
+    })
+
+    const capeBox = capeCheckboxRef.current
+
+    capeBox?.addEventListener('change', () => {
+      setCape(capeBox.checked)
+    })
+  })
+
   return (
-    <Modal
-      show={props.show}
-      title={t('user.chooseClearTexture')}
-      onConfirm={handleConfirm}
-      onClose={handleClose}
+    <mdui-dialog
+      open={props.show}
+      headline={t('user.chooseClearTexture')}
+      close-on-esc
+      close-on-overlay-click
+      ref={modalRef}
     >
-      <label className="d-block">
-        <input
-          type="checkbox"
-          className="mr-2"
-          checked={skin}
-          onChange={handleSkinChange}
-        />
+      <mdui-checkbox checked={skin} ref={skinCheckboxRef}>
         {t('general.skin')}
-      </label>
-      <label className="d-block">
-        <input
-          type="checkbox"
-          className="mr-2"
-          checked={cape}
-          onChange={handleCapeChange}
-        />
+      </mdui-checkbox>
+      <mdui-checkbox checked={cape} ref={capeCheckboxRef}>
         {t('general.cape')}
-      </label>
-    </Modal>
+      </mdui-checkbox>
+      <mdui-button slot="action" onClick={handleClose} variant="text">
+        {t('general.cancel')}
+      </mdui-button>
+      <mdui-button slot="action" onClick={handleConfirm}>
+        {t('general.confirm')}
+      </mdui-button>
+    </mdui-dialog>
   )
 }
 

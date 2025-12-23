@@ -21,7 +21,7 @@ const Previewer: React.FC<Props> = (props) => {
   const switchMode = () => setIs3d((is) => !is)
 
   const switcher = (
-    <mdui-button onClick={switchMode}>
+    <mdui-button onClick={switchMode} variant="tonal">
       {is3d ? t('user.switch2dPreview') : t('user.switch3dPreview')}
     </mdui-button>
   )

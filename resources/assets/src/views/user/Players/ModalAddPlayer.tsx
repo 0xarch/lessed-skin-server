@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import { toast } from '@/scripts/notify'
 import type { Player } from '@/scripts/types'
 import urls from '@/scripts/urls'
-import Modal from '@/components/Modal'
+import { Dialog } from 'mdui'
 
 type Extra = {
   score: number
@@ -22,9 +22,10 @@ interface Props {
 const ModalAddPlayer: React.FC<Props> = (props) => {
   const [name, setName] = useState('')
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value)
-  }
+  const { rule, length } = blessing.extra as Extra
+
+  const modalRef = useRef<Dialog>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleConfirm = async () => {
     const {
@@ -37,6 +38,7 @@ const ModalAddPlayer: React.FC<Props> = (props) => {
     if (code === 0) {
       toast.success(message)
       props.onAdd(player)
+      modalRef.current && (modalRef.current.open = false)
     } else {
       toast.error(message)
     }
@@ -47,44 +49,46 @@ const ModalAddPlayer: React.FC<Props> = (props) => {
     props.onClose()
   }
 
-  const { score, cost, rule, length } = blessing.extra as Extra
-  const isScoreEnough = score >= cost
+  useEffect(() => {
+    const dialog = modalRef.current
+    dialog?.addEventListener('close', () => {
+      handleClose()
+      dialog.open = false
+    })
+    const text = inputRef.current
+    text?.addEventListener('change', () => {
+      setName(text.value)
+    })
+  })
 
   return (
-    <Modal
-      show={props.show}
-      title={t('user.player.add-player')}
-      onConfirm={handleConfirm}
-      onClose={handleClose}
+    <mdui-dialog
+      open={props.show}
+      headline={t('user.player.add-player')}
+      close-on-esc
+      close-on-overlay-click
+      ref={modalRef}
     >
-      <div className="form-group">
-        <label htmlFor="new-player-name">
-          {t('general.player.player-name')}
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="new-player-name"
-          value={name}
-          onChange={handleNameChange}
-        />
-      </div>
+      <mdui-text-field
+        label={t('general.player.player-name')}
+        id="new-player-name"
+        value={name}
+        ref={inputRef}
+      />
+      <br className="md-br" />
       <div className="callout callout-info">
         <ul className="m-0 p-0 pl-3">
           <li>{rule}</li>
           <li>{length}</li>
         </ul>
       </div>
-      <div
-        className={`alert alert-${isScoreEnough ? 'success' : 'danger'}`}
-        role="alert"
-      >
-        <i className={`icon fas fa-${isScoreEnough ? 'check' : 'times'}`}></i>
-        <span className="ml-1">
-          {t('user.cur-score')} {score}
-        </span>
-      </div>
-    </Modal>
+      <mdui-button slot="action" variant="text" onClick={handleClose}>
+        {t('general.cancel')}
+      </mdui-button>
+      <mdui-button slot="action" onClick={handleConfirm}>
+        {t('general.confirm')}
+      </mdui-button>
+    </mdui-dialog>
   )
 }
 
