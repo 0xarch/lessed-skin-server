@@ -1,9 +1,8 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 import { t } from '@/scripts/i18n'
-import { showModal } from '@/scripts/notify'
 import type { Player } from '@/scripts/types'
-import { Box } from './styles'
-import clsx from 'clsx'
+import { dialog } from 'mdui'
 
 interface Props {
   player: Player
@@ -22,141 +21,112 @@ const Card: React.FC<Props> = (props) => {
     const capePreview = `${blessing.base_url}/preview/${player.tid_cape}`
     const capePreviewPNG = `${capePreview}?png`
 
-    showModal({
-      mode: 'alert',
-      title: t('general.player.previews'),
-      children: (
-        <div className="row">
-          <div className="col-6 d-flex justify-content-center">
-            {player.tid_skin > 0 && (
-              <a
-                href={`${blessing.base_url}/skinlib/show/${player.tid_skin}`}
-                target="_blank"
-              >
-                <picture>
-                  <source srcSet={skinPreview} type="image/webp" />
-                  <img
-                    src={skinPreviewPNG}
-                    alt={`${player.name} - ${t('general.skin')}`}
-                    width="128"
-                  />
-                </picture>
-              </a>
-            )}
-          </div>
-          <div className="col-6 d-flex justify-content-center">
-            {player.tid_cape > 0 && (
-              <a
-                href={`${blessing.base_url}/skinlib/show/${player.tid_cape}`}
-                target="_blank"
-              >
-                <picture>
-                  <source srcSet={capePreview} type="image/webp" />
-                  <img
-                    src={capePreviewPNG}
-                    alt={`${player.name} - ${t('general.cape')}`}
-                    width="128"
-                  />
-                </picture>
-              </a>
-            )}
-          </div>
+    const root = document.createElement('div')
+
+    ReactDOM.render(
+      <>
+        <div className="col-6 d-flex justify-content-center">
+          {player.tid_skin > 0 && (
+            <a
+              href={`${blessing.base_url}/skinlib/show/${player.tid_skin}`}
+              target="_blank"
+            >
+              <picture>
+                <source srcSet={skinPreview} type="image/webp" />
+                <img
+                  src={skinPreviewPNG}
+                  alt={`${player.name} - ${t('general.skin')}`}
+                  width="128"
+                />
+              </picture>
+            </a>
+          )}
         </div>
-      ),
+        <div className="col-6 d-flex justify-content-center">
+          {player.tid_cape > 0 && (
+            <a
+              href={`${blessing.base_url}/skinlib/show/${player.tid_cape}`}
+              target="_blank"
+            >
+              <picture>
+                <source srcSet={capePreview} type="image/webp" />
+                <img
+                  src={capePreviewPNG}
+                  alt={`${player.name} - ${t('general.cape')}`}
+                  width="128"
+                />
+              </picture>
+            </a>
+          )}
+        </div>
+      </>,
+      root,
+    )
+
+    dialog({
+      headline: t('general.player.previews'),
+      body: root,
+      closeOnEsc: true,
+      closeOnOverlayClick: true,
+      onClosed: () => {
+        root.remove()
+      },
     })
   }
-
-  const isDarkMode = document.body.classList.contains('dark-mode')
 
   const avatar = `${blessing.base_url}/avatar/player/${player.name}`
   const avatarPNG = `${avatar}?png`
 
   return (
-    <Box className={clsx('info-box', { 'bg-gray-dark': isDarkMode })}>
-      <div className="info-box-icon">
-        <picture>
-          <source srcSet={avatar} type="image/webp" />
-          <img className="bs-avatar" src={avatarPNG} />
-        </picture>
+    <mdui-card class="mdui-prose" style={{ padding: '1rem' }} variant="filled">
+      <header>
+        <h4>
+          <picture>
+            <source srcSet={avatar} type="image/webp" />
+            <img src={avatarPNG} style={{ marginTop: 0, height: '1em' }} />
+          </picture>
+          &nbsp;
+          {player.name}
+        </h4>
+      </header>
+      <div>
+        <span>PID: {player.pid}</span>
+        &nbsp;
+        <span>
+          {t('general.player.owner')}: {player.uid}
+        </span>
       </div>
-      <div className="info-box-content">
-        <div className="row">
-          <div className="col-10">
-            <b>{player.name}</b>
-          </div>
-          <div className="col-2">
-            <div className="float-right dropdown">
-              <a
-                className="text-gray"
-                href="#"
-                data-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <i className="fas fa-cog"></i>
-              </a>
-              <div className="dropdown-menu dropdown-menu-right">
-                <a
-                  href="#"
-                  className="dropdown-item"
-                  onClick={handlePreviewTextures}
-                >
-                  <i className="fas fa-eye mr-2"></i>
-                  {t('general.player.previews')}
-                </a>
-                <div className="dropdown-divider"></div>
-                <a
-                  href="#"
-                  className="dropdown-item"
-                  onClick={props.onUpdateName}
-                >
-                  <i className="fas fa-signature mr-2"></i>
-                  {t('admin.changePlayerName')}
-                </a>
-                <a
-                  href="#"
-                  className="dropdown-item"
-                  onClick={props.onUpdateOwner}
-                >
-                  <i className="fas fa-user-edit mr-2"></i>
-                  {t('admin.changeOwner')}
-                </a>
-                <a
-                  href="#"
-                  className="dropdown-item"
-                  onClick={props.onUpdateTexture}
-                >
-                  <i className="fas fa-tshirt mr-2"></i>
-                  {t('admin.changeTexture')}
-                </a>
-                <div className="dropdown-divider"></div>
-                <a
-                  href="#"
-                  className="dropdown-item dropdown-item-danger"
-                  onClick={props.onDelete}
-                >
-                  <i className="fas fa-trash mr-2"></i>
-                  {t('admin.deletePlayer')}
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div>
-            <span className="mr-2">PID: {player.pid}</span>
-            <span>
-              {t('general.player.owner')}: {player.uid}
-            </span>
-          </div>
-          <div>
-            <small className="text-gray">
-              {`${t('general.player.last-modified')}: `}
-              {player.last_modified}
-            </small>
-          </div>
-        </div>
-      </div>
-    </Box>
+      <small>
+        {`${t('general.player.last-modified')}: `}
+        {player.last_modified}
+      </small>
+      <mdui-divider class="md-br" />
+      <footer className="d-flex">
+        <mdui-button variant="elevated" onClick={handlePreviewTextures}>
+          {t('general.player.previews')}
+        </mdui-button>
+        &nbsp;
+        <mdui-button variant="elevated" onClick={props.onUpdateName}>
+          {t('admin.changePlayerName')}
+        </mdui-button>
+        &nbsp;
+        <mdui-dropdown>
+          <mdui-button-icon icon="settings" slot="trigger" />
+          <mdui-menu>
+            <mdui-menu-item onClick={props.onUpdateOwner}>
+              {t('admin.changeOwner')}
+            </mdui-menu-item>
+            <mdui-menu-item onClick={props.onUpdateTexture}>
+              {t('admin.changeTexture')}
+            </mdui-menu-item>
+            <mdui-divider />
+            <mdui-menu-item onClick={props.onDelete}>
+              {t('admin.deletePlayer')}
+            </mdui-menu-item>
+          </mdui-menu>
+        </mdui-dropdown>
+      </footer>
+    </mdui-card>
   )
 }
 

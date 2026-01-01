@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { t } from '@/scripts/i18n'
-import { TextureType } from '@/scripts/types'
-import Modal from '@/components/Modal'
+import { Dialog, RadioGroup } from 'mdui'
 
 interface Props {
   open: boolean
@@ -12,10 +11,6 @@ interface Props {
 const ModalUpdateTexture: React.FC<Props> = (props) => {
   const [type, setType] = useState<'skin' | 'cape'>('skin')
   const [tid, setTid] = useState('')
-
-  const handleTypeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setType(event.target.value as 'skin' | 'cape')
-  }
 
   const handleTidChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTid(event.target.value)
@@ -33,51 +28,50 @@ const ModalUpdateTexture: React.FC<Props> = (props) => {
     props.onClose()
   }
 
+  const dialogRef = useRef<Dialog>(null)
+  const radioRef = useRef<RadioGroup>(null)
+
+  useEffect(() => {
+    if (dialogRef.current) {
+      dialogRef.current.addEventListener('close', () => {
+        handleClose()
+      })
+    }
+    if (radioRef.current) {
+      radioRef.current.addEventListener('change', (e) => {
+        // @ts-ignore
+        setType(e.target.value as 'skin' | 'cape')
+      })
+    }
+  })
+
   return (
-    <Modal
-      show={props.open}
-      center
-      title={t('admin.changeTexture')}
-      onConfirm={handleConfirm}
-      onClose={handleClose}
+    <mdui-dialog
+      open={props.open}
+      headline={t('admin.changeTexture')}
+      close-on-esc
+      close-on-overlay-click
+      ref={dialogRef}
     >
-      <div className="form-group">
-        <label>{t('admin.textureType')}</label>
-        <div>
-          <label className="mr-5">
-            <input
-              className="mr-1"
-              type="radio"
-              value="skin"
-              checked={type === 'skin'}
-              onChange={handleTypeChange}
-            />
-            {t('general.skin')}
-          </label>
-          <label>
-            <input
-              className="mr-1"
-              type="radio"
-              value="cape"
-              checked={type === TextureType.Cape}
-              onChange={handleTypeChange}
-            />
-            {t('general.cape')}
-          </label>
-        </div>
-      </div>
-      <div className="form-group">
-        <label htmlFor="update-texture-tid">TID</label>
-        <input
-          type="number"
-          id="update-texture-tid"
-          className="form-control"
-          placeholder={t('admin.pidNotice')}
-          value={tid}
-          onChange={handleTidChange}
-        />
-      </div>
-    </Modal>
+      <mdui-button slot="action" onClick={handleConfirm}>
+        {t('general.confirm')}
+      </mdui-button>
+      <h4>{t('admin.textureType')}</h4>
+      <mdui-radio-group
+        ref={radioRef}
+        value={type === 'skin' ? 'skin' : 'cape'}
+      >
+        <mdui-radio value="skin">{t('general.skin')}</mdui-radio>
+        <mdui-radio value="cape">{t('general.cape')}</mdui-radio>
+      </mdui-radio-group>
+      <mdui-text-field
+        id="update-texture-tid"
+        label="TID"
+        onInput={handleTidChange}
+        value={tid}
+        placeholder={t('admin.pidNotice')}
+      ></mdui-text-field>
+    </mdui-dialog>
   )
 }
 

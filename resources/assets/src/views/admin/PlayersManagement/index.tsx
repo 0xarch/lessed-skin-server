@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { hot } from 'react-hot-loader/root'
 import { useImmer } from 'use-immer'
 import useIsLargeScreen from '@/scripts/hooks/useIsLargeScreen'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import type { Player, Paginator } from '@/scripts/types'
-import { toast, showModal } from '@/scripts/notify'
+import { toast } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import Pagination from '@/components/Pagination'
-import { Card as FluentCard } from '@/components/_FluentComponents'
 import Card from './Card'
 import LoadingCard from './LoadingCard'
 import Row from './Row'
 import LoadingRow from './LoadingRow'
 import ModalUpdateTexture from './ModalUpdateTexture'
+import { confirm, prompt, SegmentedButtonGroup } from 'mdui'
 
 const PlayersManagement: React.FC = () => {
   const [players, setPlayers] = useImmer<Player[]>([])
@@ -49,10 +49,6 @@ const PlayersManagement: React.FC = () => {
     getPlayers()
   }, [page])
 
-  const handleModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsTableMode(event.target.value === 'table')
-  }
-
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setQuery(event.target.value)
   }
@@ -63,19 +59,19 @@ const PlayersManagement: React.FC = () => {
   }
 
   const handleUpdateName = async (player: Player, index: number) => {
-    let name: string
+    let name = ''
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('admin.changePlayerNameNotice'),
-        input: player.name,
-        validator: (value: string) => {
-          if (!value) {
-            return t('admin.emptyPlayerName')
-          }
+      await prompt({
+        description: t('admin.changePlayerNameNotice'),
+        validator: (value) => value,
+        closeOnEsc: true,
+        closeOnOverlayClick: true,
+        onConfirm: (value) => {
+          name = value
         },
+        confirmText: t('general.confirm'),
+        cancelText: t('general.cancel'),
       })
-      name = value
     } catch {
       return
     }
@@ -95,15 +91,23 @@ const PlayersManagement: React.FC = () => {
   }
 
   const handleUpdateOwner = async (player: Player, index: number) => {
-    let uid: number
+    let uid = 0
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('admin.changePlayerOwner'),
-        input: player.uid.toString(),
-        inputMode: 'numeric',
+      await prompt({
+        description: t('admin.changePlayerOwner'),
+        closeOnEsc: true,
+        closeOnOverlayClick: true,
+        validator: (value) =>
+          Number.isInteger(Number(value)) ? true : 'Requires number',
+        onConfirm: (value) => {
+          uid = Number.parseInt(value)
+        },
+        confirmText: t('general.confirm'),
+        cancelText: t('general.cancel'),
+        textFieldOptions: {
+          type: 'number',
+        },
       })
-      uid = Number.parseInt(value)
     } catch {
       return
     }
@@ -143,9 +147,10 @@ const PlayersManagement: React.FC = () => {
 
   const handleDelete = async (player: Player) => {
     try {
-      await showModal({
-        text: t('admin.deletePlayerNotice'),
-        okButtonType: 'danger',
+      await confirm({
+        headline: t('admin.deletePlayerNotice'),
+        confirmText: t('general.confirm'),
+        cancelText: t('general.cancel'),
       })
     } catch {
       return
@@ -162,84 +167,84 @@ const PlayersManagement: React.FC = () => {
     }
   }
 
+  const switcherRef = useRef<SegmentedButtonGroup>(null)
+
+  const handleModeChange = (mode: boolean) => {
+    setIsTableMode(mode)
+    if (!switcherRef.current) return
+    switcherRef.current.value = mode ? 'table' : 'card'
+  }
+
   return (
-    <FluentCard>
-      <header style={{ display: 'flex', flexWrap: 'wrap' }}>
+    <mdui-card class="md-card mdui-prose">
+      <header
+        style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}
+      >
         <form className="input-group" onSubmit={handleSubmitQuery}>
-          <input
-            type="text"
-            inputMode="search"
-            className="form-control"
-            title={t('vendor.datatable.search')}
+          <mdui-text-field
             value={query}
-            onChange={handleQueryChange}
-          />
-          <div className="input-group-append">
-            <button className="btn btn-primary" type="submit">
-              {t('vendor.datatable.search')}
-            </button>
-          </div>
+            onInput={handleQueryChange}
+            variant="outlined"
+          >
+            <mdui-button-icon type="submit" icon="search" slot="end-icon" />
+          </mdui-text-field>
         </form>
-        <div className="btn-group btn-group-toggle ml-auto">
-          <label
-            className={`btn ${isTableMode ? 'active' : ''}`}
-            title="Table Mode"
-          >
-            <input
-              type="radio"
-              value="table"
-              checked={isTableMode}
-              onChange={handleModeChange}
-            />
-            <i className="fas fa-list"></i>
-          </label>
-          <label
-            className={`btn ${isTableMode ? '' : 'active'}`}
-            title="Card Mode"
-          >
-            <input
-              type="radio"
-              value="card"
-              checked={!isTableMode}
-              onChange={handleModeChange}
-            />
-            <i className="fas fa-grip-vertical"></i>
-          </label>
-        </div>
+        <mdui-segmented-button-group
+          selects="single"
+          value={isTableMode ? 'table' : 'card'}
+          ref={switcherRef}
+          style={{ marginLeft: 'auto' }}
+        >
+          <mdui-segmented-button
+            value="table"
+            end-icon="table_view"
+            onClick={() => handleModeChange(true)}
+          />
+          <mdui-segmented-button
+            value="card"
+            end-icon="grid_view"
+            onClick={() => handleModeChange(false)}
+          />
+        </mdui-segmented-button-group>
       </header>
       {players.length === 0 && !isLoading ? (
-        <body>{t('general.noResult')}</body>
+        <h4>{t('general.noResult')}</h4>
       ) : isTableMode ? (
-        <body className="table-responsive">
-          <table className={`table ${isLoading ? '' : 'table-striped'}`}>
-            <thead>
-              <tr>
-                <th>PID</th>
-                <th>{t('general.player.player-name')}</th>
-                <th>{t('general.player.owner')}</th>
-                <th>{t('general.player.previews')}</th>
-                <th>{t('general.player.last-modified')}</th>
-                <th>{t('admin.operationsTitle')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading
-                ? new Array(10).fill(null).map((_, i) => <LoadingRow key={i} />)
-                : players.map((player, i) => (
-                    <Row
-                      key={player.pid}
-                      player={player}
-                      onUpdateName={() => handleUpdateName(player, i)}
-                      onUpdateOwner={() => handleUpdateOwner(player, i)}
-                      onUpdateTexture={() => setTextureUpdating(i)}
-                      onDelete={() => handleDelete(player)}
-                    />
-                  ))}
-            </tbody>
-          </table>
-        </body>
+        <table className="table-middle-align">
+          <thead>
+            <tr>
+              <th>PID</th>
+              <th>{t('general.player.player-name')}</th>
+              <th>{t('general.player.owner')}</th>
+              <th>{t('general.player.previews')}</th>
+              <th>{t('general.player.last-modified')}</th>
+              <th>{t('admin.operationsTitle')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading
+              ? new Array(10).fill(null).map((_, i) => <LoadingRow key={i} />)
+              : players.map((player, i) => (
+                  <Row
+                    key={player.pid}
+                    player={player}
+                    onUpdateName={() => handleUpdateName(player, i)}
+                    onUpdateOwner={() => handleUpdateOwner(player, i)}
+                    onUpdateTexture={() => setTextureUpdating(i)}
+                    onDelete={() => handleDelete(player)}
+                  />
+                ))}
+          </tbody>
+        </table>
       ) : (
-        <body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '1rem',
+            marginBottom: '1rem',
+          }}
+        >
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : players.map((player, i) => (
@@ -252,19 +257,17 @@ const PlayersManagement: React.FC = () => {
                   onDelete={() => handleDelete(player)}
                 />
               ))}
-        </body>
-      )}
-      <footer>
-        <div className="float-right immersive">
-          <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
+      )}
+      <footer style={{ marginLeft: 'auto', width: 'fit-content' }}>
+        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
       </footer>
       <ModalUpdateTexture
         open={textureUpdating > -1}
         onSubmit={handleUpdateTexture}
         onClose={handleCloseModalUpdateTexture}
       />
-    </FluentCard>
+    </mdui-card>
   )
 }
 

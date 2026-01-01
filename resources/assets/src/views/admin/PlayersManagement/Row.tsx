@@ -1,7 +1,6 @@
 import React from 'react'
 import { t } from '@/scripts/i18n'
 import type { Player } from '@/scripts/types'
-import ButtonEdit from '@/components/ButtonEdit'
 
 interface Props {
   player: Player
@@ -18,22 +17,22 @@ const Row: React.FC<Props> = (props) => {
     <tr>
       <td>{player.pid}</td>
       <td>
-        {player.name}
-        <span className="ml-1">
-          <ButtonEdit
-            title={t('admin.changePlayerName')}
-            onClick={props.onUpdateName}
-          />
-        </span>
+        <mdui-button
+          variant="text"
+          onClick={props.onUpdateName}
+          end-icon="edit"
+        >
+          {player.name}
+        </mdui-button>
       </td>
       <td>
-        {player.uid}
-        <span className="ml-1">
-          <ButtonEdit
-            title={t('admin.changeOwner')}
-            onClick={props.onUpdateOwner}
-          />
-        </span>
+        <mdui-button
+          variant="text"
+          onClick={props.onUpdateOwner}
+          end-icon="edit"
+        >
+          {player.uid}
+        </mdui-button>
       </td>
       <td>
         {player.tid_skin > 0 && (
@@ -64,12 +63,19 @@ const Row: React.FC<Props> = (props) => {
       </td>
       <td>{player.last_modified}</td>
       <td>
-        <button className="btn btn-default" onClick={props.onUpdateTexture}>
+        <mdui-button variant="tonal" onClick={props.onUpdateTexture}>
           {t('admin.changeTexture')}
-        </button>
-        <button className="btn btn-danger" onClick={props.onDelete}>
+        </mdui-button>
+        &nbsp;
+        <mdui-button
+          style={{
+            backgroundColor: 'rgb(var(--mdui-color-error-container))',
+            color: 'rgb(var(--mdui-color-on-error-container))',
+          }}
+          onClick={props.onDelete}
+        >
           {t('admin.deletePlayer')}
-        </button>
+        </mdui-button>
       </td>
     </tr>
   )

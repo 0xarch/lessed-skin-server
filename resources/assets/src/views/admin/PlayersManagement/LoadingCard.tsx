@@ -1,37 +1,37 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import Skeleton from 'react-loading-skeleton'
-import { Box } from './styles'
-import clsx from 'clsx'
-
-const isDarkMode = document.body.classList.contains('dark-mode')
-
-const ShrinkedSkeleton = styled(Skeleton)<{ width?: string }>`
-  width: ${(props) => props.width};
-`
+import { t } from '@/scripts/i18n'
 
 const LoadingCard: React.FC = () => (
-  <Box className={clsx('info-box', { 'bg-gray-dark': isDarkMode })}>
-    <div className="info-box-icon">
-      <Skeleton circle height={50} width={50} />
+  <mdui-card class="mdui-prose" style={{ padding: '1rem' }} variant="filled">
+    <header>
+      <h4>
+        <Skeleton circle height="1em" width="1em" />
+        &nbsp;
+        <Skeleton />
+      </h4>
+    </header>
+    <div>
+      <span>PID:</span>
+      &nbsp;
+      <span>{t('general.player.owner')}:</span>
     </div>
-    <div className="info-box-content">
-      <div className="row">
-        <div className="col-10">
-          <ShrinkedSkeleton width="120px" />
-        </div>
-        <div className="col-2"></div>
-      </div>
-      <div>
-        <div>
-          <ShrinkedSkeleton width="150px" />
-        </div>
-        <div>
-          <ShrinkedSkeleton width="180px" />
-        </div>
-      </div>
-    </div>
-  </Box>
+    <small>{`${t('general.player.last-modified')}: `}</small>
+    <mdui-divider class="md-br" />
+    <footer className="d-flex">
+      <mdui-button variant="elevated" loading>
+        {t('general.player.previews')}
+      </mdui-button>
+      &nbsp;
+      <mdui-button variant="elevated" loading>
+        {t('admin.changePlayerName')}
+      </mdui-button>
+      &nbsp;
+      <mdui-dropdown>
+        <mdui-button-icon loading slot="trigger" />
+      </mdui-dropdown>
+    </footer>
+  </mdui-card>
 )
 
 export default LoadingCard

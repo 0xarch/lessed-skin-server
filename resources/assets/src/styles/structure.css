@@ -272,3 +272,11 @@ text {
   text-overflow: ellipsis;
   overflow: hidden;
 }
+
+table.table-middle-align,
+.mdui-prose table.table-middle-align {
+  & tr,
+  td {
+    vertical-align: middle;
+  }
+}

@@ -218,7 +218,12 @@ const Viewer: React.FC<Props> = (props) => {
       <mdui-divider class="md-br" />
       <div
         ref={containerWrapperRef}
-        style={{ overflow: 'hidden', aspectRatio: '1.5' }}
+        style={{
+          overflow: 'hidden',
+          aspectRatio: '1.5',
+          maxWidth: '50rem',
+          margin: '0 auto',
+        }}
       >
         <canvas ref={containerRef} style={{ maxWidth: '100%' }}></canvas>
       </div>
