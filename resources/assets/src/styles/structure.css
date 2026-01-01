@@ -260,3 +260,15 @@ text {
     pointer-events: none;
   }
 }
+
+.custom-file {
+  overflow: hidden;
+}
+
+.custom-file-label {
+  display: block;
+  width: 100%;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}

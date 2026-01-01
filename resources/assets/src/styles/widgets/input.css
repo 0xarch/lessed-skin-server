@@ -55,15 +55,6 @@ input[type='file'] {
   display: none;
 }
 
-.custom-file {
-  width: 100%;
-}
-
-.custom-file-label {
-  display: block;
-  width: 100%;
-}
-
 textarea.form-control {
   display: block;
   background-color: var(--callout-bg-color);

@@ -112,17 +112,15 @@ class OptionsController extends Controller
     public function score()
     {
         $rate = Option::form('rate', OptionForm::AUTO_DETECT, function ($form) {
-            $form->group('score_per_storage')->text('score_per_storage')->addon();
+            $form->text('score_per_storage')->suffix();
 
-            $form->group('private_score_per_storage')
-                ->text('private_score_per_storage')->addon()->hint();
+            $form->text('private_score_per_storage')->suffix()->hint();
 
-            $form->group('score_per_closet_item')
-                ->text('score_per_closet_item')->addon();
+            $form->text('score_per_closet_item')->suffix();
 
             $form->checkbox('return_score')->label();
 
-            $form->group('score_per_player')->text('score_per_player')->addon();
+            $form->text('score_per_player')->suffix();
 
             $form->text('user_initial_score');
         })->handle();
@@ -134,11 +132,12 @@ class OptionsController extends Controller
         })->handle();
 
         $sign = Option::form('sign', OptionForm::AUTO_DETECT, function ($form) {
-            $form->group('sign_score')
-                ->text('sign_score_from')->addon(trans('options.sign.sign_score.addon1'))
-                ->text('sign_score_to')->addon(trans('options.sign.sign_score.addon2'));
+            $form->text('sign_score_from')->hidden();
+            $form->text('sign_score_to')->hidden();
 
-            $form->group('sign_gap_time')->text('sign_gap_time')->addon();
+            $form->rangeslider('sign_score')->min(0)->max(500)->step(1)->name('sign_score_from','sign_score_to');
+
+            $form->text('sign_gap_time')->suffix();
 
             $form->checkbox('sign_after_zero')->label()->hint();
         })->after(function () {
@@ -150,13 +149,9 @@ class OptionsController extends Controller
         ])->handle();
 
         $sharing = Option::form('sharing', OptionForm::AUTO_DETECT, function ($form) {
-            $form->group('score_award_per_texture')
-                ->text('score_award_per_texture')
-                ->addon(trans('general.user.score'));
+            $form->text('score_award_per_texture')->suffix(trans('general.user.score'));
             $form->checkbox('take_back_scores_after_deletion')->label();
-            $form->group('score_award_per_like')
-                ->text('score_award_per_like')
-                ->addon(trans('general.user.score'));
+            $form->text('score_award_per_like')->suffix(trans('general.user.score'));
         })->handle();
 
         return view('admin.score', ['forms' => compact('rate', 'report', 'sign', 'sharing')]);

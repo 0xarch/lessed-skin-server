@@ -3,26 +3,24 @@
 {% block title %}{{ texture.name }}{% endblock %}
 
 {% block content %}
-  <div class="container">
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="d-flex justify-content-between flex-wrap">
-          <div>
-            <h1 class="m-0">{{ trans('skinlib.show.title') }}</h1>
-          </div>
-          <div>
-            <div class="breadcrumb"></div>
-          </div>
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="d-flex justify-content-between flex-wrap">
+        <div>
+          <h1 class="m-0">{{ trans('skinlib.show.title') }}</h1>
+        </div>
+        <div>
+          <div class="breadcrumb"></div>
         </div>
       </div>
     </div>
-
-    <section class="content">
-      <div class="container-fluid">
-        {{ include('shared.grid') }}
-      </div>
-    </section>
   </div>
+
+  <section class="content" style="flex:1">
+    <div class="container-fluid">
+      {{ include('shared.grid') }}
+    </div>
+  </section>
 
   <div id="modals"></div>
 {% endblock %}

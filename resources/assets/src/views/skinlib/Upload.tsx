@@ -12,8 +12,7 @@ import { TextureType } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import FileInput from '@/components/FileInput'
 import ViewerSkeleton from '@/components/ViewerSkeleton'
-import { Card } from '@/components/_FluentComponents'
-import { Checkbox, RadioGroup, TextField } from 'mdui'
+import { Checkbox, RadioGroup } from 'mdui'
 
 const Previewer = React.lazy(() => import('@/components/Viewer'))
 
@@ -148,7 +147,6 @@ const Upload: React.FC = () => {
           value={name}
           ref={textureNameRef}
         />
-        <br className="md-br" />
         <h4>{t('skinlib.upload.texture-type')}</h4>
         <mdui-radio-group ref={textureTypeRef} value={type}>
           <mdui-radio value="steve">Steve</mdui-radio>
@@ -165,8 +163,9 @@ const Upload: React.FC = () => {
         {contentPolicy && (
           <>
             <br />
-            <div
-              className="callout callout-warning"
+            <mdui-card
+              class="md-card mdui-prose"
+              variant="outlined"
               dangerouslySetInnerHTML={{ __html: contentPolicy }}
             />
           </>
@@ -192,7 +191,14 @@ const Upload: React.FC = () => {
           {isPrivate && (
             <>
               <br />
-              <mdui-card class="md-card mdui-prose" variant="outlined">
+              <mdui-card
+                class="md-card mdui-prose"
+                variant="outlined"
+                style={{
+                  backgroundColor: 'rgb(var(--mdui-color-tertiary-container))',
+                  color: 'rgb(var(--mdui-color-on-tertiary-container))',
+                }}
+              >
                 {privacyNotice}
               </mdui-card>
             </>
@@ -200,25 +206,33 @@ const Upload: React.FC = () => {
           {!isPrivate && award > 0 && (
             <>
               <br />
-              <div className="callout callout-success mt-3">
+              <mdui-card class="md-card mdui-prose" variant="outlined">
                 {t('skinlib.upload.award', { score: award })}
-              </div>
+              </mdui-card>
             </>
           )}
           {file && (
             <>
               <br className="md-br" />
-              <div
-                className={`callout callout-${
-                  currentScore > scoreCost ? 'success' : 'danger'
-                } mt-3`}
+              <mdui-card
+                class="md-card mdui-prose"
+                variant="outlined"
+                style={
+                  currentScore > scoreCost
+                    ? {}
+                    : {
+                        backgroundColor:
+                          'rgb(var(--mdui-color-error-container))',
+                        color: 'rgb(var(--mdui-color-on-error-container))',
+                      }
+                }
               >
                 <div>{t('skinlib.upload.cost', { score: scoreCost })}</div>
                 <div>
                   {t('user.cur-score')}
                   <span className="ml-1">{currentScore}</span>
                 </div>
-              </div>
+              </mdui-card>
             </>
           )}
         </footer>

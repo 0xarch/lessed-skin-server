@@ -1,11 +1,7 @@
-/** @jsxImportSource @emotion/react */
 import React, { useState, useEffect, useRef } from 'react'
 import { useMeasure } from 'react-use'
-import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 import * as skinview3d from 'skinview3d'
 import { t } from '@/scripts/i18n'
-import * as breakpoints from '@/styles/breakpoints'
 import SkinSteve from '../../../misc/textures/steve.png'
 import bg1 from '../../../misc/backgrounds/1.webp'
 import bg2 from '../../../misc/backgrounds/2.webp'
@@ -14,16 +10,9 @@ import bg4 from '../../../misc/backgrounds/4.webp'
 import bg5 from '../../../misc/backgrounds/5.webp'
 import bg6 from '../../../misc/backgrounds/6.webp'
 import bg7 from '../../../misc/backgrounds/7.webp'
-import { Card, CardHeader } from './_FluentComponents'
 
 const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7]
 export const PICTURES_COUNT = backgrounds.length
-
-const CenteredDiv = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
 
 interface Props {
   skin?: string
@@ -39,35 +28,6 @@ const animationFactories = [
   () => new skinview3d.FlyingAnimation(),
   () => new skinview3d.IdleAnimation(),
 ]
-
-const ActionButton = styled.i`
-  display: inline;
-  padding: 0.5em 0.5em;
-  &:hover {
-    color: #555;
-    cursor: pointer;
-  }
-`
-
-const cssViewer = css`
-  flex: 1 1 auto;
-  ${breakpoints.greaterThan(breakpoints.Breakpoint.lg)} {
-    min-height: 500px !important;
-  }
-  min-height: 300px !important;
-  width: 100%;
-  height: 100%;
-  position: relative;
-
-  canvas {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: var(--f-radius);
-  }
-`
 
 const Viewer: React.FC<Props> = (props) => {
   const { initPositionZ = 70 } = props
@@ -234,6 +194,7 @@ const Viewer: React.FC<Props> = (props) => {
         >
           {paused ? t('general.playAnimation') : t('general.pauseAnimation')}
         </mdui-button>
+        &nbsp;
         <mdui-button-icon icon="run_circle" onClick={toggleAnimation} />
         <mdui-button-icon icon="tablet" onClick={toggleBackEquippment} />
         <mdui-button-icon icon="rotate_right" onClick={toggleRotate} />
@@ -255,10 +216,13 @@ const Viewer: React.FC<Props> = (props) => {
         </mdui-button>
       </div>
       <mdui-divider class="md-br" />
-      <div className="card-body" ref={containerWrapperRef} css={cssViewer}>
-        <canvas ref={containerRef}></canvas>
+      <div
+        ref={containerWrapperRef}
+        style={{ overflow: 'hidden', aspectRatio: '1.5' }}
+      >
+        <canvas ref={containerRef} style={{ maxWidth: '100%' }}></canvas>
       </div>
-      <mdui-divider class="md-br" />
+      {props.children && <mdui-divider class="md-br" />}
       <footer className="d-flex">{props.children}</footer>
     </mdui-card>
   )

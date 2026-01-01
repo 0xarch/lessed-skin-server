@@ -1,50 +1,7 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { t } from '@/scripts/i18n'
-import * as cssUtils from '@/styles/utils'
 import type { LibraryItem } from './types'
 import { humanizeType } from './utils'
-
-const Card = styled.div`
-  width: 245px;
-  transition-property: box-shadow;
-  transition-duration: 0.3s;
-  background-color: var(--bg-color);
-  &:hover {
-    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-  }
-
-  img {
-    height: 210px;
-  }
-`
-
-// const Icon = styled.i`
-//   height: 24px;
-// `
-
-const Badge = styled.span`
-  padding-top: 0;
-`
-
-const NickNameBadge = styled(Badge)`
-  ${cssUtils.pointerCursor}
-  max-width: 100px;
-`
-
-interface ButtonLikeProps {
-  liked: boolean
-}
-const ButtonLike = styled.a<ButtonLikeProps>`
-  ${cssUtils.pointerCursor}
-
-  i, span {
-    color: ${(props) => (props.liked ? '#dc3545' : '#6c757d')};
-    &:hover {
-      color: ${(props) => (props.liked ? '#dc3545' : '#343a40')};
-    }
-  }
-`
 
 interface Props {
   item: LibraryItem
@@ -73,49 +30,38 @@ const Item: React.FC<Props> = (props) => {
 
   return (
     <a href={link} target="_blank">
-      <Card className="card immersive">
-        <div className="card-body">
-          <a href={link} target="_blank">
-            <picture>
-              <source srcSet={preview} type="image/webp" />
-              <img src={previewPNG} alt={item.name} className="card-img-top" />
-            </picture>
-          </a>
-        </div>
-        <div className="card-footer block-footer">
-          <div className="d-flex align-items-center">
-            {item.public || (
-              <i
-                className="fas fa-lock text-warning mr-2"
-                title={t('skinlib.private')}
-              />
-            )}
-            <span className="d-block mb-1 text-truncate" title={item.name}>
-              {item.name}
-            </span>
-          </div>
-          <div className="d-flex justify-content-between">
-            <div className="d-flex align-items-center">
-              <Badge className="badge">{humanizeType(item.type)}</Badge>
-              <NickNameBadge
-                className="badge name-badge"
-                title={t('skinlib.show.uploader')}
-                onClick={handleUploaderClick}
-              >
-                {item.nickname}
-              </NickNameBadge>
-            </div>
-            <ButtonLike
-              liked={props.liked}
-              tabIndex={-1}
+      <mdui-card
+        class="md-card mdui-prose"
+        variant="outlined"
+        style={{ maxWidth: '250px' }}
+      >
+        <picture>
+          <source srcSet={preview} type="image/webp" />
+          <img src={previewPNG} alt={item.name} className="card-img-top" />
+        </picture>
+        <div>
+          <div className="skinitem-title d-flex justify-content-between align-items-center">
+            <h4 style={{ margin: '0' }}>{item.name}</h4>
+            {item.public || <mdui-chip>{t('skinlib.private')}</mdui-chip>}
+            <mdui-chip
               onClick={handleHeartClick}
+              icon={props.liked ? 'favorite' : 'checkroom'}
             >
-              <i className="fas fa-heart mr-1"></i>
-              <span>{item.likes}</span>
-            </ButtonLike>
+              {item.likes}
+            </mdui-chip>
+          </div>
+          <mdui-divider class="md-br" />
+          <div
+            className="skinitem-uploader d-flex align-items-center"
+            style={{ marginLeft: 'auto' }}
+          >
+            <mdui-chip>{humanizeType(item.type)}</mdui-chip>
+            <mdui-chip end-icon="upload" onClick={handleUploaderClick}>
+              {item.nickname}
+            </mdui-chip>
           </div>
         </div>
-      </Card>
+      </mdui-card>
     </a>
   )
 }

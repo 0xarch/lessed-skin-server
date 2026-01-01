@@ -15,7 +15,6 @@ import FilterSelector from './FilterSelector'
 import Button from './Button'
 import Item from './Item'
 import type { Filter, LibraryItem } from './types'
-import { Card } from '@/components/_FluentComponents'
 
 const SkinLibrary: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -171,7 +170,7 @@ const SkinLibrary: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="content-header">
+      <div className="content-header d-flex align-items-center">
         <h1>{t('general.skinlib')}</h1>
         <span>
           {uploader ? (
@@ -188,7 +187,7 @@ const SkinLibrary: React.FC = () => {
         </span>
       </div>
       <section className="content">
-        <Card>
+        <mdui-card class="md-card">
           <header>
             <div className="form-group d-flex justify-content-between">
               <form onSubmit={handleFormSubmit}>
@@ -250,7 +249,8 @@ const SkinLibrary: React.FC = () => {
               </div>
             </div>
           </header>
-          <body>
+          <mdui-divider class="md-br" />
+          <div className="skin-list">
             {isLoading ? (
               <div className="overlay">
                 <Loading />
@@ -271,9 +271,9 @@ const SkinLibrary: React.FC = () => {
             ) : (
               <p className="text-center">{t('general.noResult')}</p>
             )}
-          </body>
+          </div>
           <footer>
-            <div className="float-right immersive">
+            <div style={{ marginLeft: 'auto', width: 'fit-content' }}>
               <Pagination
                 page={page}
                 totalPages={totalPages}
@@ -281,7 +281,7 @@ const SkinLibrary: React.FC = () => {
               />
             </div>
           </footer>
-        </Card>
+        </mdui-card>
       </section>
     </div>
   )

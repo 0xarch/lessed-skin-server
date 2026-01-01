@@ -438,7 +438,7 @@ class OptionFormText extends OptionFormItem
     public function suffix($suffix = OptionForm::AUTO_DETECT)
     {
         if ($suffix == OptionForm::AUTO_DETECT) {
-            $key = "options.$this->parentId.$this->id.placeholder";
+            $key = "options.$this->parentId.$this->id.addon";
             $suffix = trans()->has($key) ? trans($key) : '';
         }
 

@@ -7,39 +7,13 @@
 
   <body>
     <mdui-layout style="height: 100vh">
-      {# <nav class="main-header navbar navbar-expand navbar-{{ navbar_color }} navbar-{{ color_mode }} ml-0">
-        <div class="container">
-          <div class="navbar-header">
-            <a href="{{ url('/') }}" class="navbar-brand">{{ site_name }}</a>
-          </div>
-
-          <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{ url('skinlib') }}">
-                  {{ trans('general.skinlib') }}
-                </a>
-              </li>
-              {% if auth_check() %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('user/closet') }}">
-                    {{ trans('general.my-closet') }}
-                  </a>
-                </li>
-              {% endif %}
-            </ul>
-          </div>
-        </div>
-      </nav> #}
       {{ include('shared.md-header') }}
       {{ include('shared.md-sidebar-skinlib', {scope: 'user'}) }}
 
       <mdui-layout-main class="d-flex flex-column content-wrapper">
         {% block content %}{% endblock %}
-        <footer class="main-footer">
-          {# <div class="container"> #}
-            {{ include('shared.copyright') }}
-          {# </div> #}
+        <footer style="margin-top: 1rem">
+          {{ include('shared.copyright') }}
         </footer>
       </mdui-layout-main>
     </mdui-layout>
