@@ -30,59 +30,38 @@ const Row: React.FC<Props> = (props) => {
         {allDeps.length === 0 ? (
           <i>{t('admin.noDependencies')}</i>
         ) : (
-          <div className="d-flex flex-column">
-            {allDeps.map(([name, constraint]) => {
-              const classes = [
-                'mb-1',
-                'badge',
-                `bg-${unsatisfied.includes(name) ? 'red' : 'green'}`,
-              ]
-              return (
-                <span key={name} className={classes.join(' ')}>
-                  {name}: {constraint}
-                </span>
-              )
-            })}
-          </div>
+          allDeps.map(([name, constraint]) => {
+            return (
+              <mdui-chip key={name} disabled={unsatisfied.includes(name)}>
+                {name}: {constraint}
+              </mdui-chip>
+            )
+          })
         )}
       </td>
       <td style={{ width: '12%' }}>
         {plugin.can_update ? (
-          <button
-            className="btn btn-success"
-            disabled={isInstalling}
+          <mdui-button
+            loading={isInstalling}
             onClick={props.onUpdate}
+            icon="update"
+            variant="text"
           >
-            {isInstalling ? (
-              <>
-                <i className="fas fa-spinner fa-spin mr-1"></i>
-                {t('admin.pluginUpdating')}
-              </>
-            ) : (
-              <>
-                <i className="fas fa-sync-alt mr-1"></i>
-                {t('admin.updatePlugin')}
-              </>
-            )}
-          </button>
+            {t('admin.updatePlugin')}
+          </mdui-button>
         ) : (
-          <button
+          <mdui-button
             className="btn btn-default"
             disabled={props.isInstalling || !!plugin.installed}
             onClick={props.onInstall}
+            icon="download"
+            loading={isInstalling}
+            variant="text"
           >
-            {isInstalling ? (
-              <>
-                <i className="fas fa-spinner fa-spin mr-1"></i>
-                {t('admin.pluginInstalling')}
-              </>
-            ) : (
-              <>
-                <i className="fas fa-download mr-1"></i>
-                {t('admin.installPlugin')}
-              </>
-            )}
-          </button>
+            {plugin.installed
+              ? t('admin.updatePlugin')
+              : t('admin.installPlugin')}
+          </mdui-button>
         )}
       </td>
     </tr>

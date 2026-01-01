@@ -9,7 +9,8 @@ import Loading from '@/components/Loading'
 import Pagination from '@/components/Pagination'
 import type { Plugin } from './types'
 import Row from './Row'
-import { Card } from '@/components/_FluentComponents'
+import Card from '@/components/mdui/card'
+import TextInput from '@/components/mdui/text-input'
 
 enableMapSet()
 
@@ -113,25 +114,24 @@ const PluginsMarket: React.FC = () => {
   const pagedPlugins = searchedPlugins.slice((page - 1) * 10, page * 10)
 
   return (
-    <Card>
+    <Card prose>
       <header>
-        <input
+        <TextInput
           type="text"
-          className="form-control"
           placeholder={t('vendor.datatable.search')}
           value={search}
           onChange={handleSearchChange}
         />
       </header>
       {isLoading ? (
-        <body>
+        <div>
           <Loading />
-        </body>
+        </div>
       ) : searchedPlugins.length === 0 ? (
-        <body>{t('general.noResult')}</body>
+        <div>{t('general.noResult')}</div>
       ) : (
-        <body className="table-responsive">
-          <table className="table table-striped">
+        <div className="table-responsive">
+          <table className="table-middle-align">
             <thead>
               <tr>
                 <th>{t('admin.pluginTitle')}</th>
@@ -154,12 +154,12 @@ const PluginsMarket: React.FC = () => {
               ))}
             </tbody>
           </table>
-        </body>
-      )}
-      <footer>
-        <div className="float-right immersive">
-          <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
+      )}
+      <footer
+        style={{ marginLeft: 'auto', marginTop: '1rem', width: 'fit-content' }}
+      >
+        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
       </footer>
     </Card>
   )
