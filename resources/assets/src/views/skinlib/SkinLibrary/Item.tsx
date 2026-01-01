@@ -53,9 +53,10 @@ const Item: React.FC<Props> = (props) => {
           <mdui-divider class="md-br" />
           <div
             className="skinitem-uploader d-flex align-items-center"
-            style={{ marginLeft: 'auto' }}
+            style={{ marginLeft: 'auto', width: 'fit-content' }}
           >
             <mdui-chip>{humanizeType(item.type)}</mdui-chip>
+            <mdui-divider vertical />
             <mdui-chip end-icon="upload" onClick={handleUploaderClick}>
               {item.nickname}
             </mdui-chip>
