@@ -1,27 +1,9 @@
 import React from 'react'
-import styled from '@emotion/styled'
 import { t } from '@/scripts/i18n'
 import type { Plugin } from './types'
-import Card from '@/components/Fluent/Card'
-
-const ActionButton = styled.a`
-  transition-property: color;
-  transition-duration: 0.3s;
-  color: #000;
-  .dark-mode & {
-    color: #fff;
-  }
-  &:hover {
-    color: #999;
-  }
-  &:not(:last-child) {
-    margin-right: 9px;
-  }
-`
-
-const Description = styled.div`
-  font-size: 14px;
-`
+import Card from '@/components/mdui/card'
+import Divider from '@/components/mdui/divider'
+import Switch from '@/components/mdui/switch'
 
 interface Props {
   plugin: Plugin
@@ -48,65 +30,49 @@ const InfoBox: React.FC<Props> = (props) => {
 
   return (
     <Card>
-      <header
-        style={{
-          marginBottom: 'var(--f-content-padding)',
-          borderBottom: '.1rem solid var(--outline-light-color)',
-        }}
-      >
-        <span className="card-icon">
-          <i className={`${plugin.icon.faType} fa-${plugin.icon.fa}`} />
-        </span>
-        <div className="d-flex justify-content-between">
-          <div>
-            <h3 className="card-title">{plugin.title}</h3>
-            <p className="card-subtitle">v{plugin.version}</p>
-          </div>
-          <input
-            className="toggle"
-            type="checkbox"
-            checked={plugin.enabled}
-            title={
-              plugin.enabled
-                ? t('admin.disablePlugin')
-                : t('admin.enablePlugin')
-            }
-            onChange={handleChange}
-          />
+      <div className="card-icon">
+        <i className={`${plugin.icon.faType} fa-${plugin.icon.fa}`} />
+      </div>
+      <div className="d-flex justify-content-between">
+        <div>
+          <h3 className="card-title">{plugin.title}</h3>
+          <p className="card-subtitle">v{plugin.version}</p>
         </div>
-      </header>
-      <body>
-        <Description className="mt-2 text-truncate" title={plugin.description}>
-          {plugin.description}
-        </Description>
-      </body>
+        <Switch checked={plugin.enabled} onChange={handleChange} />
+      </div>
+      <Divider />
+      <p>{plugin.description}</p>
       <footer className="flex-wrap">
-        {plugin.readme && (
-          <a
-            className="btn"
-            href={`${props.baseUrl}/admin/plugins/readme/${plugin.name}`}
-            title={t('admin.pluginReadme')}
-          >
-            {t('admin.pluginReadme')}
-          </a>
-        )}
         {plugin.enabled && plugin.config && (
-          <a
-            className="btn btn-primary"
-            href={`${props.baseUrl}/admin/plugins/config/${plugin.name}`}
-            title={t('admin.configurePlugin')}
-          >
-            {t('admin.configurePlugin')}
-          </a>
+          <>
+            <mdui-button
+              href={`${props.baseUrl}/admin/plugins/config/${plugin.name}`}
+              title={t('admin.configurePlugin')}
+            >
+              {t('admin.configurePlugin')}
+            </mdui-button>
+            &nbsp;
+          </>
         )}
-        <a
-          className="btn btn-danger"
-          href="#"
+        <mdui-button
+          variant="outlined"
           title={t('admin.deletePlugin')}
           onClick={handleDelete}
         >
           {t('admin.deletePlugin')}
-        </a>
+        </mdui-button>
+        {plugin.readme && (
+          <>
+            &nbsp;
+            <mdui-button
+              variant="text"
+              href={`${props.baseUrl}/admin/plugins/readme/${plugin.name}`}
+              title={t('admin.pluginReadme')}
+            >
+              {t('admin.pluginReadme')}
+            </mdui-button>
+          </>
+        )}
       </footer>
     </Card>
   )

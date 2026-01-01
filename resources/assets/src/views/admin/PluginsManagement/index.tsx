@@ -6,9 +6,11 @@ import * as fetch from '@/scripts/net'
 import { toast, showModal } from '@/scripts/notify'
 import FileInput from '@/components/FileInput'
 import Loading from '@/components/Loading'
-import Card from '@/components/Fluent/Card'
 import InfoBox from './InfoBox'
 import type { Plugin } from './types'
+import Card from '@/components/mdui/card'
+import TextInput from '@/components/mdui/text-input'
+import Divider from '@/components/mdui/divider'
 
 const PluginsManagement: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -190,54 +192,40 @@ const PluginsManagement: React.FC = () => {
         )}
       </div>
       <div className="col-lg-4">
-        <Card>
+        <Card prose>
           <header>
             <h3>{t('admin.uploadArchive')}</h3>
-          </header>
-          <body>
             <p>{t('admin.uploadArchiveNotice')}</p>
-            <FileInput
-              file={file}
-              accept="application/zip"
-              onChange={handleFileChange}
-            />
-          </body>
+          </header>
+          <FileInput
+            file={file}
+            accept="application/zip"
+            onChange={handleFileChange}
+          />
+          <Divider space-only />
           <footer>
-            <button
-              className="btn btn-primary"
-              disabled={isUploading}
-              onClick={handleUpload}
-            >
+            <mdui-button disabled={isUploading} onClick={handleUpload}>
               {isUploading ? <Loading /> : t('general.submit')}
-            </button>
+            </mdui-button>
           </footer>
         </Card>
-        <Card>
+        <Card prose>
           <header>
             <h3>{t('admin.downloadRemote')}</h3>
-          </header>
-          <body>
             <p>{t('admin.downloadRemoteNotice')}</p>
-            <div className="form-group">
-              <label htmlFor="zip-url">URL</label>
-              <input
-                type="text"
-                id="zip-url"
-                className="form-control"
-                inputMode="url"
-                value={url}
-                onChange={handleUrlChange}
-              />
-            </div>
-          </body>
+          </header>
+          <TextInput
+            type="url"
+            id="zip-url"
+            value={url}
+            onChange={handleUrlChange}
+            label="URL"
+          />
+          <Divider space-only />
           <footer>
-            <button
-              className="btn btn-primary"
-              disabled={isDownloading}
-              onClick={handleSubmitUrl}
-            >
-              {isDownloading ? <Loading /> : t('general.submit')}
-            </button>
+            <mdui-button loading={isDownloading} onClick={handleSubmitUrl}>
+              {t('general.submit')}
+            </mdui-button>
           </footer>
         </Card>
       </div>
