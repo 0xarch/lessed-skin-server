@@ -6,7 +6,7 @@ import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import { toast, showModal } from '@/scripts/notify'
 import Loading from '@/components/Loading'
-import Pagination from '@/components/Pagination'
+import Pagination from '@/components/mdui/pagination'
 import type { Plugin } from './types'
 import Row from './Row'
 import Card from '@/components/mdui/card'
@@ -156,11 +156,7 @@ const PluginsMarket: React.FC = () => {
           </table>
         </div>
       )}
-      <footer
-        style={{ marginLeft: 'auto', marginTop: '1rem', width: 'fit-content' }}
-      >
-        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
-      </footer>
+      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
     </Card>
   )
 }
