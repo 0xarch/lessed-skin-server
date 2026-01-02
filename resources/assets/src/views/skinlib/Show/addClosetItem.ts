@@ -1,6 +1,7 @@
+import Dialog from '@/scripts/dialog'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { toast } from '@/scripts/notify'
 import type { Texture } from '@/scripts/types'
 import urls from '@/scripts/urls'
 
@@ -9,15 +10,17 @@ export default async function addClosetItem(
 ): Promise<boolean> {
   let name: string
   try {
-    const { value } = await showModal({
-      mode: 'prompt',
-      title: t('skinlib.setItemName'),
-      text: t('skinlib.applyNotice'),
-      input: texture.name,
+    const value = await Dialog.prompt({
+      headline: t('skinlib.setItemName'),
+      description: t('skinlib.applyNotice'),
+      textFieldOptions: {
+        value: texture.name,
+      },
       validator: (value: string) => {
         if (!value) {
           return t('skinlib.emptyItemName')
         }
+        return true
       },
     })
     name = value

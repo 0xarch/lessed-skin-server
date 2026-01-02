@@ -1,13 +1,13 @@
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { toast } from '@/scripts/notify'
 import urls from '@/scripts/urls'
+import Dialog from '@/scripts/dialog'
 
 export default async function removeClosetItem(tid: number): Promise<boolean> {
   try {
-    await showModal({
-      text: t('user.removeFromClosetNotice'),
-      okButtonType: 'danger',
+    await Dialog.confirm({
+      headline: t('user.removeFromClosetNotice'),
     })
   } catch {
     return false

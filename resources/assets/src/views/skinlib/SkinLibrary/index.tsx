@@ -8,13 +8,14 @@ import { toast } from '@/scripts/notify'
 import { Paginator, TextureType } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import Loading from '@/components/Loading'
-import Pagination from '@/components/Pagination'
 import addClosetItem from '../Show/addClosetItem'
 import removeClosetItem from '@/views/user/Closet/removeClosetItem'
 import FilterSelector from './FilterSelector'
-import Button from './Button'
 import Item from './Item'
 import type { Filter, LibraryItem } from './types'
+import Card from '@/components/mdui/card'
+import Divider from '@/components/mdui/divider'
+import Pagination from '@/components/mdui/pagination'
 
 const SkinLibrary: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -124,7 +125,8 @@ const SkinLibrary: React.FC = () => {
   const handleLikesSortClick = () => setSort('likes')
   const handleTimeSortClick = () => setSort('time')
   const handleSelfUploadClick = () => {
-    setUploader(currentUid)
+    if (uploader !== currentUid) setUploader(currentUid)
+    else setUploader(0)
     setPage(1)
   }
   const handleResetClick = () => {
@@ -187,7 +189,7 @@ const SkinLibrary: React.FC = () => {
         </span>
       </div>
       <section className="content">
-        <mdui-card class="md-card">
+        <Card>
           <header>
             <div className="form-group d-flex justify-content-between">
               <form onSubmit={handleFormSubmit}>
@@ -217,39 +219,40 @@ const SkinLibrary: React.FC = () => {
                   </div>
                 </div>
               </form>
-              <div className="d-none">
-                <div className="btn-group">
-                  <Button
-                    bg="olive"
-                    active={sort === 'likes'}
-                    onClick={handleLikesSortClick}
+              <div
+                className="d-none d-flex align-items-center"
+                style={{ gap: '.5rem' }}
+              >
+                <mdui-chip
+                  selectable
+                  selected={sort === 'likes'}
+                  onClick={handleLikesSortClick}
+                >
+                  {t('skinlib.sort.likes')}
+                </mdui-chip>
+                <mdui-chip
+                  selectable
+                  selected={sort === 'time'}
+                  onClick={handleTimeSortClick}
+                >
+                  {t('skinlib.sort.time')}
+                </mdui-chip>
+                {currentUid !== null && (
+                  <mdui-chip
+                    selectable
+                    selected={uploader === currentUid}
+                    onClick={handleSelfUploadClick}
                   >
-                    {t('skinlib.sort.likes')}
-                  </Button>
-                  <Button
-                    bg="olive"
-                    active={sort === 'time'}
-                    onClick={handleTimeSortClick}
-                  >
-                    {t('skinlib.sort.time')}
-                  </Button>
-                  {currentUid !== null && (
-                    <Button
-                      bg="olive"
-                      active={uploader === currentUid}
-                      onClick={handleSelfUploadClick}
-                    >
-                      {t('skinlib.seeMyUpload')}
-                    </Button>
-                  )}
-                  <Button bg="olive" onClick={handleResetClick}>
-                    {t('skinlib.reset')}
-                  </Button>
-                </div>
+                    {t('skinlib.seeMyUpload')}
+                  </mdui-chip>
+                )}
+                <mdui-button onClick={handleResetClick} variant="tonal">
+                  {t('skinlib.reset')}
+                </mdui-button>
               </div>
             </div>
           </header>
-          <mdui-divider class="md-br" />
+          <Divider />
           <div className="skin-list">
             {isLoading ? (
               <div className="overlay">
@@ -272,16 +275,8 @@ const SkinLibrary: React.FC = () => {
               <p className="text-center">{t('general.noResult')}</p>
             )}
           </div>
-          <footer>
-            <div style={{ marginLeft: 'auto', width: 'fit-content' }}>
-              <Pagination
-                page={page}
-                totalPages={totalPages}
-                onChange={setPage}
-              />
-            </div>
-          </footer>
-        </mdui-card>
+          <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+        </Card>
       </section>
     </div>
   )

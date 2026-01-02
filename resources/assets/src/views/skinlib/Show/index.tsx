@@ -7,7 +7,7 @@ import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import useMount from '@/scripts/hooks/useMount'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal, toast } from '@/scripts/notify'
+import { toast } from '@/scripts/notify'
 import { Texture, TextureType } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import ButtonEdit from '@/components/ButtonEdit'
@@ -16,7 +16,8 @@ import ModalApply from '@/views/user/Closet/ModalApply'
 import removeClosetItem from '@/views/user/Closet/removeClosetItem'
 import setAsAvatar from '@/views/user/Closet/setAsAvatar'
 import addClosetItem from './addClosetItem'
-import { Card } from '@/components/_FluentComponents'
+import Card from '@/components/mdui/card'
+import Dialog from '@/scripts/dialog'
 
 export type Badge = {
   color: string
@@ -61,14 +62,13 @@ const Show: React.FC = () => {
   const handleEditName = async () => {
     let name: string
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('skinlib.setNewTextureName'),
-        input: texture.name,
+      const value = await Dialog.prompt({
+        headline: t('skinlib.setNewTextureName'),
         validator: (value: string) => {
           if (!value) {
             return t('skinlib.emptyNewTextureName')
           }
+          return true
         },
       })
       name = value
@@ -91,11 +91,8 @@ const Show: React.FC = () => {
   const handleSwitchType = async () => {
     let type: TextureType
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        text: t('skinlib.setNewTextureModel'),
-        input: texture.type,
-        inputType: 'radios',
+      const value = await Dialog.radio({
+        headline: t('skinlib.setNewTextureModel'),
         choices: [
           { text: 'Steve', value: TextureType.Steve },
           { text: 'Alex', value: TextureType.Alex },
@@ -145,7 +142,7 @@ const Show: React.FC = () => {
   }
 
   const handleReport = async () => {
-    const prompt = (() => {
+    const getPrompt = (() => {
       if (reportScore > 0) {
         return t('skinlib.report.positive', { score: reportScore })
       } else if (reportScore < 0) {
@@ -156,11 +153,12 @@ const Show: React.FC = () => {
 
     let reason: string
     try {
-      const { value } = await showModal({
-        mode: 'prompt',
-        title: t('skinlib.report.title'),
-        text: prompt,
-        placeholder: t('skinlib.report.reason'),
+      const value = await Dialog.prompt({
+        headline: t('skinlib.report.title'),
+        description: getPrompt,
+        textFieldOptions: {
+          placeholder: t('skinlib.report.reason'),
+        },
       })
       reason = value
     } catch {
@@ -183,8 +181,8 @@ const Show: React.FC = () => {
 
   const handlePrivacyClick = async () => {
     try {
-      await showModal({
-        text: texture.public
+      await Dialog.confirm({
+        headline: texture.public
           ? t('skinlib.setPrivateNotice')
           : t('skinlib.setPublicNotice'),
       })
@@ -205,10 +203,9 @@ const Show: React.FC = () => {
       setTexture((texture) => ({ ...texture, public: !texture.public }))
     } else if (resp.code === 2) {
       try {
-        await showModal({
-          mode: 'confirm',
-          text: message,
-          okButtonText: t('user.viewInSkinlib'),
+        await Dialog.confirm({
+          headline: message,
+          confirmText: t('user.viewInSkinlib'),
         })
         window.location.href =
           blessing.base_url + urls.skinlib.show(resp.data.tid)
@@ -222,9 +219,8 @@ const Show: React.FC = () => {
 
   const handleDeleteTextureClick = async () => {
     try {
-      await showModal({
-        text: t('skinlib.deleteNotice'),
-        okButtonType: 'danger',
+      await Dialog.confirm({
+        headline: t('skinlib.deleteNotice'),
       })
     } catch {
       return
@@ -276,55 +272,61 @@ const Show: React.FC = () => {
               initPositionZ={60}
             >
               {currentUid === 0 ? (
-                <button
-                  className="btn btn-outline-secondary"
-                  title={t('skinlib.show.anonymous')}
-                  disabled
-                >
+                <mdui-button title={t('skinlib.show.anonymous')} disabled>
                   {t('skinlib.addToCloset')}
-                </button>
+                </mdui-button>
               ) : (
                 <div
                   className="d-flex justify-content-between align-items-center"
                   style={{ flex: 1 }}
                 >
-                  <div className="btn-group">
+                  <div>
                     {liked && (
-                      <button
-                        className="btn btn-success"
-                        onClick={handleOpenModalApply}
-                      >
-                        {t('skinlib.apply')}
-                      </button>
+                      <>
+                        <mdui-button onClick={handleOpenModalApply}>
+                          {t('skinlib.apply')}
+                        </mdui-button>
+                        &nbsp;
+                      </>
                     )}
                     {liked ? (
-                      <button
-                        className="btn btn-primary"
+                      <mdui-button
+                        variant="tonal"
                         onClick={handleRemoveItemClick}
                       >
                         {t('skinlib.removeFromCloset')}
-                      </button>
+                      </mdui-button>
                     ) : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={handleAddItemClick}
-                      >
+                      <mdui-button onClick={handleAddItemClick}>
                         {t('skinlib.addToCloset')}
-                      </button>
+                      </mdui-button>
                     )}
+                    &nbsp;
                     {texture.type !== TextureType.Cape && (
-                      <button className="btn" onClick={handleSetAsAvatar}>
-                        {t('user.setAsAvatar')}
-                      </button>
+                      <>
+                        <mdui-button
+                          variant="elevated"
+                          onClick={handleSetAsAvatar}
+                        >
+                          {t('user.setAsAvatar')}
+                        </mdui-button>
+                        &nbsp;
+                      </>
                     )}
                     {canBeDownloaded && (
-                      <button className="btn" onClick={handleDownloadClick}>
-                        {t('skinlib.show.download')}
-                      </button>
+                      <>
+                        <mdui-button
+                          variant="elevated"
+                          onClick={handleDownloadClick}
+                        >
+                          {t('skinlib.show.download')}
+                        </mdui-button>
+                        &nbsp;
+                      </>
                     )}
-                    <button className="btn" onClick={handleReport}>
+                    <mdui-button onClick={handleReport}>
                       {t('skinlib.report.title')}
-                    </button>
+                    </mdui-button>
                   </div>
                   <div
                     className={liked ? 'text-red' : 'text-gray'}
@@ -340,108 +342,99 @@ const Show: React.FC = () => {
           container,
         )}
       <Card>
-        <header>
-          <h3>{t('skinlib.show.detail')}</h3>
-        </header>
-        <body>
-          <div className="container">
-            <div className="row mt-2 mb-4">
-              <div className="col-4">{t('skinlib.show.name')}</div>
-              {isLoading ? (
-                <div className="col-8">
-                  <Skeleton />
-                </div>
-              ) : (
-                <>
-                  <div className="col-7 text-truncate" title={texture.name}>
-                    {texture.name}
-                  </div>
-                  {canEdit && (
-                    <div className="col-1">
-                      <ButtonEdit
-                        title={t('skinlib.show.edit')}
-                        onClick={handleEditName}
-                      />
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="row my-4">
-              <div className="col-4">{t('skinlib.show.model')}</div>
-              {isLoading ? (
-                <div className="col-8">
-                  <Skeleton />
-                </div>
-              ) : (
-                <>
-                  <div className="col-7">
-                    {texture.type === TextureType.Cape
-                      ? t('general.cape')
-                      : texture.type}
-                  </div>
-                  {canEdit && (
-                    <div className="col-1">
-                      <ButtonEdit
-                        title={t('skinlib.show.edit')}
-                        onClick={handleSwitchType}
-                      />
-                    </div>
-                  )}
-                </>
-              )}
-            </div>
-            <div className="row my-4">
-              <div className="col-4">Hash</div>
-              <div
-                className="col-8 text-truncate user-select-all"
-                title={texture.hash}
-              >
-                {isLoading ? <Skeleton /> : texture.hash}
-              </div>
-            </div>
-            <div className="row my-4">
-              <div className="col-4">{t('skinlib.show.size')}</div>
+        <h3>{t('skinlib.show.detail')}</h3>
+        <div className="container">
+          <div className="row mt-2 mb-4">
+            <div className="col-4">{t('skinlib.show.name')}</div>
+            {isLoading ? (
               <div className="col-8">
-                {isLoading ? <Skeleton /> : <span>{texture.size} KB</span>}
+                <Skeleton />
               </div>
-            </div>
-            <div className="row my-4">
-              <div className="col-4">{t('skinlib.show.uploader')}</div>
-              <div className="col-8 text-truncate">
-                {isLoading ? (
-                  <Skeleton />
-                ) : isUploaderExists ? (
-                  <>
-                    <div>
-                      <a href={linkToUploader} target="_blank">
-                        {nickname}
-                      </a>
-                    </div>
-                    <div>
-                      {badges.map((badge) => (
-                        <span
-                          className={`badge bg-${badge.color} mr-2`}
-                          key={badge.text}
-                        >
-                          {badge.text}
-                        </span>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  nickname
+            ) : (
+              <>
+                <div className="col-7 text-truncate" title={texture.name}>
+                  {texture.name}
+                </div>
+                {canEdit && (
+                  <div className="col-1">
+                    <ButtonEdit
+                      title={t('skinlib.show.edit')}
+                      onClick={handleEditName}
+                    />
+                  </div>
                 )}
-              </div>
-            </div>
-            <div className="row mt-4 mb-2">
-              <div className="col-4">{t('skinlib.show.upload-at')}</div>
+              </>
+            )}
+          </div>
+          <div className="row my-4">
+            <div className="col-4">{t('skinlib.show.model')}</div>
+            {isLoading ? (
               <div className="col-8">
-                {isLoading ? <Skeleton /> : texture.upload_at}
+                <Skeleton />
               </div>
+            ) : (
+              <>
+                <div className="col-7">
+                  {texture.type === TextureType.Cape
+                    ? t('general.cape')
+                    : texture.type}
+                </div>
+                {canEdit && (
+                  <div className="col-1">
+                    <ButtonEdit
+                      title={t('skinlib.show.edit')}
+                      onClick={handleSwitchType}
+                    />
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <div className="row my-4">
+            <div className="col-4">Hash</div>
+            <div
+              className="col-8 text-truncate user-select-all"
+              title={texture.hash}
+            >
+              {isLoading ? <Skeleton /> : texture.hash}
             </div>
           </div>
-        </body>
+          <div className="row my-4">
+            <div className="col-4">{t('skinlib.show.size')}</div>
+            <div className="col-8">
+              {isLoading ? <Skeleton /> : <span>{texture.size} KB</span>}
+            </div>
+          </div>
+          <div className="row my-4">
+            <div className="col-4">{t('skinlib.show.uploader')}</div>
+            <div className="col-8 text-truncate">
+              {isLoading ? (
+                <Skeleton />
+              ) : isUploaderExists ? (
+                <>
+                  <div>
+                    <a href={linkToUploader} target="_blank">
+                      {nickname}
+                    </a>
+                  </div>
+                  <div>
+                    {badges.map((badge) => (
+                      <mdui-badge key={badge.text}>{badge.text}</mdui-badge>
+                    ))}
+                  </div>
+                </>
+              ) : (
+                nickname
+              )}
+            </div>
+          </div>
+          <div className="row mt-4 mb-2">
+            <div className="col-4">{t('skinlib.show.upload-at')}</div>
+            <div className="col-8">
+              {isLoading ? <Skeleton /> : texture.upload_at}
+            </div>
+          </div>
+        </div>
       </Card>
       {canEdit && (
         <Card>
@@ -450,17 +443,14 @@ const Show: React.FC = () => {
             <p>{t('skinlib.show.manage-notice')}</p>
           </header>
           <footer>
-            <button className="btn btn-warning" onClick={handlePrivacyClick}>
+            <mdui-button onClick={handlePrivacyClick}>
               {texture.public
                 ? t('skinlib.setAsPrivate')
                 : t('skinlib.setAsPublic')}
-            </button>
-            <button
-              className="btn btn-danger"
-              onClick={handleDeleteTextureClick}
-            >
+            </mdui-button>
+            <mdui-button variant="text" onClick={handleDeleteTextureClick}>
               {t('skinlib.show.delete-texture')}
-            </button>
+            </mdui-button>
           </footer>
         </Card>
       )}
