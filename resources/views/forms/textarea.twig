@@ -5,4 +5,29 @@
   label="{{ label }}"
   placeholder="{{ placeholder }}"
   {{ disabled ? 'disabled' : '' }}
+  onkeydown="if(event.key === 'Enter' && this.rows > 1) {
+        event.preventDefault();
+
+        const start = this.selectionStart || 0;
+        const end = this.selectionEnd || 0;
+
+        const inputElement = this.shadowRoot?.querySelector('textarea, input') || this;
+
+        if (document.queryCommandSupported('insertText')) {
+            document.execCommand('insertText', false, '\n');
+        } else {
+            const currentValue = this.value || '';
+            this.value = currentValue.substring(0, start) + '\n' + currentValue.substring(end);
+            const newCursorPos = start + 1;
+            setTimeout(() => {
+                this.setSelectionRange(newCursorPos, newCursorPos);
+            }, 0);
+        }
+        setTimeout(() => {
+            this.dispatchEvent(new Event('input', { bubbles: true }));
+        }, 0);
+
+        return false;
+    }"
+  enterkeyhint="enter"
 ></mdui-text-field>
