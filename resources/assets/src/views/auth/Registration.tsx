@@ -8,7 +8,7 @@ import { toast } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import Alert from '@/components/Alert'
 import Captcha from '@/components/Captcha'
-import EmailSuggestion from '@/components/EmailSuggestion'
+import TextInput from '@/components/mdui/text-input'
 
 const Registration: React.FC = () => {
   const [email, setEmail] = useState('')
@@ -74,105 +74,86 @@ const Registration: React.FC = () => {
     setIsPending(false)
   }
 
+  const emailChangeHandler: React.FormEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    // @ts-ignore
+    setEmail(event.target.value)
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <EmailSuggestion
-        type="email"
+      <TextInput
+        onChange={emailChangeHandler}
+        type="text"
+        icon="email"
+        label={t('auth.email')}
         required
-        autoFocus
-        placeholder={t('auth.email')}
+        autofocus
         value={email}
-        onChange={setEmail}
+        variant="outlined"
       />
-      <div className="input-group mb-3">
-        <input
-          type="password"
-          required
-          minLength={8}
-          maxLength={32}
-          className="form-control"
-          placeholder={t('auth.password')}
-          autoComplete="new-password"
-          value={password}
-          onChange={handlePasswordChange}
-        />
-        <div className="input-group-append">
-          <div className="input-group-text">
-            <i className="fas fa-lock"></i>
-          </div>
-        </div>
-      </div>
-      <div className="input-group mb-3">
-        <input
-          type="password"
-          required
-          minLength={8}
-          maxLength={32}
-          className="form-control"
-          placeholder={t('auth.repeat-pwd')}
-          autoComplete="new-password"
-          ref={confirmationRef}
-          value={confirmation}
-          onChange={handleConfirmationChange}
-        />
-        <div className="input-group-append">
-          <div className="input-group-text">
-            <i className="fas fa-sign-in-alt"></i>
-          </div>
-        </div>
-      </div>
+      <TextInput
+        type="password"
+        toggle-password
+        icon="password"
+        onChange={handlePasswordChange}
+        required
+        label={t('auth.password')}
+        autocomplete="new-password"
+        value={password}
+        variant="outlined"
+        minlength={8}
+        maxlength={32}
+      />
+      <TextInput
+        type="password"
+        toggle-password
+        icon="repeat"
+        onChange={handleConfirmationChange}
+        required
+        label={t('auth.repeat-pwd')}
+        autocomplete="new-password"
+        value={confirmation}
+        variant="outlined"
+        minlength={8}
+        maxlength={32}
+        ref={confirmationRef}
+      />
       {requirePlayer ? (
-        <div className="input-group mb-3" title={t('auth.player-name-intro')}>
-          <input
-            type="text"
-            required
-            className="form-control"
-            placeholder={t('auth.player-name')}
-            value={playerName}
-            onChange={handlePlayerNameChange}
-          />
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <i className="fas fa-gamepad"></i>
-            </div>
-          </div>
-        </div>
+        <TextInput
+          type="text"
+          icon="gamepad"
+          onChange={handlePlayerNameChange}
+          required
+          label={t('auth.player-name')}
+          value={playerName}
+          variant="outlined"
+        />
       ) : (
-        <div className="input-group mb-3" title={t('auth.nickname-intro')}>
-          <input
-            type="text"
-            required
-            className="form-control"
-            placeholder={t('auth.nickname')}
-            value={nickName}
-            onChange={handleNickNameChange}
-          />
-          <div className="input-group-append">
-            <div className="input-group-text">
-              <i className="fas fa-gamepad"></i>
-            </div>
-          </div>
-        </div>
+        <TextInput
+          type="text"
+          icon="gamepad"
+          onChange={handleNickNameChange}
+          required
+          label={t('auth.nickname')}
+          value={nickName}
+          variant="outlined"
+        />
       )}
+
       <Captcha ref={captchaRef} />
 
       <Alert type="warning">{warningMessage}</Alert>
 
-      <div className="card-footer">
-        <a className="btn btn-small" href={`${blessing.base_url}/auth/login`}>
+      <footer className="d-flex justify-content-between">
+        <mdui-button variant="text" href={`${blessing.base_url}/auth/login`}>
           {t('auth.login-link')}
-        </a>
-        <button className="btn btn-primary" type="submit" disabled={isPending}>
-          {isPending ? (
-            <>
-              <i className="fas fa-spinner fa-spin mr-1"></i>
-              {t('auth.registering')}
-            </>
-          ) : (
-            t('auth.register')
-          )}
-        </button>
-      </div>
+        </mdui-button>
+        <mdui-button loading={isPending} disabled={isPending} type="submit">
+          {t('auth.register')}
+        </mdui-button>
+      </footer>
     </form>
   )
 }

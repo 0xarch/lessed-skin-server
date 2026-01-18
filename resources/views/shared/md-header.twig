@@ -11,12 +11,8 @@
       {# {{ include('shared.languages') }} #}
       {{ include('shared.user-menu', { design: 'mdui' }) }}
     {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{{ url('auth/login') }}">
-          <i class="icon fas fa-sign-in"></i>
-          {{ trans('general.login') }}
-        </a>
-      </li>
+      <mdui-button href="{{ url('auth/login') }}" variant='text' icon='login'>{{ trans('general.login') }}</mdui-button>
+      <mdui-button href="{{ url('auth/register') }}" variant='outlined' icon='app_registration'>{{ trans('general.register') }}</mdui-button>
     {% endif %}
   </ul>
 </mdui-top-app-bar>

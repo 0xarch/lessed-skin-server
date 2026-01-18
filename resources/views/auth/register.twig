@@ -3,11 +3,11 @@
 {% block title %}{{ trans('auth.register.title') }}{% endblock %}
 
 {% block content %}
-  <div class="card-body login-card-body">
+  <mdui-card class='md-card mdui-prose'>
     {% for row in rows %}
       {{ include(row) }}
     {% endfor %}
-  </div>
+  </mdui-card>
 {% endblock %}
 
 {% block before_foot %}

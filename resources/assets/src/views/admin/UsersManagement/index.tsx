@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useLayoutEffect } from 'react'
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react'
 import { hot } from 'react-hot-loader/root'
 import { useImmer } from 'use-immer'
 import useBlessingExtra from '@/scripts/hooks/useBlessingExtra'
@@ -10,11 +10,12 @@ import { toast, showModal } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import type { Props as ModalInputProps } from '@/components/ModalInput'
 import Pagination from '@/components/Pagination'
-import { Card as FluentCard } from '@/components/_FluentComponents'
-import Card from './Card'
+import Card from '@/components/mdui/card'
+import { default as UserCard } from './Card'
 import LoadingCard from './LoadingCard'
 import Row from './Row'
 import LoadingRow from './LoadingRow'
+import { SegmentedButtonGroup } from 'mdui'
 
 const UsersManagement: React.FC = () => {
   const [users, setUsers] = useImmer<User[]>([])
@@ -53,8 +54,12 @@ const UsersManagement: React.FC = () => {
     getUsers()
   }, [page])
 
-  const handleModeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setIsTableMode(event.target.value === 'table')
+  const switcherRef = useRef<SegmentedButtonGroup>(null)
+
+  const handleModeChange = (mode: boolean) => {
+    setIsTableMode(mode)
+    if (!switcherRef.current) return
+    switcherRef.current.value = mode ? 'table' : 'card'
   }
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -255,95 +260,82 @@ const UsersManagement: React.FC = () => {
   }
 
   return (
-    <FluentCard>
-      <header style={{ display: 'flex', flexWrap: 'wrap' }}>
-        <form className="input-group" onSubmit={handleSubmitQuery}>
-          <input
+    <Card>
+      <header
+        style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}
+      >
+        <form onSubmit={handleSubmitQuery}>
+          <mdui-text-field
             type="text"
             inputMode="search"
-            className="form-control"
             title={t('vendor.datatable.search')}
             value={query}
-            onChange={handleQueryChange}
-          />
-          <div className="input-group-append">
-            <button className="btn btn-primary" type="submit">
-              {t('vendor.datatable.search')}
-            </button>
-          </div>
+            onInput={handleQueryChange}
+          >
+            <mdui-button-icon type="submit" icon="search" slot="end-icon" />
+          </mdui-text-field>
         </form>
-        <div className="btn-group btn-group-toggle ml-auto">
-          <label
-            className={`btn btn-secondary ${isTableMode ? 'active' : ''}`}
-            title="Table Mode"
-          >
-            <input
-              type="radio"
-              value="table"
-              checked={isTableMode}
-              onChange={handleModeChange}
-            />
-            <i className="fas fa-list"></i>
-          </label>
-          <label
-            className={`btn btn-secondary ${isTableMode ? '' : 'active'}`}
-            title="Card Mode"
-          >
-            <input
-              type="radio"
-              value="card"
-              checked={!isTableMode}
-              onChange={handleModeChange}
-            />
-            <i className="fas fa-grip-vertical"></i>
-          </label>
-        </div>
+        <mdui-segmented-button-group
+          selects="single"
+          value={isTableMode ? 'table' : 'card'}
+          ref={switcherRef}
+          style={{ marginLeft: 'auto' }}
+        >
+          <mdui-segmented-button
+            value="table"
+            end-icon="table_view"
+            onClick={() => handleModeChange(true)}
+          />
+          <mdui-segmented-button
+            value="card"
+            end-icon="grid_view"
+            onClick={() => handleModeChange(false)}
+          />
+        </mdui-segmented-button-group>
       </header>
       {users.length === 0 && !isLoading ? (
         <body>{t('general.noResult')}</body>
       ) : isTableMode ? (
-        <body className="table-responsive">
-          <table className={`table ${isLoading ? '' : 'table-striped'}`}>
-            <thead>
-              <tr>
-                <th>UID</th>
-                <th>{t('general.user.email')}</th>
-                <th>{t('general.user.nickname')}</th>
-                <th>{t('general.user.score')}</th>
-                <th>{t('admin.permission')}</th>
-                <th>{t('admin.verification')}</th>
-                <th>{t('general.user.register-at')}</th>
-                <th>{t('admin.operationsTitle')}</th>
-              </tr>
-            </thead>
-            <tbody>
-              {isLoading
-                ? new Array(10).fill(null).map((_, i) => <LoadingRow key={i} />)
-                : users.map((user, i) => (
-                    <Row
-                      key={user.uid}
-                      user={user}
-                      currentUser={currentUser}
-                      onEmailChange={() => handleEmailChange(user, i)}
-                      onNicknameChange={() => handleNicknameChange(user, i)}
-                      onScoreChange={() => handleScoreChange(user, i)}
-                      onPermissionChange={() => handlePermissionChange(user, i)}
-                      onVerificationToggle={() =>
-                        handleVerificationToggle(user, i)
-                      }
-                      onPasswordChange={() => handlePasswordChange(user)}
-                      onDelete={() => handleDelete(user)}
-                    />
-                  ))}
-            </tbody>
-          </table>
-        </body>
+        <table className="table-middle-align">
+          <thead>
+            <tr>
+              <th>UID</th>
+              <th>{t('general.user.email')}</th>
+              <th>{t('general.user.nickname')}</th>
+              <th>{t('general.user.score')}</th>
+              <th>{t('admin.permission')}</th>
+              <th>{t('admin.verification')}</th>
+              <th>{t('general.user.register-at')}</th>
+              <th>{t('admin.operationsTitle')}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {isLoading
+              ? new Array(10).fill(null).map((_, i) => <LoadingRow key={i} />)
+              : users.map((user, i) => (
+                  <Row
+                    key={user.uid}
+                    user={user}
+                    currentUser={currentUser}
+                    onEmailChange={() => handleEmailChange(user, i)}
+                    onNicknameChange={() => handleNicknameChange(user, i)}
+                    onScoreChange={() => handleScoreChange(user, i)}
+                    onPermissionChange={() => handlePermissionChange(user, i)}
+                    onVerificationToggle={() =>
+                      handleVerificationToggle(user, i)
+                    }
+                    onPasswordChange={() => handlePasswordChange(user)}
+                    onDelete={() => handleDelete(user)}
+                  />
+                ))}
+          </tbody>
+        </table>
       ) : (
         <body style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : users.map((user, i) => (
-                <Card
+                <UserCard
                   key={user.uid}
                   user={user}
                   currentUser={currentUser}
@@ -363,7 +355,7 @@ const UsersManagement: React.FC = () => {
           <Pagination page={page} totalPages={totalPages} onChange={setPage} />
         </div>
       </footer>
-    </FluentCard>
+    </Card>
   )
 }
 

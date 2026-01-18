@@ -4,6 +4,7 @@ import Reaptcha from 'reaptcha'
 import { emit, on } from '@/scripts/event'
 import { t } from '@/scripts/i18n'
 import * as cssUtils from '@/styles/utils'
+import TextInput from './mdui/text-input'
 
 const eventId = Symbol()
 
@@ -76,26 +77,24 @@ class Captcha extends React.Component<Record<string, unknown>, State> {
         />
       </div>
     ) : (
-      <div className="d-flex">
-        <div className="form-group mb-3 mr-2">
-          <input
-            type="text"
-            className="form-control"
-            placeholder={t('auth.captcha')}
-            required
-            value={this.state.value}
-            onChange={this.handleValueChange}
-          />
-        </div>
+      <TextInput
+        type="text"
+        label={t('auth.captcha')}
+        required
+        value={this.state.value}
+        onChange={this.handleValueChange}
+        variant="outlined"
+      >
         <img
           src={`${blessing.base_url}/auth/captcha?v=${this.state.time}`}
           alt={t('auth.captcha')}
           css={cssUtils.pointerCursor}
-          height={34}
+          height={36}
           title={t('auth.change-captcha')}
           onClick={this.handleRefresh}
+          slot="end-icon"
         />
-      </div>
+      </TextInput>
     )
   }
 }

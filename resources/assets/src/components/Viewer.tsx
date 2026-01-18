@@ -10,6 +10,8 @@ import bg4 from '../../../misc/backgrounds/4.webp'
 import bg5 from '../../../misc/backgrounds/5.webp'
 import bg6 from '../../../misc/backgrounds/6.webp'
 import bg7 from '../../../misc/backgrounds/7.webp'
+import Divider from './mdui/divider'
+import Card from './mdui/card'
 
 const backgrounds = [bg1, bg2, bg3, bg4, bg5, bg6, bg7]
 export const PICTURES_COUNT = backgrounds.length
@@ -177,8 +179,7 @@ const Viewer: React.FC<Props> = (props) => {
   }
 
   return (
-    // @ts-ignore
-    <mdui-card class="md-card mdui-prose">
+    <Card>
       <h3>
         {t('general.texturePreview')}
         {props.showIndicator && indicator ? (
@@ -215,7 +216,7 @@ const Viewer: React.FC<Props> = (props) => {
           {t('colors.next')}
         </mdui-button>
       </div>
-      <mdui-divider class="md-br" />
+      <Divider />
       <div
         ref={containerWrapperRef}
         style={{
@@ -227,9 +228,9 @@ const Viewer: React.FC<Props> = (props) => {
       >
         <canvas ref={containerRef} style={{ maxWidth: '100%' }}></canvas>
       </div>
-      {props.children && <mdui-divider class="md-br" />}
+      {props.children && <Divider />}
       <footer className="d-flex">{props.children}</footer>
-    </mdui-card>
+    </Card>
   )
 }
 

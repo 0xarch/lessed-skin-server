@@ -1,17 +1,39 @@
 import React from 'react'
 import { t } from '@/scripts/i18n'
-import { Card } from './_FluentComponents'
+import Card from './mdui/card'
+import Divider from './mdui/divider'
 
 const ViewerSkeleton: React.FC = () => (
   <Card>
-    <header>
-      <div className="d-flex justify-content-between">
-        <h3 className="card-title">
-          <span>{t('general.texturePreview')}</span>
-        </h3>
-      </div>
-    </header>
-    <body />
+    <h3>{t('general.texturePreview')}</h3>
+    <div>
+      <mdui-button disabled>{t('general.playAnimation')}</mdui-button>
+      &nbsp;
+      <mdui-button-icon icon="run_circle" disabled />
+      <mdui-button-icon icon="tablet" disabled />
+      <mdui-button-icon icon="rotate_right" disabled />
+      <br />
+      <mdui-button icon="navigate_before" variant="tonal" disabled>
+        ...
+      </mdui-button>
+      &nbsp;
+      <mdui-button end-icon="navigate_next" variant="tonal" disabled>
+        ...
+      </mdui-button>
+    </div>
+    <Divider />
+    <div
+      style={{
+        overflow: 'hidden',
+        aspectRatio: '1.5',
+        maxWidth: '50rem',
+        margin: '0 auto',
+      }}
+    ></div>
+    <Divider />
+    <footer className="d-flex">
+      <mdui-button variant="tonal" disabled />
+    </footer>
   </Card>
 )
 

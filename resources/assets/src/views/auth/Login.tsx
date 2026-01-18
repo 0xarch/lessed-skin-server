@@ -8,7 +8,7 @@ import { showModal } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import Alert from '@/components/Alert'
 import Captcha from '@/components/Captcha'
-import EmailSuggestion from '@/components/EmailSuggestion'
+import TextInput from '@/components/mdui/text-input'
 
 type SuccessfulResponse = {
   code: 0
@@ -92,72 +92,60 @@ const Login: React.FC = () => {
     }
   }
 
+  const emailChangeHandler: React.FormEventHandler<HTMLInputElement> = (
+    event,
+  ) => {
+    // @ts-ignore
+    setIdentification(event.target.value)
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <EmailSuggestion
+      <TextInput
+        onChange={emailChangeHandler}
         type="text"
-        placeholder={t('auth.identification')}
+        icon="email"
+        label={t('auth.identification')}
         required
-        autoFocus
+        autofocus
         value={identification}
-        onChange={setIdentification}
+        variant="outlined"
       />
-      <div className="input-group mb-3">
-        <input
-          type="password"
-          className="form-control"
-          placeholder={t('auth.password')}
-          autoComplete="current-password"
-          value={password}
-          onChange={handlePasswordChange}
-          required
-        />
-        <div className="input-group-append">
-          <div className="input-group-text">
-            <i className="fas fa-lock"></i>
-          </div>
-        </div>
-      </div>
+      <TextInput
+        type="password"
+        toggle-password
+        icon="password"
+        onChange={handlePasswordChange}
+        required
+        label={t('auth.password')}
+        autocomplete="current-password"
+        value={password}
+        variant="outlined"
+      />
 
       {hasTooManyFails && <Captcha ref={ref} />}
 
       <Alert type="warning">{warningMessage}</Alert>
 
-      <div className="d-flex justify-content-between mb-3">
-        <label>
-          <input
-            type="checkbox"
-            className="mr-1"
-            checked={remember}
-            onChange={handleRememberChange}
-          />
+      <div className="d-flex justify-content-between align-items-center">
+        <mdui-checkbox
+          checked={remember}
+          onInput={handleRememberChange}
+          name="rememberMe"
+        >
           {t('auth.keep')}
-        </label>
+        </mdui-checkbox>
         <a href={`${blessing.base_url}/auth/forgot`}>{t('auth.forgot-link')}</a>
       </div>
 
-      <div className="card-footer">
-        <a
-          className="btn btn-small"
-          href={`${blessing.base_url}/auth/register`}
-        >
+      <footer className="d-flex justify-content-between">
+        <mdui-button variant="text" href={`${blessing.base_url}/auth/register`}>
           {t('auth.register-link')}
-        </a>
-        <button
-          className="btn btn-primary btn-block"
-          type="submit"
-          disabled={isPending}
-        >
-          {isPending ? (
-            <>
-              <i className="fas fa-spinner fa-spin mr-1"></i>
-              {t('auth.loggingIn')}
-            </>
-          ) : (
-            t('auth.login')
-          )}
-        </button>
-      </div>
+        </mdui-button>
+        <mdui-button loading={isPending} disabled={isPending} type="submit">
+          {t('auth.login')}
+        </mdui-button>
+      </footer>
     </form>
   )
 }

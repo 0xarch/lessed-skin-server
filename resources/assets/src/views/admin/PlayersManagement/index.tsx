@@ -8,7 +8,8 @@ import type { Player, Paginator } from '@/scripts/types'
 import { toast } from '@/scripts/notify'
 import urls from '@/scripts/urls'
 import Pagination from '@/components/Pagination'
-import Card from './Card'
+import Card from '@/components/mdui/card'
+import { default as UserCard } from './Card'
 import LoadingCard from './LoadingCard'
 import Row from './Row'
 import LoadingRow from './LoadingRow'
@@ -176,12 +177,14 @@ const PlayersManagement: React.FC = () => {
   }
 
   return (
-    <mdui-card class="md-card mdui-prose">
+    <Card>
       <header
         style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center' }}
       >
-        <form className="input-group" onSubmit={handleSubmitQuery}>
+        <form onSubmit={handleSubmitQuery}>
           <mdui-text-field
+            type="text"
+            inputMode="search"
             value={query}
             onInput={handleQueryChange}
             variant="outlined"
@@ -248,7 +251,7 @@ const PlayersManagement: React.FC = () => {
           {isLoading
             ? new Array(10).fill(null).map((_, i) => <LoadingCard key={i} />)
             : players.map((player, i) => (
-                <Card
+                <UserCard
                   key={player.pid}
                   player={player}
                   onUpdateName={() => handleUpdateName(player, i)}
@@ -267,7 +270,7 @@ const PlayersManagement: React.FC = () => {
         onSubmit={handleUpdateTexture}
         onClose={handleCloseModalUpdateTexture}
       />
-    </mdui-card>
+    </Card>
   )
 }
 

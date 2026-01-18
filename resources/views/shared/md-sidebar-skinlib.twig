@@ -1,34 +1,30 @@
 <mdui-navigation-drawer close-on-overlay-click id="main-sidebar">
   {% if scope == 'user' %}
-    {{ include('shared.user-panel') }}
+    {% if auth_check() %}
+      {{ include('shared.user-panel') }}
+    {% endif %}
     <mdui-list style="margin: 0 .5rem">
-      <mdui-collapse value="skinlib">
-        <mdui-collapse-item value="skinlib">
-          <mdui-list-item slot="header" icon="archive" rounded>
-            {{ trans('general.skinlib') }}
-          </mdui-list-item>
-          <div style="margin-left: 2.5rem">
-            <mdui-list-item icon="archive" href="{{ url('skinlib') }}" rounded>
-              {{ trans('general.skinlib') }}
+      {% if auth_check() %}
+        <mdui-list-item icon="upload" href="{{ url('skinlib/upload') }}" rounded>
+          {{ trans('skinlib.general.upload-new-skin') }}
+        </mdui-list-item>
+      {% else %}
+        <mdui-list-item icon="upload" disabled rounded>
+          {{ trans('skinlib.general.upload-new-skin') }}
+        </mdui-list-item>
+      {% endif %}
+      {% if auth_check() %}
+        <mdui-collapse value="user">
+          <mdui-collapse-item value="user">
+            <mdui-list-item slot="header" icon="admin_panel_settings" end-icon="expand_more" rounded>
+              {{ trans('general.user-center') }}
             </mdui-list-item>
-            {% if auth_check() %}
-              <mdui-list-item icon="upload" href="{{ url('skinlib/upload') }}" rounded>
-                {{ trans('skinlib.general.upload-new-skin') }}
-              </mdui-list-item>
-            {% endif %}
-          </div>
-        </mdui-collapse-item>
-      </mdui-collapse>
-      <mdui-collapse value="user">
-        <mdui-collapse-item value="user">
-          <mdui-list-item slot="header" icon="admin_panel_settings" end-icon="expand_more" rounded>
-            {{ trans('general.user-center') }}
-          </mdui-list-item>
-          <div style="margin-left: 2.5rem">
-            {{ include('shared.side-menu', {type: 'user', design: 'mdui'}) }}
-          </div>
-        </mdui-collapse-item>
-      </mdui-collapse>
+            <div style="margin-left: 2.5rem">
+              {{ include('shared.side-menu', {type: 'user', design: 'mdui'}) }}
+            </div>
+          </mdui-collapse-item>
+        </mdui-collapse>
+      {% endif %}
       <mdui-collapse value="explore">
         <mdui-collapse-item value="explore">
           <mdui-list-item slot="header" icon="explore" end-icon="expand_more" rounded>
