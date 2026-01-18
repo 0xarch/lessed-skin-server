@@ -170,6 +170,15 @@ const SkinLibrary: React.FC = () => {
     }
   }
 
+  const handleItemTypeClick = (type: TextureType) => {
+    switch (type) {
+      case TextureType.Steve:
+      case TextureType.Alex:
+      case TextureType.Cape:
+        handleFilterChange(type)
+    }
+  }
+
   return (
     <div className="container">
       <div className="content-header d-flex align-items-center">
@@ -263,6 +272,7 @@ const SkinLibrary: React.FC = () => {
                     onAdd={(item) => handleAddToCloset(item, i)}
                     onRemove={(item) => handleRemoveFromCloset(item, i)}
                     onUploaderClick={handleUploaderClick}
+                    onTypeClick={handleItemTypeClick}
                   />
                 ))}
               </div>
