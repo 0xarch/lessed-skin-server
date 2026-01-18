@@ -1,13 +1,13 @@
 import React from 'react'
 import { t } from '@/scripts/i18n'
 import { TextureType } from '@/scripts/types'
-import Button from './Button'
 import type { Filter } from './types'
 import { humanizeType } from './utils'
 
 interface Props {
   filter: Filter
   onChange(filter: Filter): void
+  slot: string
 }
 
 const FilterSelector: React.FC<Props> = (props) => {
@@ -19,45 +19,19 @@ const FilterSelector: React.FC<Props> = (props) => {
   const handleCapeClick = () => onChange(TextureType.Cape)
 
   return (
-    <>
-      <button
-        className="btn btn-default dropdown-toggle"
-        type="button"
-        data-toggle="dropdown"
-      >
-        {humanizeType(filter)}
-      </button>
-      <div className="dropdown-menu">
-        <Button
-          className="dropdown-item"
-          active={filter === 'skin'}
-          onClick={handleSkinClick}
-        >
+    <mdui-dropdown slot={props.slot}>
+      <mdui-button slot="trigger">{humanizeType(filter)}</mdui-button>
+      <mdui-menu>
+        <mdui-menu-item onClick={handleSkinClick}>
           {t('general.skin')}
-        </Button>
-        <Button
-          className="dropdown-item"
-          active={filter === TextureType.Steve}
-          onClick={handleSteveClick}
-        >
-          Steve
-        </Button>
-        <Button
-          className="dropdown-item"
-          active={filter === TextureType.Alex}
-          onClick={handleAlexClick}
-        >
-          Alex
-        </Button>
-        <Button
-          className="dropdown-item"
-          active={filter === TextureType.Cape}
-          onClick={handleCapeClick}
-        >
+        </mdui-menu-item>
+        <mdui-menu-item onClick={handleSteveClick}>Steve</mdui-menu-item>
+        <mdui-menu-item onClick={handleAlexClick}>Alex</mdui-menu-item>
+        <mdui-menu-item onClick={handleCapeClick}>
           {t('general.cape')}
-        </Button>
-      </div>
-    </>
+        </mdui-menu-item>
+      </mdui-menu>
+    </mdui-dropdown>
   )
 }
 

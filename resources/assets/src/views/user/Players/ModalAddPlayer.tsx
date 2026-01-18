@@ -5,6 +5,7 @@ import { toast } from '@/scripts/notify'
 import type { Player } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import { Dialog } from 'mdui'
+import Divider from '@/components/mdui/divider'
 
 type Extra = {
   score: number
@@ -75,13 +76,12 @@ const ModalAddPlayer: React.FC<Props> = (props) => {
         value={name}
         ref={inputRef}
       />
-      <br className="md-br" />
-      <div className="callout callout-info">
-        <ul className="m-0 p-0 pl-3">
-          <li>{rule}</li>
-          <li>{length}</li>
-        </ul>
-      </div>
+      <Divider />
+      <mdui-card variant="outlined">
+        <li>{rule}</li>
+        <li>{length}</li>
+      </mdui-card>
+      <Divider />
       <mdui-button slot="action" variant="text" onClick={handleClose}>
         {t('general.cancel')}
       </mdui-button>

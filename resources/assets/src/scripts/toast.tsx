@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import { nanoid } from 'nanoid'
 import * as emitter from './event'
 import ToastBox, { ToastType } from '../components/Toast'
 import { snackbar } from 'mdui'
@@ -56,7 +54,7 @@ export const ToastContainer: React.FC = () => {
 export class Toast {
   // private container: HTMLDivElement
 
-  constructor(render?: (element: JSX.Element) => void) {
+  constructor() {
     // this.container = document.createElement('div')
     // document.body.appendChild(this.container)
     // if (render) {
@@ -71,7 +69,6 @@ export class Toast {
       message,
       placement: 'top',
     })
-    console.error('Deprecated toast.success called. Use snackbar instead.')
     // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'success', message })
   }
 
@@ -80,7 +77,6 @@ export class Toast {
       message,
       placement: 'top',
     })
-    console.error('Deprecated toast.success called. Use snackbar instead.')
     // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'info', message })
   }
 
@@ -89,7 +85,6 @@ export class Toast {
       message,
       placement: 'top',
     })
-    console.error('Deprecated toast.warning called. Use snackbar instead.')
     // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'warning', message })
   }
 
@@ -98,7 +93,6 @@ export class Toast {
       message,
       placement: 'top',
     })
-    console.error('Deprecated toast.error called. Use snackbar instead.')
     // emitter.emit(TOAST_EVENT, { id: nanoid(4), type: 'error', message })
   }
 

@@ -233,19 +233,29 @@ text {
 .md-card {
   padding: 1rem;
   width: 100%;
-  background-color: rgb(var(--mdui-color-surface-container));
+  /* background-color: rgb(var(--mdui-color-surface-container));
   color: rgb(var(--mdui-color-surface-on-container));
   & + :is(.md-card, .md-tab-card) {
     margin-top: 1rem;
+  } */
+}
+
+@media (prefers-color-scheme: dark) {
+  .md-card {
+    /* Hack for unbordered card in dark mode */
+    background-color: rgb(var(--mdui-color-surface-container));
+    color: rgb(var(--mdui-color-surface-on-container));
   }
 }
 
 .md-tab-card {
+  padding: 0;
   padding-bottom: 1rem;
   width: 100%;
-  & + :is(.md-card, .md-tab-card) {
+
+  /* &+ :is(.md-card, .md-tab-card) {
     margin-top: 1rem;
-  }
+  } */
 }
 
 .md-short-card {

@@ -4,7 +4,6 @@ import debounce from 'lodash.debounce'
 import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
-import { showModal } from '@/scripts/notify'
 import {
   ClosetItem as Item,
   Texture,
@@ -18,50 +17,55 @@ import LoadingClosetItem from './LoadingClosetItem'
 import Previewer from './Previewer'
 import ModalApply from './ModalApply'
 import removeClosetItem from './removeClosetItem'
-import { alert, prompt, snackbar } from 'mdui'
+import Divider from '@/components/mdui/divider'
+import Card from '@/components/mdui/card'
+import Dialog from '@/scripts/dialog'
+import { toast } from '@/scripts/notify'
 
 type Category = 'skin' | 'cape'
 
 const Closet: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
   const [category, setCategory] = useState<Category>('skin')
   const [search, setSearch] = useState('')
   const [query, setQuery] = useState('')
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
-  const [items, setItems] = useState<Item[]>([])
   const [skin, setSkin] = useState<Texture | null>(null)
   const [cape, setCape] = useState<Texture | null>(null)
   const [showModalApply, setShowModalApply] = useState(false)
-  const containerRef = useRef<HTMLDivElement | null>(null)
-  const perPageRef = useRef(6)
+  const perPageRef = useRef(8)
+  const [isSkinLoaded, setIsSkinLoaded] = useState(false)
+  const [isCapeLoaded, setIsCapeLoaded] = useState(false)
+  const [skinItems, setSkinItems] = useState<Item[]>([])
+  const [capeItems, setCapeItems] = useState<Item[]>([])
 
   useEmitMounted()
 
   useEffect(() => {
-    const element = containerRef.current
-    /* istanbul ignore next */
-    if (element) {
-      const { width } = element.getBoundingClientRect()
-      if (width >= 500) {
-        perPageRef.current = Math.floor(width / 235) * 2
+    const getItems = async (category: Category) => {
+      const fetchData = async () =>
+        await fetch.get<Paginator<Item>>(urls.user.closet.list(), {
+          category,
+          q: query,
+          page,
+          perPage: perPageRef.current,
+        })
+      if (category === 'skin' && !isSkinLoaded) {
+        const { data, last_page } = await fetchData()
+        setSkinItems(data)
+        setTotalPages(last_page)
+        setIsSkinLoaded(true)
+        console.log(data)
+      } else if (category === 'cape' && !isCapeLoaded) {
+        const { data, last_page } = await fetchData()
+        setCapeItems(data)
+        setTotalPages(last_page)
+        setIsCapeLoaded(true)
+        console.log(data)
       }
     }
-  }, [])
-
-  useEffect(() => {
-    const getItems = async () => {
-      setIsLoading(true)
-      const { data, last_page } = await fetch.get<Paginator<Item>>(
-        urls.user.closet.list(),
-        { category, q: query, page, perPage: perPageRef.current },
-      )
-
-      setItems(data)
-      setTotalPages(last_page)
-      setIsLoading(false)
-    }
-    getItems()
+    getItems(category)
   }, [category, query, page])
 
   const switchCategoryToSkin = () => {
@@ -80,7 +84,7 @@ const Closet: React.FC = () => {
 
   const debouncedSetQuery = React.useMemo(
     () => debounce((value: string) => setQuery(value), 350),
-    [setQuery], // setQuery 是稳定的，所以这个 debounced 函数也会是稳定的
+    [setQuery],
   )
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,7 +93,10 @@ const Closet: React.FC = () => {
     debouncedSetQuery
   }
 
-  const handlePageChange = (page: number) => setPage(page)
+  const handlePageChange = (page: number) => {
+    setPage(page)
+    ;(category === 'skin' ? setIsSkinLoaded : setIsCapeLoaded)(false)
+  }
 
   const isSelected = (item: Item): boolean => {
     if (category === 'skin') {
@@ -115,24 +122,9 @@ const Closet: React.FC = () => {
   const renameItem = async (item: Item, index: number) => {
     let name: string
     try {
-      const value = await new Promise<string>((resolve, reject) => {
-        prompt({
-          description: t('user.renameClosetItem'),
-          confirmText: t('user.renameItem'),
-          cancelText: t('general.cancel'),
-          onConfirm: (value) => {
-            if (!value) {
-              alert({
-                description: t('skinlib.emptyNewTextureName'),
-              })
-              return false
-            }
-            resolve(value)
-            return true
-          },
-          onCancel: reject,
-          onClose: reject,
-        })
+      const value = await Dialog.prompt({
+        description: t('user.renameClosetItem'),
+        confirmText: t('user.renameItem'),
       })
       name = value
     } catch {
@@ -144,13 +136,13 @@ const Closet: React.FC = () => {
       { name },
     )
     if (code === 0) {
-      snackbar({ message, placement: 'top', closeable: true })
-      setItems((items) => {
+      toast.success(message)
+      ;(category === 'skin' ? setSkinItems : setCapeItems)((items) => {
         items[index] = { ...item, pivot: { ...item.pivot, item_name: name } }
         return items.slice()
       })
     } else {
-      snackbar({ message, placement: 'top' })
+      toast.error(message)
     }
   }
 
@@ -158,16 +150,15 @@ const Closet: React.FC = () => {
     const { tid } = item
     const ok = await removeClosetItem(tid)
     if (ok) {
-      setItems((items) => items.filter((item) => item.tid !== tid))
+      ;(category === 'skin' ? setSkinItems : setCapeItems)((items) =>
+        items.filter((item) => item.tid !== tid),
+      )
     }
   }
 
   const applyToPlayer = () => {
     if (!skin && !cape) {
-      snackbar({
-        message: t('user.emptySelectedTexture'),
-        placement: 'top',
-      })
+      toast.success(t('user.emptySelectedTexture'))
       return
     }
     setShowModalApply(true)
@@ -175,7 +166,8 @@ const Closet: React.FC = () => {
 
   return (
     <>
-      <mdui-card ref={containerRef} class="md-tab-card mdui-prose">
+      <Card className="md-tab-card mdui-prose">
+        <mdui-text-field type="search" onInput={handleSearch} />
         <mdui-tabs value="tab-skin">
           <mdui-tab value="tab-skin" onClick={switchCategoryToSkin}>
             {t('general.skin')}
@@ -184,13 +176,13 @@ const Closet: React.FC = () => {
             {t('general.cape')}
           </mdui-tab>
           <mdui-tab-panel slot="panel" value="tab-skin">
-            {isLoading ? (
+            {!isSkinLoaded ? (
               <div className="d-flex flex-wrap">
                 {new Array(perPageRef.current).fill(null).map((_, i) => (
                   <LoadingClosetItem key={i} />
                 ))}
               </div>
-            ) : items.length === 0 ? (
+            ) : skinItems.length === 0 ? (
               <div className="text-center p-3">
                 {search ? (
                   t('general.noResult')
@@ -205,8 +197,11 @@ const Closet: React.FC = () => {
                 )}
               </div>
             ) : (
-              <div className="d-flex flex-wrap md-card">
-                {items.map((item, i) => (
+              <div
+                className="d-flex flex-wrap"
+                style={{ padding: '1rem', gap: '1rem' }}
+              >
+                {skinItems.map((item, i) => (
                   <ClosetItem
                     key={item.tid}
                     item={item}
@@ -220,13 +215,13 @@ const Closet: React.FC = () => {
             )}
           </mdui-tab-panel>
           <mdui-tab-panel slot="panel" value="tab-cape">
-            {isLoading ? (
+            {!isCapeLoaded ? (
               <div className="d-flex flex-wrap">
                 {new Array(perPageRef.current).fill(null).map((_, i) => (
                   <LoadingClosetItem key={i} />
                 ))}
               </div>
-            ) : items.length === 0 ? (
+            ) : capeItems.length === 0 ? (
               <div className="text-center p-3">
                 {search ? (
                   t('general.noResult')
@@ -242,7 +237,7 @@ const Closet: React.FC = () => {
               </div>
             ) : (
               <div className="d-flex flex-wrap md-card">
-                {items.map((item, i) => (
+                {capeItems.map((item, i) => (
                   <ClosetItem
                     key={item.tid}
                     item={item}
@@ -265,14 +260,14 @@ const Closet: React.FC = () => {
             />
           </div>
         </footer>
-      </mdui-card>
+      </Card>
       <Previewer
         skin={skin?.hash}
         cape={cape?.hash}
         isAlex={skin?.type === TextureType.Alex}
       >
         <mdui-button onClick={applyToPlayer}>{t('user.useAs')}</mdui-button>
-        <mdui-divider vertical class="md-br" />
+        <Divider />
         <mdui-button variant="outlined" onClick={resetSelected}>
           {t('user.resetSelected')}
         </mdui-button>

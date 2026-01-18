@@ -193,31 +193,26 @@ const SkinLibrary: React.FC = () => {
           <header>
             <div className="form-group d-flex justify-content-between">
               <form onSubmit={handleFormSubmit}>
-                <div className="input-group">
-                  <div className="input-group-prepend">
-                    <FilterSelector
-                      filter={filter}
-                      onChange={handleFilterChange}
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    inputMode="search"
-                    className="form-control"
-                    value={name}
-                    placeholder={t('vendor.datatable.search')}
-                    onChange={handleNameChange}
+                <mdui-text-field
+                  variant="outlined"
+                  type="text"
+                  inputMode="search"
+                  className="form-control"
+                  value={name}
+                  placeholder={t('vendor.datatable.search')}
+                  onInput={handleNameChange}
+                >
+                  <FilterSelector
+                    filter={filter}
+                    onChange={handleFilterChange}
+                    slot="icon"
                   />
-                  <div className="input-group-append">
-                    <button
-                      className="btn btn-primary px-3"
-                      type="submit"
-                      title={t('vendor.datatable.search')}
-                    >
-                      <i className="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div>
+                  <mdui-button-icon
+                    icon="search"
+                    type="submit"
+                    slot="end-icon"
+                  />
+                </mdui-text-field>
               </form>
               <div
                 className="d-none d-flex align-items-center"
@@ -259,7 +254,7 @@ const SkinLibrary: React.FC = () => {
                 <Loading />
               </div>
             ) : items.length > 0 ? (
-              <div className="d-flex flex-wrap">
+              <div className="d-flex flex-wrap" style={{ gap: '1rem' }}>
                 {items.map((item, i) => (
                   <Item
                     key={item.tid}

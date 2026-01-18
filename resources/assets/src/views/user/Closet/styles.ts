@@ -6,3 +6,8 @@ export const DropdownButton = styled.span`
     color: #000;
   }
 `
+
+export const Img = styled.img`
+  width: 150px;
+  height: 150px;
+`

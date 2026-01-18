@@ -1,5 +1,5 @@
+import Dialog from '@/scripts/dialog'
 import { post, ResponseBody } from '@/scripts/net'
-import { showModal } from '@/scripts/notify'
 
 export default async function handler(event: Event) {
   event.preventDefault()
@@ -16,7 +16,9 @@ export default async function handler(event: Event) {
       password,
     },
   )
-  await showModal({ mode: 'alert', text: message })
+  await Dialog.alert({
+    headline: message,
+  })
   if (code === 0) {
     window.location.href = `${blessing.base_url}/auth/login`
   }

@@ -1,10 +1,13 @@
-import { showModal, toast } from '@/scripts/notify'
+import { toast } from '@/scripts/notify'
 import { t } from '@/scripts/i18n'
 import { post, ResponseBody } from '@/scripts/net'
+import Dialog from '@/scripts/dialog'
 
 export default async function resetAvatar() {
   try {
-    await showModal({ text: t('user.resetAvatarConfirm') })
+    await Dialog.confirm({
+      headline: t('user.resetAvatarConfirm'),
+    })
   } catch {
     return
   }
