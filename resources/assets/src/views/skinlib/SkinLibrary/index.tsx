@@ -181,19 +181,13 @@ const SkinLibrary: React.FC = () => {
 
   return (
     <div className="container">
-      <div className="content-header d-flex align-items-center">
+      <div className="content-header d-flex align-items-center justify-content-between">
         <h1>{t('general.skinlib')}</h1>
         <span>
           {uploader ? (
-            <>
-              <i className="fas fa-user mr-1"></i>
-              {t('skinlib.filter.uploader', { uid: uploader })}
-            </>
+            <mdui-icon name="account_circle" />
           ) : (
-            <>
-              <i className="fas fa-user-friends mr-1"></i>
-              {t('skinlib.filter.allUsers')}
-            </>
+            <mdui-icon name="supervisor_account" />
           )}
         </span>
       </div>

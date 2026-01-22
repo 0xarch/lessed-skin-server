@@ -42,7 +42,7 @@ const Item: React.FC<Props> = (props) => {
 
   return (
     <a href={link} target="_blank">
-      <Card variant="outlined" style={{ maxWidth: '250px' }}>
+      <Card prose variant="outlined" style={{ maxWidth: '250px' }}>
         <picture>
           <source srcSet={preview} type="image/webp" />
           <img

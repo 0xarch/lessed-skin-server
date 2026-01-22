@@ -20,7 +20,9 @@ const FilterSelector: React.FC<Props> = (props) => {
 
   return (
     <mdui-dropdown slot={props.slot}>
-      <mdui-button slot="trigger">{humanizeType(filter)}</mdui-button>
+      <mdui-button slot="trigger" variant="text" end-icon="arrow_drop_down">
+        {humanizeType(filter)}
+      </mdui-button>
       <mdui-menu>
         <mdui-menu-item onClick={handleSkinClick}>
           {t('general.skin')}

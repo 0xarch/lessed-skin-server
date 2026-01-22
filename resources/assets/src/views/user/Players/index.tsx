@@ -207,7 +207,7 @@ const Players: React.FC = () => {
 
   return (
     <>
-      <Card>
+      <Card prose>
         <mdui-text-field
           type="text"
           placeholder={t('user.typeToSearch')}
@@ -215,7 +215,7 @@ const Players: React.FC = () => {
           variant="outlined"
           end-icon="search"
         />
-        <table className="table table-hover">
+        <table className="mdui-table">
           <thead>
             <tr>
               <th>PID</th>

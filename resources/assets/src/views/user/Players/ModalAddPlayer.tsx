@@ -6,6 +6,7 @@ import type { Player } from '@/scripts/types'
 import urls from '@/scripts/urls'
 import { Dialog } from 'mdui'
 import Divider from '@/components/mdui/divider'
+import Card from '@/components/mdui/card'
 
 type Extra = {
   score: number
@@ -77,10 +78,10 @@ const ModalAddPlayer: React.FC<Props> = (props) => {
         ref={inputRef}
       />
       <Divider />
-      <mdui-card variant="outlined">
+      <Card prose variant="outlined">
         <li>{rule}</li>
         <li>{length}</li>
-      </mdui-card>
+      </Card>
       <Divider />
       <mdui-button slot="action" variant="text" onClick={handleClose}>
         {t('general.cancel')}
