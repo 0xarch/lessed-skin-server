@@ -1,8 +1,7 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import { t } from '@/scripts/i18n'
 import * as scoreUtils from './scoreUtils'
 import 'mdui/components/button'
-import { Button } from 'mdui/components/button'
 import { throttle } from 'mdui'
 
 interface Props {
@@ -23,25 +22,22 @@ const SignButton: React.FC<Props> = (props) => {
   const remainingTimeText = scoreUtils.remainingTimeText(remainingTime)
   const canSign = remainingTime <= 0
 
-  const buttonRef = useRef<Button>(null)
   const clickEvent = throttle(props.onClick, 300)
 
-  useEffect(() => {
-    buttonRef.current!.addEventListener('click', (event) => {
-      clickEvent(
-        event as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>,
-      )
-    })
-  }, [])
-
   return (
-    <mdui-button
-      ref={buttonRef}
+    <mdui-fab
+      loading={props.isLoading}
       disabled={!canSign || props.isLoading}
       icon="calendar_today"
+      onClick={(event) =>
+        clickEvent(
+          event as unknown as React.MouseEvent<HTMLButtonElement, MouseEvent>,
+        )
+      }
+      extended
     >
       {canSign ? t('user.sign') : remainingTimeText}
-    </mdui-button>
+    </mdui-fab>
   )
 }
 

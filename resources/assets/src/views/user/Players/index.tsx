@@ -13,6 +13,7 @@ import Previewer from './Previewer'
 import ModalAddPlayer from './ModalAddPlayer'
 import ModalReset from './ModalReset'
 import { confirm, prompt, snackbar } from 'mdui'
+import Card from '@/components/mdui/card'
 
 const Players: React.FC = () => {
   const [players, setPlayers] = useState<Player[]>([])
@@ -206,11 +207,13 @@ const Players: React.FC = () => {
 
   return (
     <>
-      <mdui-card class="md-card mdui-prose">
+      <Card>
         <mdui-text-field
           type="text"
           placeholder={t('user.typeToSearch')}
-          onChange={handleSearch}
+          onInput={handleSearch}
+          variant="outlined"
+          end-icon="search"
         />
         <table className="table table-hover">
           <thead>
@@ -256,7 +259,7 @@ const Players: React.FC = () => {
         >
           {t('user.player.add-player')}
         </mdui-button>
-      </mdui-card>
+      </Card>
 
       <Previewer
         skin={skin.url}

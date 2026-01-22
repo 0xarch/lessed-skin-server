@@ -167,7 +167,20 @@ const Closet: React.FC = () => {
   return (
     <>
       <Card className="md-tab-card mdui-prose">
-        <mdui-text-field type="search" onInput={handleSearch} />
+        <div
+          style={{
+            backgroundColor: 'rgb(var(--mdui-color-surface))',
+            color: 'rgb(var(--mdui-color-on-surface))',
+            padding: '.5rem',
+          }}
+        >
+          <mdui-text-field
+            type="search"
+            onInput={handleSearch}
+            variant="outlined"
+            end-icon="search"
+          />
+        </div>
         <mdui-tabs value="tab-skin">
           <mdui-tab value="tab-skin" onClick={switchCategoryToSkin}>
             {t('general.skin')}

@@ -5,14 +5,12 @@
 
   <div style="flex-grow: 1"></div>
   
-  <ul class="navbar-nav ml-auto">
-    {% if auth_check() %}
-      {{ include('shared.notifications', { design: 'mdui' }) }}
-      {# {{ include('shared.languages') }} #}
-      {{ include('shared.user-menu', { design: 'mdui' }) }}
-    {% else %}
-      <mdui-button href="{{ url('auth/login') }}" variant='text' icon='login'>{{ trans('general.login') }}</mdui-button>
-      <mdui-button href="{{ url('auth/register') }}" variant='outlined' icon='app_registration'>{{ trans('general.register') }}</mdui-button>
-    {% endif %}
-  </ul>
+  {% if auth_check() %}
+    {{ include('shared.notifications', { design: 'mdui' }) }}
+    {# {{ include('shared.languages') }} #}
+    {{ include('shared.user-menu', { design: 'mdui' }) }}
+  {% else %}
+    <mdui-button href="{{ url('auth/login') }}" variant='text' icon='login'>{{ trans('general.login') }}</mdui-button>
+    <mdui-button href="{{ url('auth/register') }}" variant='outlined' icon='app_registration'>{{ trans('general.register') }}</mdui-button>
+  {% endif %}
 </mdui-top-app-bar>

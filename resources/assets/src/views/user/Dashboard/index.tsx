@@ -1,40 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import styled from '@emotion/styled'
 import { hot } from 'react-hot-loader/root'
 import useEmitMounted from '@/scripts/hooks/useEmitMounted'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import useTween from '@/scripts/hooks/useTween'
 import urls from '@/scripts/urls'
-import * as breakpoints from '@/styles/breakpoints'
 import InfoBox from './InfoBox'
 import SignButton from './SignButton'
 import * as scoreUtils from './scoreUtils'
 import { ScoreInfo } from '@/scripts/types'
 import { Dialog, snackbar } from 'mdui'
+import Divider from '@/components/mdui/divider'
+import Card from '@/components/mdui/card'
 
 type SignReturn = {
   score: number
 }
-
-const ScoreTitle = styled.p`
-  font-weight: bold;
-  margin-top: 5px;
-  ${breakpoints.lessThan(breakpoints.Breakpoint.md)} {
-    margin-top: 12px;
-  }
-`
-const Score = styled.p`
-  font-family: 'Minecraft';
-  font-size: 50px;
-  margin-top: 20px;
-  cursor: help;
-  text-wrap: nowrap;
-`
-const ScoreNotice = styled.p`
-  font-size: smaller;
-  margin-top: 20px;
-`
 
 const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState(false)
@@ -109,56 +90,64 @@ const Dashboard: React.FC = () => {
   }
 
   return (
-    // @ts-ignore
-    <mdui-card class="md-card mdui-prose">
-      <h3>{t('user.used.title')}</h3>
-      <section>
-        <div className="row">
-          <div className="col-md-7">
-            <InfoBox
-              color="primary"
-              icon="gamepad"
-              name={t('user.used.players')}
-              used={players}
-              unused={score / playersRate}
-              unit=""
-            />
-            {storage > 1024 ? (
-              <InfoBox
-                color="primary"
-                icon="storage"
-                name={t('user.used.storage')}
-                used={~~(storage / 1024)}
-                unused={~~(score / storageRate / 1024)}
-                unit="MB"
-              />
-            ) : (
-              <InfoBox
-                color="primary"
-                icon="storage"
-                name={t('user.used.storage')}
-                used={storage}
-                unused={score / storageRate}
-                unit="KB"
-              />
-            )}
-          </div>
-          <div className="col-md-5 text-center">
-            <ScoreTitle>{t('user.cur-score')}</ScoreTitle>
-            <Score onClick={handleScoreNotice}>{~~tweenedScore}</Score>
-            <ScoreNotice>{t('user.score-notice')}</ScoreNotice>
-          </div>
+    <>
+      <Card>
+        <h3>{t('user.cur-score')}</h3>
+        <p
+          style={{ fontFamily: 'Minecraft', fontSize: '2em' }}
+          onClick={handleScoreNotice}
+        >
+          {~~tweenedScore}
+        </p>
+        <Divider />
+        <div className="d-flex align-items-center">
+          <SignButton
+            isLoading={loading}
+            lastSign={lastSign}
+            canSignAfterZero={canSignAfterZero}
+            signGap={signGap}
+            onClick={handleSign}
+          />
+          <div style={{ marginLeft: 'auto' }} />
+          <mdui-button-icon
+            onClick={handleScoreNotice}
+            icon="question_mark"
+            variant="tonal"
+          />
         </div>
-      </section>
-      <br className="md-br" />
-      <SignButton
-        isLoading={loading}
-        lastSign={lastSign}
-        canSignAfterZero={canSignAfterZero}
-        signGap={signGap}
-        onClick={handleSign}
-      />
-    </mdui-card>
+      </Card>
+      <Divider space-only />
+      <div className="d-flex">
+        <InfoBox
+          color="primary"
+          icon="gamepad"
+          name={t('user.used.players')}
+          used={players}
+          unused={score / playersRate}
+          unit=""
+        />
+        <Divider space-only />
+        {storage > 1024 ? (
+          <InfoBox
+            color="primary"
+            icon="storage"
+            name={t('user.used.storage')}
+            used={~~(storage / 1024)}
+            unused={~~(score / storageRate / 1024)}
+            unit="MB"
+          />
+        ) : (
+          <InfoBox
+            color="primary"
+            icon="storage"
+            name={t('user.used.storage')}
+            used={storage}
+            unused={score / storageRate}
+            unit="KB"
+          />
+        )}
+      </div>
+    </>
   )
 }
 

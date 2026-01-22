@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { t } from '@/scripts/i18n'
 import * as fetch from '@/scripts/net'
 import { toast } from '@/scripts/notify'
+import Card from '@/components/mdui/card'
 
 const EmailVerification: React.FC = () => {
   const [isSending, setIsSending] = useState(false)
@@ -20,7 +21,7 @@ const EmailVerification: React.FC = () => {
   }
 
   return (
-    <div className="callout callout-info">
+    <Card>
       <h4>
         <i className="fas fa-envelope"></i> {t('user.verification.title')}
       </h4>
@@ -32,12 +33,12 @@ const EmailVerification: React.FC = () => {
             {t('user.verification.sending')}
           </>
         ) : (
-          <a className="link-info" href="#" onClick={send}>
+          <a href="#" onClick={send}>
             {t('user.verification.resend')}
           </a>
         )}
       </p>
-    </div>
+    </Card>
   )
 }
 

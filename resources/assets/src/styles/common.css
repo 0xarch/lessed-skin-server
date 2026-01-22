@@ -64,12 +64,6 @@
   -webkit-tap-highlight-color: #0000;
 }
 
-a {
-  outline: none;
-  text-decoration: none;
-  color: var(--accent-color);
-}
-
 .brand-link,
 .navbar-brand {
   font-family: Minecraft;

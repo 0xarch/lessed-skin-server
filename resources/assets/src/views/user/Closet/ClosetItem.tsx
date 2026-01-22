@@ -25,7 +25,7 @@ const ClosetItem: React.FC<Props> = (props) => {
   const handleSetAsAvatar = () => setAsAvatar(item.tid)
 
   return (
-    <Card style={{ width: 'fit-content' }}>
+    <Card style={{ width: 'fit-content' }} variant="outlined">
       <div onClick={handleItemClick}>
         <picture>
           <source srcSet={preview} type="image/webp" />
