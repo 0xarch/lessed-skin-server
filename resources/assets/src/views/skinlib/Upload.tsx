@@ -13,6 +13,8 @@ import urls from '@/scripts/urls'
 import FileInput from '@/components/FileInput'
 import ViewerSkeleton from '@/components/ViewerSkeleton'
 import { Checkbox, RadioGroup } from 'mdui'
+import Card from '@/components/mdui/card'
+import Divider from '@/components/mdui/divider'
 
 const Previewer = React.lazy(() => import('@/components/Viewer'))
 
@@ -139,13 +141,14 @@ const Upload: React.FC = () => {
 
   return (
     <>
-      <mdui-card class="md-card mdui-prose">
+      <Card prose>
         <mdui-text-field
           label={t('skinlib.upload.texture-name')}
           id="texture-name"
           placeholder={nameRule}
           value={name}
           ref={textureNameRef}
+          variant="outlined"
         />
         <h4>{t('skinlib.upload.texture-type')}</h4>
         <mdui-radio-group ref={textureTypeRef} value={type}>
@@ -162,15 +165,15 @@ const Upload: React.FC = () => {
 
         {contentPolicy && (
           <>
-            <br />
-            <mdui-card
-              class="md-card mdui-prose"
+            <Divider space-only />
+            <Card
+              prose
               variant="outlined"
               dangerouslySetInnerHTML={{ __html: contentPolicy }}
             />
           </>
         )}
-        <br className="md-br" />
+        <Divider />
         <footer>
           <div className="container d-flex justify-content-between">
             <mdui-checkbox
@@ -190,9 +193,9 @@ const Upload: React.FC = () => {
           </div>
           {isPrivate && (
             <>
-              <br />
-              <mdui-card
-                class="md-card mdui-prose"
+              <Divider space-only />
+              <Card
+                prose
                 variant="outlined"
                 style={{
                   backgroundColor: 'rgb(var(--mdui-color-tertiary-container))',
@@ -200,22 +203,22 @@ const Upload: React.FC = () => {
                 }}
               >
                 {privacyNotice}
-              </mdui-card>
+              </Card>
             </>
           )}
           {!isPrivate && award > 0 && (
             <>
-              <br />
-              <mdui-card class="md-card mdui-prose" variant="outlined">
+              <Divider space-only />
+              <Card prose variant="outlined">
                 {t('skinlib.upload.award', { score: award })}
-              </mdui-card>
+              </Card>
             </>
           )}
           {file && (
             <>
-              <br className="md-br" />
-              <mdui-card
-                class="md-card mdui-prose"
+              <Divider space-only />
+              <Card
+                prose
                 variant="outlined"
                 style={
                   currentScore > scoreCost
@@ -232,11 +235,11 @@ const Upload: React.FC = () => {
                   {t('user.cur-score')}
                   <span className="ml-1">{currentScore}</span>
                 </div>
-              </mdui-card>
+              </Card>
             </>
           )}
         </footer>
-      </mdui-card>
+      </Card>
       {container &&
         ReactDOM.createPortal(
           <React.Suspense fallback={<ViewerSkeleton />}>

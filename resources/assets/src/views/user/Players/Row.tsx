@@ -23,7 +23,7 @@ const Row: React.FC<Props> = (props) => {
 
   return (
     <tr onClick={props.onClick}>
-      <td>{player.pid}</td>
+      <td style={{ verticalAlign: 'middle' }}>{player.pid}</td>
       <td>
         <mdui-button variant="text" end-icon="edit" onClick={handleEdit}>
           {player.name}

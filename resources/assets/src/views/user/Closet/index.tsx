@@ -164,6 +164,11 @@ const Closet: React.FC = () => {
     setShowModalApply(true)
   }
 
+  const goToUpload = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault()
+    window.location.href = `${blessing.base_url}/skinlib/upload`
+  }
+
   return (
     <>
       <Card className="md-tab-card mdui-prose">
@@ -188,6 +193,7 @@ const Closet: React.FC = () => {
           <mdui-tab value="tab-cape" onClick={switchCategoryToCape}>
             {t('general.cape')}
           </mdui-tab>
+          <mdui-tab onClick={goToUpload}>{t('user.closet.upload')}</mdui-tab>
           <mdui-tab-panel slot="panel" value="tab-skin">
             {!isSkinLoaded ? (
               <div className="d-flex flex-wrap">
@@ -206,6 +212,7 @@ const Closet: React.FC = () => {
                         url: `${blessing.base_url}/skinlib?filter=${category}`,
                       }),
                     }}
+                    style={{ padding: '1rem' }}
                   ></span>
                 )}
               </div>
@@ -245,6 +252,7 @@ const Closet: React.FC = () => {
                         url: `${blessing.base_url}/skinlib?filter=${category}`,
                       }),
                     }}
+                    style={{ padding: '1rem' }}
                   ></span>
                 )}
               </div>
