@@ -1,6 +1,7 @@
 @import './avatar.css';
 @import './auth.css';
 @import './admin.css';
+@import './preload.css';
 
 :root {
   --root-color: #111;

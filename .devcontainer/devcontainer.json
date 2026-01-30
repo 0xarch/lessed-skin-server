@@ -3,7 +3,7 @@
 // Update the VARIANT arg in docker-compose.yml to pick a PHP version
 {
   "name": "PHP & MariaDB (Community)",
-  "dockerComposeFile": "docker-compose.yml",
+  "dockerComposeFile": ["../docker-compose.yml"],
   "service": "app",
   "workspaceFolder": "/workspace",
   // Set *default* container specific settings.json values on container create.
@@ -15,20 +15,11 @@
     "mrmlnc.vscode-apache"
   ],
   // For use with PHP or Apache (e.g.php -S localhost:8080 or apache2ctl start)
-  "forwardPorts": [
-    8080,
-    3306,
-    3399
-  ],
-  "appPorts": [
-    "8080:8080",
-    "3306:3306",
-    "3399:3399"
-  ],
+  "forwardPorts": [8080, 3306, 3399],
+  "appPorts": ["8080:8080", "3306:3306", "3399:3399"],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "sudo truncate -s 0 /etc/apache2/ports.conf && sudo rm -f /etc/apache2/sites-enabled/000-default.conf && sudo ln -sf /workspace/.devcontainer/blessing-skin.apache.conf /etc/apache2/sites-enabled/ && bash .devcontainer/post-create.sh && composer install && yarn install",
-  // Start apache2 after the container is started
-  "postStartCommand": "apache2ctl start && echo '\\n👉 \\e[0;32mPlease run '\\'yarn build\\'' to build the frontend. Application is available on port 8080.\\e[0m 👈\\n'",
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  // postStartCommand removed; apache is started by entrypoint when needed
   // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "vscode",
   "features": {

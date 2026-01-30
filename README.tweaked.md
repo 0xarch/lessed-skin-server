@@ -6,6 +6,10 @@
 
 ## Docker
 
+现在需要通过以下指令构建和开发：
+构建：`docker compose -f docker-compose.yml up --d --build`
+进入 SHELL：`docker compose exec app bash` (注意切换至`/workspace`目录)
+
 额外打包了 phpMyAdmin 用于可视化数据库管理。并调整了网络设置使应用可以从本地网络直接访问。
 端口一览：
 

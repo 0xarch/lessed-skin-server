@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.devcontainer
+      args:
+        VARIANT: '8-bullseye'
+        NODE_VERSION: 'lts/*'
+
+    volumes:
+      - .:/workspace:cached
+
+    environment:
+      - MODE=${MODE:-prod}
+
+    ports:
+      - '0.0.0.0:8080:8080'
+
+    networks:
+      - app-network
+
+  db:
+    image: mariadb:10.4
+    restart: unless-stopped
+    volumes:
+      - mariadb-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: mariadb
+      MYSQL_DATABASE: blessingskin
+      MYSQL_USER: username
+      MYSQL_PASSWORD: secret
+    networks:
+      - app-network
+    ports:
+      - '0.0.0.0:3306:3306'
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 0
+      UPLOAD_LIMIT: 1024M
+    ports:
+      - '0.0.0.0:3399:80'
+    depends_on:
+      - db
+    networks:
+      - app-network
+    volumes:
+      - phpmyadmin-config:/etc/phpmyadmin
+      - phpmyadmin-sessions:/sessions
+
+volumes:
+  mariadb-data:
+  phpmyadmin-config:
+  phpmyadmin-sessions:
+
+networks:
+  app-network:
+    driver: bridge
